@@ -118,16 +118,45 @@
         .era-chip.active { border-color: #292524; box-shadow: 0 0 0 2px rgba(41,37,36,0.15); }
         .country-label {
             font-family: 'Noto Serif TC', serif;
-            font-size: 1.1rem;
+            font-size: 1.15rem;
             font-weight: 900;
-            color: #78716c; /* Stone-500 equivalent */
+            color: #78716c;
             -webkit-text-stroke: 3px rgba(255, 255, 255, 0.9);
             paint-order: stroke fill;
             letter-spacing: 0.25em;
             pointer-events: none;
             text-align: center;
+            opacity: 0.9;
+            white-space: nowrap;
+            z-index: 400 !important;
+        }
+        .sea-label {
+            font-family: 'Noto Serif TC', serif;
+            font-size: 1.35rem;
+            font-weight: 900;
+            color: #38bdf8;
+            -webkit-text-stroke: 4px rgba(235, 248, 255, 0.8);
+            paint-order: stroke fill;
+            letter-spacing: 0.4em;
+            pointer-events: none;
+            text-align: center;
+            opacity: 0.75;
+            white-space: nowrap;
+            z-index: 300 !important;
+        }
+        .water-label {
+            font-family: 'Noto Serif TC', serif;
+            font-size: 0.95rem;
+            font-weight: 800;
+            color: #0284c7;
+            -webkit-text-stroke: 3px rgba(255, 255, 255, 0.9);
+            paint-order: stroke fill;
+            letter-spacing: 0.2em;
+            pointer-events: none;
+            text-align: center;
             opacity: 0.85;
             white-space: nowrap;
+            z-index: 400 !important;
         }
         .page-enter { animation: fadeIn 0.3s ease-out; }
         @keyframes fadeIn {
@@ -766,6 +795,37 @@
                 `;
                 marker.bindPopup(popupContent, { maxWidth: 320, closeButton: true });
                 markersRef.current.push(marker);
+            });
+
+            // ─── ADD STATIC CHINESE LABELS ───
+            const staticLabels = [
+                // 國家 (Countries)
+                { name: '以色列', lat: 31.05, lng: 34.80, type: 'country' }, 
+                { name: '約旦',   lat: 31.25, lng: 36.50, type: 'country' },
+                { name: '黎巴嫩', lat: 33.90, lng: 35.86, type: 'country' },
+                { name: '敘利亞', lat: 34.80, lng: 38.50, type: 'country' },
+                { name: '埃及',   lat: 29.50, lng: 32.20, type: 'country' },
+                { name: '伊朗 (波斯)', lat: 32.42, lng: 52.00, type: 'country' },
+                // 海洋/地標 (Seas & Waters)
+                { name: '地中海', lat: 33.50, lng: 32.50, type: 'sea' },
+                { name: '紅海',   lat: 27.50, lng: 34.50, type: 'sea' },
+                { name: '加利利海', lat: 32.85, lng: 35.75, type: 'water' }, 
+                { name: '死海',   lat: 31.50, lng: 35.58, type: 'water' }   
+            ];
+
+            staticLabels.forEach(c => {
+                let textClass = c.type === 'country' ? 'country-label' : 'sea-label';
+                if (c.type === 'water') textClass = 'water-label';
+
+                const icon = L.divIcon({
+                    className: textClass,
+                    html: c.name,
+                    iconSize: [200, 30],
+                    iconAnchor: [100, 15] // Center perfectly over coordinate
+                });
+                
+                // NOT pushed to markersRef so it isn't cleared by activeEra
+                L.marker([c.lat, c.lng], { icon, interactive: false }).addTo(map);
             });
 
             return () => {
