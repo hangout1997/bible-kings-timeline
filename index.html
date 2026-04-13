@@ -41,7 +41,7 @@
 
         const START_YEAR = 931;
         const END_YEAR   = 586;
-        const YEAR_PX    = 15;
+        const YEAR_PX    = 22;
 
         const downloadImage = async () => {
             setIsExporting(true);
@@ -203,7 +203,7 @@
         const KingCard = ({ item }) => {
             const duration = Math.max(Math.abs(item.start - item.end), 0);
             const top    = (START_YEAR - item.start) * YEAR_PX;
-            const height = Math.max(duration * YEAR_PX, 52);
+            const height = Math.max(duration * YEAR_PX, 72);
             const evalColors = item.eval === 'good'  ? 'good-bg border-teal-600'  :
                                item.eval === 'bad'   ? 'bad-bg border-rose-600'   :
                                'mixed-bg border-amber-600';
@@ -212,18 +212,18 @@
                                'bg-amber-600';
             return (
                 <div style={{ position:'absolute', top:`${top}px`, height:`${height}px`, width:'100%' }}
-                     className={`king-card p-1.5 border-l-4 rounded-r-lg shadow-sm border ${evalColors}`}>
+                     className={`king-card p-2 border-l-4 rounded-r-lg shadow-sm border ${evalColors}`}>
                     <div className="flex justify-between items-start gap-1">
-                        <span className="font-black text-stone-800 text-[9px] md:text-[11px] flex items-center gap-0.5 flex-wrap leading-tight">
+                        <span className="font-black text-stone-800 text-[13px] md:text-[15px] flex items-center gap-1 flex-wrap leading-snug">
                             {item.name}
-                            <span className={`text-[7px] text-white px-1 py-0.5 rounded-sm ${badgeColor} whitespace-nowrap`}>{item.label}</span>
+                            <span className={`text-[10px] text-white px-1.5 py-0.5 rounded-sm ${badgeColor} whitespace-nowrap`}>{item.label}</span>
                         </span>
-                        <span className="text-[8px] font-mono text-stone-500 whitespace-nowrap shrink-0">
+                        <span className="text-[11px] font-mono text-stone-500 whitespace-nowrap shrink-0">
                             {duration <= 1 ? `${item.start}` : `${item.start}–${item.end}`}
                         </span>
                     </div>
-                    {height >= 68 && (
-                        <p className="text-[8px] text-stone-600 leading-tight mt-0.5 italic line-clamp-2">{item.note}</p>
+                    {height >= 88 && (
+                        <p className="text-[11px] text-stone-600 leading-snug mt-1 italic line-clamp-3">{item.note}</p>
                     )}
                 </div>
             );
@@ -233,14 +233,14 @@
             const clampedStart = Math.min(item.start, START_YEAR);
             const clampedEnd   = Math.max(item.end,   END_YEAR);
             const top    = (START_YEAR - clampedStart) * YEAR_PX;
-            const height = Math.max((clampedStart - clampedEnd) * YEAR_PX, 52);
+            const height = Math.max((clampedStart - clampedEnd) * YEAR_PX, 72);
             return (
                 <div style={{ position:'absolute', top:`${top}px`, height:`${height}px`, width:'100%' }}
-                     className={`king-card p-1.5 border-l-4 rounded-r-lg shadow-sm border ${colorClass} ${borderClass}`}>
-                    <span className="font-black text-[9px] md:text-[11px] text-stone-800 leading-tight block">{item.name}</span>
-                    <span className="text-[8px] font-mono text-stone-500">{item.start}–{item.end}</span>
-                    {height >= 68 && (
-                        <p className="text-[8px] text-stone-600 leading-tight mt-0.5 italic line-clamp-3">{item.note}</p>
+                     className={`king-card p-2 border-l-4 rounded-r-lg shadow-sm border ${colorClass} ${borderClass}`}>
+                    <span className="font-black text-[13px] md:text-[15px] text-stone-800 leading-snug block">{item.name}</span>
+                    <span className="text-[11px] font-mono text-stone-500">{item.start}–{item.end}</span>
+                    {height >= 88 && (
+                        <p className="text-[11px] text-stone-600 leading-snug mt-1 italic line-clamp-3">{item.note}</p>
                     )}
                 </div>
             );
@@ -251,17 +251,17 @@
             const clampedStart = Math.min(item.start, START_YEAR);
             const clampedEnd   = Math.max(item.end,   END_YEAR);
             const top    = (START_YEAR - clampedStart) * YEAR_PX;
-            const height = Math.max((clampedStart - clampedEnd) * YEAR_PX, 44);
+            const height = Math.max((clampedStart - clampedEnd) * YEAR_PX, 64);
             return (
                 <div style={{ position:'absolute', top:`${top}px`, height:`${height}px`, width:'100%' }}
-                     className={`king-card p-1 border-l-[3px] rounded-r-md shadow-sm border ${item.bg} ${item.border}`}>
+                     className={`king-card p-1.5 border-l-[3px] rounded-r-md shadow-sm border ${item.bg} ${item.border}`}>
                     <div className="flex items-start gap-1 flex-wrap">
-                        <span className={`text-[7px] text-white px-1 py-0.5 rounded-sm ${item.empireTag} whitespace-nowrap shrink-0`}>{item.empire}</span>
-                        <span className="font-black text-[8px] md:text-[9px] text-stone-800 leading-tight">{item.name}</span>
+                        <span className={`text-[10px] text-white px-1.5 py-0.5 rounded-sm ${item.empireTag} whitespace-nowrap shrink-0`}>{item.empire}</span>
+                        <span className="font-black text-[12px] md:text-[13px] text-stone-800 leading-snug">{item.name}</span>
                     </div>
-                    <span className="text-[7px] font-mono text-stone-400">{item.start}–{item.end}</span>
-                    {height >= 62 && (
-                        <p className="text-[7px] text-stone-600 leading-tight mt-0.5 italic line-clamp-2">{item.note}</p>
+                    <span className="text-[10px] font-mono text-stone-400">{item.start}–{item.end}</span>
+                    {height >= 80 && (
+                        <p className="text-[10px] text-stone-600 leading-snug mt-0.5 italic line-clamp-2">{item.note}</p>
                     )}
                 </div>
             );
@@ -275,15 +275,15 @@
                                item.eval === 'bad'   ? 'bg-rose-600'  :
                                'bg-amber-600';
             return (
-                <div className={`king-card p-3 border-l-4 rounded-r-lg shadow-sm border ${evalColors}`} style={{ minHeight:'72px' }}>
-                    <div className="flex justify-between items-start mb-0.5">
-                        <span className="font-black text-stone-800 text-xs md:text-sm flex items-center gap-1">
+                <div className={`king-card p-4 border-l-4 rounded-r-lg shadow-sm border ${evalColors}`} style={{ minHeight:'88px' }}>
+                    <div className="flex justify-between items-start mb-1">
+                        <span className="font-black text-stone-800 text-base md:text-lg flex items-center gap-1.5">
                             {item.name}
-                            <span className={`text-[8px] text-white px-1 py-0.5 rounded-sm ${badgeColor}`}>{item.label}</span>
+                            <span className={`text-[11px] text-white px-1.5 py-0.5 rounded-sm ${badgeColor}`}>{item.label}</span>
                         </span>
-                        <span className="text-[9px] font-mono text-stone-500 font-bold">{item.period}</span>
+                        <span className="text-[12px] font-mono text-stone-500 font-bold">{item.period}</span>
                     </div>
-                    <p className="text-[9px] md:text-[10px] text-stone-600 leading-tight mt-1 italic">{item.note}</p>
+                    <p className="text-[12px] md:text-[13px] text-stone-600 leading-snug mt-1 italic">{item.note}</p>
                 </div>
             );
         };
@@ -293,19 +293,19 @@
             for (let y = START_YEAR; y >= END_YEAR; y -= 10) {
                 marks.push(
                     <div key={y} className="relative h-0" style={{ top:`${(START_YEAR - y) * YEAR_PX}px` }}>
-                        <span className="absolute right-2 -translate-y-1/2 text-[9px] text-stone-400 font-bold whitespace-nowrap">— {y}</span>
+                        <span className="absolute right-2 -translate-y-1/2 text-[12px] text-stone-400 font-bold whitespace-nowrap">— {y}</span>
                     </div>
                 );
             }
             return (
-                <div className="border-r border-dashed border-stone-300 hidden md:block w-12 shrink-0 relative">{marks}</div>
+                <div className="border-r border-dashed border-stone-300 hidden md:block w-16 shrink-0 relative">{marks}</div>
             );
         };
 
         // ─────────────────────────────────────────────
         //  RENDER
         // ─────────────────────────────────────────────
-        const totalHeight = (START_YEAR - END_YEAR) * YEAR_PX + 280;
+        const totalHeight = (START_YEAR - END_YEAR) * YEAR_PX + 400;
         // Grid: South(2fr) | S.Prophets(1fr) | Regional(0.9fr) | Super(0.9fr) | N.Prophets(1fr) | North(2fr)
         const gridCols = '2fr 1fr 0.9fr 0.9fr 1fr 2fr';
 
@@ -318,7 +318,7 @@
                         <h1 className="text-2xl md:text-4xl font-black text-stone-800 tracking-tighter">
                             舊約列王暨先知對照年表
                         </h1>
-                        <p className="text-stone-500 text-sm mt-2 leading-relaxed">
+                        <p className="text-stone-500 text-base mt-2 leading-relaxed">
                             依據列王記上下、歷代志上下及各先知書 · 年代採 Thiele 福音派年表<br/>
                             南國猶大全部20王 · 北國以色列全部19王 · 書寫先知13位 · 外邦強國歷代君王
                         </p>
@@ -349,29 +349,29 @@
                         <h2 className="text-center text-2xl md:text-3xl font-black mb-2 text-blue-900 tracking-tighter">
                             分裂王國、先知與外邦強國對照（比例時間軸）
                         </h2>
-                        <p className="text-center text-stone-500 text-sm mb-8">
+                        <p className="text-center text-stone-500 text-base mb-8">
                             931 BC（王國分裂）→ 722 BC（北國亞述滅）→ 586 BC（南國巴比倫滅）
                         </p>
 
                         {/* Column header labels */}
-                        <div className="grid gap-1 md:gap-2 mb-3 ml-14" style={{ gridTemplateColumns: gridCols }}>
-                            <div className="py-2 px-2 bg-sky-950 text-white text-center font-black rounded-xl shadow text-[11px] md:text-xs">
-                                南國 猶大<br/><span className="text-[9px] opacity-60 font-normal">Judah · 20王</span>
+                        <div className="grid gap-1 md:gap-2 mb-3 ml-18" style={{ gridTemplateColumns: gridCols }}>
+                            <div className="py-2 px-2 bg-sky-950 text-white text-center font-black rounded-xl shadow text-sm md:text-base">
+                                南國 猶大<br/><span className="text-[11px] opacity-60 font-normal">Judah · 20王</span>
                             </div>
-                            <div className="py-2 px-1 bg-violet-800 text-white text-center font-black rounded-xl shadow text-[10px]">
-                                先知（南）<br/><span className="text-[8px] opacity-60 font-normal">S. Prophets</span>
+                            <div className="py-2 px-1 bg-violet-800 text-white text-center font-black rounded-xl shadow text-[13px] md:text-sm">
+                                先知（南）<br/><span className="text-[11px] opacity-60 font-normal">S. Prophets</span>
                             </div>
-                            <div className="py-2 px-1 bg-yellow-700 text-white text-center font-black rounded-xl shadow text-[10px]">
-                                亞蘭・埃及<br/><span className="text-[8px] opacity-60 font-normal">Regional</span>
+                            <div className="py-2 px-1 bg-yellow-700 text-white text-center font-black rounded-xl shadow text-[13px] md:text-sm">
+                                亞蘭・埃及<br/><span className="text-[11px] opacity-60 font-normal">Regional</span>
                             </div>
-                            <div className="py-2 px-1 bg-orange-800 text-white text-center font-black rounded-xl shadow text-[10px]">
-                                亞述・巴比倫<br/><span className="text-[8px] opacity-60 font-normal">Superpower</span>
+                            <div className="py-2 px-1 bg-orange-800 text-white text-center font-black rounded-xl shadow text-[13px] md:text-sm">
+                                亞述・巴比倫<br/><span className="text-[11px] opacity-60 font-normal">Superpower</span>
                             </div>
-                            <div className="py-2 px-1 bg-emerald-800 text-white text-center font-black rounded-xl shadow text-[10px]">
-                                先知（北）<br/><span className="text-[8px] opacity-60 font-normal">N. Prophets</span>
+                            <div className="py-2 px-1 bg-emerald-800 text-white text-center font-black rounded-xl shadow text-[13px] md:text-sm">
+                                先知（北）<br/><span className="text-[11px] opacity-60 font-normal">N. Prophets</span>
                             </div>
-                            <div className="py-2 px-2 bg-emerald-950 text-white text-center font-black rounded-xl shadow text-[11px] md:text-xs">
-                                北國 以色列<br/><span className="text-[9px] opacity-60 font-normal">Israel · 19王</span>
+                            <div className="py-2 px-2 bg-emerald-950 text-white text-center font-black rounded-xl shadow text-sm md:text-base">
+                                北國 以色列<br/><span className="text-[11px] opacity-60 font-normal">Israel · 19王</span>
                             </div>
                         </div>
 
@@ -432,20 +432,20 @@
 
                     {/* ── Legend ── */}
                     <div className="mt-16 pt-8 border-t border-stone-200">
-                        <h3 className="text-center font-black text-stone-400 mb-5 text-xs uppercase tracking-widest">圖例</h3>
-                        <div className="flex flex-wrap justify-center gap-4 text-[11px] font-bold text-stone-600 mb-6">
-                            <span className="flex items-center gap-1.5"><div className="w-3 h-3 bg-teal-600 rounded-sm"></div>行耶和華眼中正事</span>
-                            <span className="flex items-center gap-1.5"><div className="w-3 h-3 bg-rose-600 rounded-sm"></div>行耶和華眼中惡事</span>
-                            <span className="flex items-center gap-1.5"><div className="w-3 h-3 bg-amber-600 rounded-sm"></div>評價分歧 / 篡位</span>
-                            <span className="flex items-center gap-1.5"><div className="w-3 h-3 bg-violet-600 rounded-sm"></div>先知（南國事奉）</span>
-                            <span className="flex items-center gap-1.5"><div className="w-3 h-3 bg-emerald-600 rounded-sm"></div>先知（北國事奉）</span>
-                            <span className="flex items-center gap-1.5"><div className="w-3 h-3 bg-yellow-600 rounded-sm"></div>亞蘭（大馬士革）</span>
-                            <span className="flex items-center gap-1.5"><div className="w-3 h-3 bg-lime-600 rounded-sm"></div>埃及</span>
-                            <span className="flex items-center gap-1.5"><div className="w-3 h-3 bg-orange-600 rounded-sm"></div>亞述帝國</span>
-                            <span className="flex items-center gap-1.5"><div className="w-3 h-3 bg-red-700 rounded-sm"></div>新巴比倫帝國</span>
+                        <h3 className="text-center font-black text-stone-400 mb-5 text-sm uppercase tracking-widest">圖例</h3>
+                        <div className="flex flex-wrap justify-center gap-5 text-[13px] font-bold text-stone-600 mb-6">
+                            <span className="flex items-center gap-2"><div className="w-4 h-4 bg-teal-600 rounded-sm"></div>行耶和華眼中正事</span>
+                            <span className="flex items-center gap-2"><div className="w-4 h-4 bg-rose-600 rounded-sm"></div>行耶和華眼中惡事</span>
+                            <span className="flex items-center gap-2"><div className="w-4 h-4 bg-amber-600 rounded-sm"></div>評價分歧 / 篡位</span>
+                            <span className="flex items-center gap-2"><div className="w-4 h-4 bg-violet-600 rounded-sm"></div>先知（南國事奉）</span>
+                            <span className="flex items-center gap-2"><div className="w-4 h-4 bg-emerald-600 rounded-sm"></div>先知（北國事奉）</span>
+                            <span className="flex items-center gap-2"><div className="w-4 h-4 bg-yellow-600 rounded-sm"></div>亞蘭（大馬士革）</span>
+                            <span className="flex items-center gap-2"><div className="w-4 h-4 bg-lime-600 rounded-sm"></div>埃及</span>
+                            <span className="flex items-center gap-2"><div className="w-4 h-4 bg-orange-600 rounded-sm"></div>亞述帝國</span>
+                            <span className="flex items-center gap-2"><div className="w-4 h-4 bg-red-700 rounded-sm"></div>新巴比倫帝國</span>
                         </div>
                         <div className="bg-stone-100 rounded-2xl p-5 max-w-4xl mx-auto">
-                            <p className="text-[10px] text-stone-500 leading-relaxed">
+                            <p className="text-[13px] text-stone-500 leading-relaxed">
                                 <strong>年代說明：</strong>採 Edwin Thiele《希伯來君王的謎》年表（福音派神學院通用）。部分君王有<strong>共治期</strong>，故起訖年可能重疊（如烏西雅 792–740 與約坦 750–735；約沙法與亞撒尾端）。
                                 比加（752–740 為吉列地區競爭王，740 BC 弒比加轄後為全國之王，本表採 740–732 以避免視覺重疊）。<br/>
                                 <strong>外邦強國：</strong>亞述「阿達德尼拉里三世」攻打大馬士革一事，被多數學者認為是王下13:5「拯救者」的歷史背景。
