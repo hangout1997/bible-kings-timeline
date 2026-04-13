@@ -3,8 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Visio Divina - 聖經視覺化平台</title>
-    <meta name="description" content="Visio Divina - 透過互動式年表與地圖，視覺化舊約聖經的歷史脈絡。">
+    <title>看見聖經 Visio Divina — 每一個故事，都是一個世界</title>
+    <meta name="description" content="看見聖經 Visio Divina — 透過互動式年表與地圖，視覺化舊約聖經的歷史脈絡。每一個故事，都是一個世界。">
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://unpkg.com/react@18/umd/react.production.min.js"></script>
     <script src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>
@@ -120,6 +120,45 @@
             from { opacity: 0; transform: translateY(8px); }
             to { opacity: 1; transform: translateY(0); }
         }
+        /* Landing Page */
+        @keyframes heroFloat { 0%,100%{transform:translateY(0)} 50%{transform:translateY(-12px)} }
+        @keyframes shimmer { 0%{background-position:-200% center} 100%{background-position:200% center} }
+        @keyframes fadeUp { from{opacity:0;transform:translateY(30px)} to{opacity:1;transform:translateY(0)} }
+        .landing-float { animation: heroFloat 5s ease-in-out infinite; }
+        .landing-shimmer {
+            background: linear-gradient(90deg, #78716c 0%, #d6d3d1 40%, #78716c 80%);
+            background-size: 200% auto;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            animation: shimmer 4s linear infinite;
+        }
+        .landing-fadeup { animation: fadeUp 0.8s ease-out both; }
+        .landing-fadeup-delay1 { animation-delay: 0.15s; }
+        .landing-fadeup-delay2 { animation-delay: 0.3s; }
+        .landing-fadeup-delay3 { animation-delay: 0.45s; }
+        .feature-card {
+            position: relative;
+            overflow: hidden;
+            border-radius: 2rem;
+            padding: 2.5rem 2rem;
+            cursor: pointer;
+            transition: all 0.35s cubic-bezier(.25,.8,.25,1);
+            border: 2px solid rgba(0,0,0,0.06);
+        }
+        .feature-card:hover {
+            transform: translateY(-8px) scale(1.02);
+            box-shadow: 0 30px 60px -12px rgba(0,0,0,0.2);
+        }
+        .feature-card::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            opacity: 0;
+            transition: opacity 0.35s ease;
+            border-radius: 2rem;
+            background: radial-gradient(circle at 30% 30%, rgba(255,255,255,0.25), transparent 60%);
+        }
+        .feature-card:hover::before { opacity: 1; }
     </style>
 </head>
 <body class="bg-stone-200 text-stone-900">
@@ -782,20 +821,107 @@
     };
 
     // ═════════════════════════════════════════════════════
+    //  LANDING PAGE
+    // ═════════════════════════════════════════════════════
+
+    const LandingPage = ({ onNavigate }) => {
+        return (
+            <div className="min-h-screen bg-stone-200 flex flex-col items-center justify-center px-4 py-12 relative overflow-hidden">
+                {/* Subtle decorative background */}
+                <div className="absolute inset-0 pointer-events-none" style={{ opacity: 0.04 }}>
+                    <div style={{ position:'absolute', top:'10%', left:'5%', fontSize:'8rem' }}>✝</div>
+                    <div style={{ position:'absolute', bottom:'15%', right:'8%', fontSize:'6rem' }}>🕊</div>
+                    <div style={{ position:'absolute', top:'30%', right:'15%', fontSize:'5rem' }}>📜</div>
+                    <div style={{ position:'absolute', bottom:'30%', left:'12%', fontSize:'4rem' }}>🗺</div>
+                </div>
+
+                {/* Main hero content */}
+                <div className="relative z-10 text-center max-w-3xl landing-fadeup">
+                    {/* English brand - subtle */}
+                    <p className="text-stone-400 font-bold text-sm tracking-[0.3em] uppercase mb-4 landing-shimmer" style={{ fontFamily: 'Inter, sans-serif' }}>
+                        Visio Divina
+                    </p>
+
+                    {/* Chinese brand name - hero */}
+                    <h1 className="text-6xl md:text-8xl font-black text-stone-800 tracking-tight mb-6 landing-float" style={{ fontFamily: 'Noto Serif TC, serif', lineHeight: 1.1 }}>
+                        看見聖經
+                    </h1>
+
+                    {/* Slogan */}
+                    <p className="text-lg md:text-2xl text-stone-500 font-bold mb-2 landing-fadeup landing-fadeup-delay1" style={{ fontFamily: 'Noto Serif TC, serif', letterSpacing: '0.15em' }}>
+                        每一個故事，都是一個世界
+                    </p>
+
+                    {/* Decorative divider */}
+                    <div className="flex items-center justify-center gap-3 my-10 landing-fadeup landing-fadeup-delay2">
+                        <div className="w-16 h-px bg-stone-300"></div>
+                        <div className="w-2 h-2 rounded-full bg-stone-400"></div>
+                        <div className="w-16 h-px bg-stone-300"></div>
+                    </div>
+                </div>
+
+                {/* Feature cards */}
+                <div className="relative z-10 grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-8 w-full max-w-3xl landing-fadeup landing-fadeup-delay3">
+                    {/* Timeline Card */}
+                    <div className="feature-card bg-gradient-to-br from-amber-50 to-orange-50"
+                         onClick={() => onNavigate('timeline')}>
+                        <div className="text-5xl mb-4 landing-float" style={{ animationDelay: '0.5s' }}>📜</div>
+                        <h2 className="text-2xl font-black text-stone-800 mb-2" style={{ fontFamily: 'Noto Serif TC, serif' }}>
+                            舊約年代表
+                        </h2>
+                        <p className="text-stone-500 text-sm leading-relaxed mb-4">
+                            從亞當到被擄歸回，一覽南北國列王的興衰對照與先知預言的時代脈絡。
+                        </p>
+                        <div className="flex items-center gap-2 text-amber-700 font-bold text-sm" style={{ fontFamily: 'Inter, sans-serif' }}>
+                            <span>開始探索</span>
+                            <span className="transition-transform group-hover:translate-x-1">→</span>
+                        </div>
+                    </div>
+
+                    {/* Atlas Card */}
+                    <div className="feature-card bg-gradient-to-br from-teal-50 to-emerald-50"
+                         onClick={() => onNavigate('atlas')}>
+                        <div className="text-5xl mb-4 landing-float" style={{ animationDelay: '1s' }}>🗺️</div>
+                        <h2 className="text-2xl font-black text-stone-800 mb-2" style={{ fontFamily: 'Noto Serif TC, serif' }}>
+                            聖經地理
+                        </h2>
+                        <p className="text-stone-500 text-sm leading-relaxed mb-4">
+                            在互動地圖上標記聖經的重要地點，從族長足跡到帝國戰場，親手觸摸聖地。
+                        </p>
+                        <div className="flex items-center gap-2 text-teal-700 font-bold text-sm" style={{ fontFamily: 'Inter, sans-serif' }}>
+                            <span>開始探索</span>
+                            <span>→</span>
+                        </div>
+                    </div>
+                </div>
+
+                {/* Footer on landing */}
+                <p className="relative z-10 mt-16 text-stone-400 text-xs font-bold" style={{ fontFamily: 'Inter, sans-serif' }}>
+                    © 2026 Visio Divina · 看見聖經
+                </p>
+            </div>
+        );
+    };
+
+    // ═════════════════════════════════════════════════════
     //  APP SHELL (Navigation + Routing)
     // ═════════════════════════════════════════════════════
 
     const App = () => {
         const [currentPage, setCurrentPage] = useState(() => {
             const hash = window.location.hash.replace('#', '');
-            return hash === 'atlas' ? 'atlas' : 'timeline';
+            if (hash === 'atlas') return 'atlas';
+            if (hash === 'timeline') return 'timeline';
+            return 'home';
         });
         const [activeEra, setActiveEra] = useState('patriarch');
 
         useEffect(() => {
             const handleHash = () => {
                 const hash = window.location.hash.replace('#', '');
-                setCurrentPage(hash === 'atlas' ? 'atlas' : 'timeline');
+                if (hash === 'atlas') setCurrentPage('atlas');
+                else if (hash === 'timeline') setCurrentPage('timeline');
+                else setCurrentPage('home');
             };
             window.addEventListener('hashchange', handleHash);
             return () => window.removeEventListener('hashchange', handleHash);
@@ -805,14 +931,21 @@
             window.location.hash = page;
         };
 
+        // Landing page has its own full-screen layout
+        if (currentPage === 'home') {
+            return <LandingPage onNavigate={navigate} />;
+        }
+
         return (
             <div className="bg-stone-200 min-h-screen p-2 md:p-4 flex flex-col items-center">
                 
                 {/* ── Unified Header & Tabs ── */}
                 <div className="max-w-7xl w-full bg-white/95 backdrop-blur rounded-2xl p-3 px-4 md:px-6 mb-4 shadow-md border border-white">
                     <div className="flex justify-between items-center gap-3">
-                        <h1 className="text-xl md:text-2xl font-black text-stone-800 tracking-tighter" style={{ fontFamily: 'Inter, Noto Serif TC, serif' }}>
-                            Visio Divina
+                        <h1 className="text-lg md:text-xl font-black text-stone-800 tracking-tighter cursor-pointer hover:text-stone-600 transition-colors" 
+                            style={{ fontFamily: 'Noto Serif TC, serif' }}
+                            onClick={() => navigate('home')}>
+                            <span style={{ fontFamily: 'Inter, sans-serif', fontSize: '0.65em', opacity: 0.5, marginRight: '0.5em' }}>Visio Divina</span>看見聖經
                         </h1>
                         
                         <div className="flex bg-stone-100 p-1 rounded-xl">
@@ -858,7 +991,7 @@
 
                 {/* ── Footer ── */}
                 <footer className="text-center py-6 text-stone-400 text-xs font-bold" style={{ fontFamily: 'Inter, sans-serif' }}>
-                    Visio Divina · 聖經視覺化平台
+                    © 2026 Visio Divina · 看見聖經
                 </footer>
             </div>
         );
