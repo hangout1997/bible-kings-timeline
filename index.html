@@ -36,7 +36,6 @@
     const { useState, useRef, useEffect, Fragment } = React;
 
     const App = () => {
-        const [isExporting, setIsExporting] = useState(false);
         const [selectedDetail, setSelectedDetail] = useState(null);
         const timelineRef = useRef(null);
 
@@ -44,27 +43,7 @@
         const END_YEAR   = 586;
         const YEAR_PX    = 22;
 
-        const downloadImage = async () => {
-            setIsExporting(true);
-            try {
-                if (typeof window.html2canvas === 'undefined') {
-                    await new Promise((resolve, reject) => {
-                        const script = document.createElement('script');
-                        script.src = 'https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js';
-                        script.onload = resolve; script.onerror = reject;
-                        document.head.appendChild(script);
-                    });
-                }
-                const canvas = await window.html2canvas(timelineRef.current, {
-                    scale: 2, useCORS: true, backgroundColor: '#e7e5e4',
-                });
-                const link = document.createElement('a');
-                link.download = 'Visio Divina.png';
-                link.href = canvas.toDataURL('image/png');
-                link.click();
-            } catch (err) { console.error('下載失敗:', err); }
-            finally { setIsExporting(false); }
-        };
+
 
         // ─────────────────────────────────────────────
         //  DATA
@@ -395,10 +374,7 @@
                             南國猶大全部20王 · 北國以色列全部19王 · 書寫先知13位 · 外邦強國歷代君王
                         </p>
                     </div>
-                    <button onClick={downloadImage} disabled={isExporting}
-                            className="bg-stone-900 text-white px-8 py-3 rounded-2xl font-black shadow-xl hover:bg-black transition-all active:scale-95 whitespace-nowrap">
-                        {isExporting ? '生成中…' : '下載 PNG'}
-                    </button>
+
                 </div>
 
                 <div ref={timelineRef} className="bg-stone-50 w-full max-w-7xl shadow-2xl rounded-[3rem] p-6 md:p-12 border border-stone-300">
