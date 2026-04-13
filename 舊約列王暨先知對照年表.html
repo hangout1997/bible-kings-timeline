@@ -116,6 +116,19 @@
         }
         .era-chip:hover { transform: scale(1.05); }
         .era-chip.active { border-color: #292524; box-shadow: 0 0 0 2px rgba(41,37,36,0.15); }
+        .country-label {
+            font-family: 'Noto Serif TC', serif;
+            font-size: 1.1rem;
+            font-weight: 900;
+            color: #78716c; /* Stone-500 equivalent */
+            -webkit-text-stroke: 3px rgba(255, 255, 255, 0.9);
+            paint-order: stroke fill;
+            letter-spacing: 0.25em;
+            pointer-events: none;
+            text-align: center;
+            opacity: 0.85;
+            white-space: nowrap;
+        }
         .page-enter { animation: fadeIn 0.3s ease-out; }
         @keyframes fadeIn {
             from { opacity: 0; transform: translateY(8px); }
@@ -709,7 +722,7 @@
 
             mapInstanceRef.current = map;
 
-            // Add all markers
+            // Add all location markers
             atlasData.locations.forEach(loc => {
                 const color = eraColors[loc.era] || '#78716c';
                 const icon = L.divIcon({
