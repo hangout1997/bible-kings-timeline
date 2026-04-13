@@ -942,10 +942,10 @@
                 {/* ── Unified Header & Tabs ── */}
                 <div className="max-w-7xl w-full bg-white/95 backdrop-blur rounded-2xl p-3 px-4 md:px-6 mb-4 shadow-md border border-white">
                     <div className="flex justify-between items-center gap-3">
-                        <h1 className="text-lg md:text-xl font-black text-stone-800 tracking-tighter cursor-pointer hover:text-stone-600 transition-colors" 
-                            style={{ fontFamily: 'Noto Serif TC, serif' }}
+                        <h1 className="cursor-pointer hover:opacity-75 transition-opacity" 
                             onClick={() => navigate('home')}>
-                            <span style={{ fontFamily: 'Inter, sans-serif', fontSize: '0.65em', opacity: 0.5, marginRight: '0.5em' }}>Visio Divina</span>看見聖經
+                            <span className="block text-[10px] md:text-xs font-bold text-stone-400 tracking-[0.2em] uppercase" style={{ fontFamily: 'Inter, sans-serif' }}>Visio Divina</span>
+                            <span className="block text-base md:text-lg font-black text-stone-800 tracking-tight leading-tight" style={{ fontFamily: 'Noto Serif TC, serif' }}>看見聖經</span>
                         </h1>
                         
                         <div className="flex bg-stone-100 p-1 rounded-xl">
