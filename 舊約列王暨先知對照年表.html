@@ -3,13 +3,16 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Visio Divina - 舊約列王暨先知對照年表</title>
+    <title>Visio Divina - 聖經視覺化平台</title>
+    <meta name="description" content="Visio Divina - 透過互動式年表與地圖，視覺化舊約聖經的歷史脈絡。">
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://unpkg.com/react@18/umd/react.production.min.js"></script>
     <script src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>
     <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Noto+Serif+TC:wght@400;700;900&display=swap');
+        @import url('https://fonts.googleapis.com/css2?family=Noto+Serif+TC:wght@400;700;900&family=Inter:wght@400;600;800;900&display=swap');
         body { font-family: 'Noto Serif TC', serif; scroll-behavior: smooth; }
         .good-bg  { background-color: #f0fdfa; border-color: #0d9488; }
         .bad-bg   { background-color: #fff1f2; border-color: #e11d48; }
@@ -27,224 +30,332 @@
             transform: scale(1.02);
             box-shadow: 0 10px 15px -3px rgb(0 0 0 / 0.15);
         }
+        .nav-tab {
+            position: relative;
+            padding: 0.75rem 1.5rem;
+            font-weight: 900;
+            font-size: 0.95rem;
+            letter-spacing: -0.02em;
+            color: #78716c;
+            transition: color 0.2s ease;
+            cursor: pointer;
+            border: none;
+            background: none;
+            font-family: 'Inter', 'Noto Serif TC', serif;
+        }
+        .nav-tab:hover { color: #292524; }
+        .nav-tab.active {
+            color: #292524;
+        }
+        .nav-tab.active::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 60%;
+            height: 3px;
+            background: #292524;
+            border-radius: 3px;
+        }
+        .leaflet-popup-content-wrapper {
+            border-radius: 1.5rem !important;
+            padding: 0 !important;
+            overflow: hidden;
+            box-shadow: 0 20px 25px -5px rgb(0 0 0 / 0.15) !important;
+        }
+        .leaflet-popup-content {
+            margin: 0 !important;
+            min-width: 260px !important;
+        }
+        .leaflet-popup-tip {
+            box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1) !important;
+        }
+        .map-popup { padding: 1.25rem 1.5rem; }
+        .map-popup h3 { font-family: 'Noto Serif TC', serif; font-weight: 900; font-size: 1.25rem; color: #292524; margin-bottom: 0.25rem; }
+        .map-popup .subtitle { font-family: 'Inter', sans-serif; font-size: 0.75rem; color: #a8a29e; font-weight: 600; letter-spacing: 0.05em; text-transform: uppercase; }
+        .map-popup .desc { font-size: 0.875rem; color: #57534e; line-height: 1.6; margin-top: 0.75rem; font-style: italic; }
+        .map-popup .ref { font-size: 0.75rem; color: #0d9488; font-weight: 700; margin-top: 0.5rem; }
+        .era-chip {
+            display: inline-block;
+            padding: 0.25rem 0.75rem;
+            border-radius: 9999px;
+            font-size: 0.75rem;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            border: 2px solid transparent;
+            font-family: 'Inter', sans-serif;
+        }
+        .era-chip:hover { transform: scale(1.05); }
+        .era-chip.active { border-color: #292524; box-shadow: 0 0 0 2px rgba(41,37,36,0.15); }
+        .page-enter { animation: fadeIn 0.3s ease-out; }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(8px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
     </style>
 </head>
 <body class="bg-stone-200 text-stone-900">
 <div id="root"></div>
 
 <script type="text/babel">
-    const { useState, useRef, useEffect, Fragment } = React;
+    const { useState, useRef, useEffect, Fragment, useCallback } = React;
 
-    const App = () => {
-        const [selectedDetail, setSelectedDetail] = useState(null);
-        const timelineRef = useRef(null);
+    // ═════════════════════════════════════════════════════
+    //  SHARED DATA
+    // ═════════════════════════════════════════════════════
 
-        const START_YEAR = 931;
-        const END_YEAR   = 586;
-        const YEAR_PX    = 22;
+    const timelineData = {
+        patriarchs: [
+            { name: '亞當', period: '壽 930 歲', eval: 'mixed', label: '始', note: '人類始祖；因犯罪失落伊甸園，死亡從此進入世界。（創2–3）' },
+            { name: '挪亞', period: '壽 950 歲', eval: 'good',  label: '義', note: '因信造方舟渡大洪水；蒙神立彩虹之約永不再毀滅全地。（創6–9）' },
+        ],
+        founders: [
+            { name: '亞伯拉罕', period: '壽 175 歲', eval: 'good', label: '信', note: '信心之父；蒙召離開吾珥；領受割禮之約；以撒為應許之子。（創12–25）' },
+            { name: '雅各',     period: '壽 147 歲', eval: 'good', label: '以色列', note: '與天使摔跤後改名以色列；十二支派之父；以色列民族的起源。（創25–50）' },
+        ],
+        exodus: [
+            { name: '摩西',   period: '壽 120 歲',       eval: 'good', label: '律', note: '領民出埃及；西奈山領受十誡；著摩西五經；帶領曠野四十年。（出1–申34）' },
+            { name: '撒母耳', period: '約 1060–1010 BC', eval: 'good', label: '聖', note: '最後一位士師兼先知；膏立掃羅為王後又膏立大衛；守護王朝交替。（撒上1–16）' },
+        ],
+        united: [
+            { name: '掃羅',   period: '1050–1010 BC', eval: 'bad',   label: '惡', note: '以色列首位君王；因悖逆神擅自獻祭、留下亞瑪力戰利品而被廢黜；戰死基利波山。（撒上9–31）' },
+            { name: '大衛',   period: '1010–970 BC',  eval: 'good',  label: '好', note: '合神心意的人；定都耶路撒冷；蒙神立「大衛之約」——王位永立。（撒下1–王上2）' },
+            { name: '所羅門', period: '970–930 BC',   eval: 'mixed', label: '變', note: '建造第一聖殿；一代極智慧；晚年隨從外邦假神，王國因此分裂為南北。（王上1–11）' },
+        ],
+        south: [
+            { name: '羅波安',   start: 931, end: 913, eval: 'bad',   label: '惡', note: '不聽老臣之言加重賦稅，致王國分裂為南北。（王上12）' },
+            { name: '亞比央',   start: 913, end: 911, eval: 'bad',   label: '惡', note: '又稱亞比雅；效父行惡；惟因大衛之故神仍保守燈火不滅。（王上15:1–8）' },
+            { name: '亞撒',     start: 911, end: 870, eval: 'good',  label: '好', note: '大宗教改革；除偶像、廢太后祖母；仰賴神勝埃軍百萬。（王上15:9–24）' },
+            { name: '約沙法',   start: 873, end: 848, eval: 'good',  label: '好', note: '設律法教師巡行全國；建立公義法院；與北國亞哈結親為一生敗筆。（代下17–20）' },
+            { name: '約蘭',     start: 848, end: 841, eval: 'bad',   label: '惡', note: '娶亞哈之女；行北國之惡；以東與立拿相繼叛離。（王下8:16–24）' },
+            { name: '亞哈謝',   start: 841, end: 841, eval: 'bad',   label: '惡', note: '亞哈之外孫；與北國約蘭同往迎戰耶戶，在那裡被耶戶殺死。（王下8:25–29）' },
+            { name: '亞他利雅', start: 841, end: 835, eval: 'bad',   label: '篡', note: '亞哈之女；剿滅大衛後裔篡奪王位；後被祭司耶何耶大發動政變廢殺。（王下11）' },
+            { name: '約阿施',   start: 835, end: 796, eval: 'mixed', label: '變', note: '幼年蒙耶何耶大藏匿存活；修繕聖殿；祭司死後轉向偶像。（王下12）' },
+            { name: '亞瑪謝',   start: 796, end: 767, eval: 'mixed', label: '變', note: '初期行正；勝以東後拜以東神；驕傲挑釁北國，大敗於伯示麥。（王下14:1–20）' },
+            { name: '烏西雅',   start: 792, end: 740, eval: 'mixed', label: '變', note: '國力強盛；晚年僭越獻香患痲瘋終身。以賽亞蒙召之年。（代下26）' },
+            { name: '約坦',     start: 750, end: 735, eval: 'good',  label: '好', note: '因父患痲瘋代理國政；修建聖殿上門；一生行正事。（王下15:32–38）' },
+            { name: '亞哈斯',   start: 735, end: 715, eval: 'bad',   label: '惡', note: '引進亞述祭壇；使子女經火；封閉聖殿門。賽7章背景。（王下16）' },
+            { name: '希西家',   start: 715, end: 686, eval: 'good',  label: '好', note: '大宗教復興；信靠神退亞述軍18.5萬；病癒命延十五年。（王下18–20）' },
+            { name: '瑪拿西',   start: 696, end: 642, eval: 'bad',   label: '惡', note: '在位最長（55年）；大規模重建偶像；被擄後悔改蒙神接納。（代下33）' },
+            { name: '亞們',     start: 642, end: 640, eval: 'bad',   label: '惡', note: '效父行惡卻不悔改；在位二年被臣僕謀殺。（王下21:19–26）' },
+            { name: '約西亞',   start: 640, end: 609, eval: 'good',  label: '好', note: '發現律法書；大規模廢除偶像；舉行盛大逾越節；戰死米吉多。（代下34–35）' },
+            { name: '約哈斯',   start: 609, end: 609, eval: 'bad',   label: '惡', note: '百姓所立；在位三個月被埃及法老廢黜，擄往埃及客死。（代下36:1–4）' },
+            { name: '約雅敬',   start: 609, end: 598, eval: 'bad',   label: '惡', note: '法老所立；燒耶利米書卷；首批被擄（但以理）。（代下36:5–8）' },
+            { name: '約雅斤',   start: 598, end: 597, eval: 'bad',   label: '惡', note: '在位三個月十天即降服；第二批被擄（以西結）。（代下36:9–10）' },
+            { name: '西底家',   start: 597, end: 586, eval: 'bad',   label: '惡', note: '末代王；拒聽耶利米；聖殿被焚，耶路撒冷陷落，猶大亡。（代下36:11–21）' },
+        ],
+        north: [
+            { name: '耶羅波安一世', start: 931, end: 910, eval: 'bad',   label: '惡', note: '設立伯特利與但的金牛犢；「行耶羅波安的罪」成為北國定語。（王上12–14）' },
+            { name: '拿答',         start: 910, end: 909, eval: 'bad',   label: '惡', note: '效父行惡；在位二年被巴沙謀殺，耶羅波安家族滅絕。（王上15:25–31）' },
+            { name: '巴沙',         start: 909, end: 886, eval: 'bad',   label: '惡', note: '弒君奪位；在位二十四年；仍行耶羅波安之罪。（王上15:33–16:7）' },
+            { name: '以拉',         start: 886, end: 885, eval: 'bad',   label: '惡', note: '酒醉被心利謀殺；巴沙家族應驗先知預言而滅絕。（王上16:8–14）' },
+            { name: '心利',         start: 885, end: 885, eval: 'bad',   label: '惡', note: '弒君自立；在位僅七天；城破後自焚而死。（王上16:15–20）' },
+            { name: '暗利',         start: 885, end: 874, eval: 'bad',   label: '惡', note: '建撒馬利亞城為首都；亞述銘文稱以色列為「暗利之地」。（王上16:21–28）' },
+            { name: '亞哈',         start: 874, end: 853, eval: 'bad',   label: '惡', note: '娶耶洗別引入巴力崇拜；逼迫以利亞先知；行惡超過前人。（王上16–22）' },
+            { name: '亞哈謝(北)',   start: 853, end: 852, eval: 'bad',   label: '惡', note: '亞哈長子；拜巴力；因傷問偶像，被以利亞譴責而死。（王下1）' },
+            { name: '約蘭(北)',     start: 852, end: 841, eval: 'bad',   label: '惡', note: '亞哈次子；除巴力柱像但仍行耶羅波安之罪；被耶戶射殺。（王下3–9）' },
+            { name: '耶戶',         start: 841, end: 814, eval: 'mixed', label: '變', note: '受膏滅亞哈家；剿除巴力崇拜；但仍拜金牛犢。（王下9–10）' },
+            { name: '約哈斯(北)',   start: 814, end: 798, eval: 'bad',   label: '惡', note: '受亞蘭王哈薛嚴重壓制；求告神得暫時拯救。（王下13:1–9）' },
+            { name: '約阿施(北)',   start: 798, end: 782, eval: 'bad',   label: '惡', note: '三次戰勝亞蘭；到以利沙臨終床前哭泣；仍行惡。（王下13:10–25）' },
+            { name: '耶羅波安二世', start: 793, end: 753, eval: 'bad',   label: '惡', note: '北國全盛期；大幅擴張疆土；貧富極度不均。阿摩司、何西阿時代。（王下14:23–29）' },
+            { name: '撒迦利雅',     start: 753, end: 752, eval: 'bad',   label: '惡', note: '在位六個月被沙龍謀殺；耶戶四代之約應驗。（王下15:8–12）' },
+            { name: '沙龍',         start: 752, end: 752, eval: 'bad',   label: '惡', note: '弒君自立；在位一個月被米拿現殺死。（王下15:13–16）' },
+            { name: '米拿現',       start: 752, end: 742, eval: 'bad',   label: '惡', note: '向亞述王提革拉毘列色進貢以鞏固王位。（王下15:17–22）' },
+            { name: '比加轄',       start: 742, end: 740, eval: 'bad',   label: '惡', note: '米拿現之子；在位二年被比加謀殺。（王下15:23–26）' },
+            { name: '比加',         start: 740, end: 732, eval: 'bad',   label: '惡', note: '弒君；聯亞蘭攻猶大（賽7章）；亞述擄走大批居民。（王下15:27–31）' },
+            { name: '何細亞',       start: 732, end: 722, eval: 'bad',   label: '惡', note: '北國末代王；倚靠埃及謀反亞述；撒馬利亞陷落，北國亡。（王下17）' },
+        ],
+        prophets_south: [
+            { name: '俄巴底亞', start: 848, end: 841, note: '最短先知書；預言以東因欺壓兄弟以色列後裔必遭滅絕審判。（俄1）' },
+            { name: '約珥',     start: 835, end: 796, note: '以蝗災警告審判；預言末後聖靈澆灌全人類（使徒行傳2章引用）。（珥1–3）' },
+            { name: '以賽亞',   start: 740, end: 700, note: '烏西雅崩年蒙召；預言童女懷孕（賽7）與受苦僕人（賽53）；稱「舊約福音書」。（賽1–66）' },
+            { name: '彌迦',     start: 735, end: 700, note: '預言彌賽亞降生伯利恆（彌5:2）；「行公義、好憐憫、存謙卑的心」。（彌1–7）' },
+            { name: '那鴻',     start: 663, end: 612, note: '預言亞述首都尼尼微必傾覆；約拿後約150年，尼尼微果真滅亡。（鴻1–3）' },
+            { name: '西番雅',   start: 640, end: 609, note: '約西亞時期；預言耶和華大日降臨；呼籲謙卑悔改；末日中有餘民得救。（番1–3）' },
+            { name: '哈巴谷',   start: 612, end: 598, note: '與神對話的先知；「義人必因信得生」；面對巴比倫侵略仍歡呼讚美神。（哈1–3）' },
+            { name: '耶利米',   start: 627, end: 586, note: '眼淚先知；幼年蒙召；預言七十年被擄與新約；親歷耶路撒冷陷落。（耶1–52）' },
+        ],
+        prophets_north: [
+            { name: '以利亞', start: 875, end: 848, note: '在迦密山勝480位巴力先知；呼喚天火；乘火車火馬升天。（王上17–王下2）' },
+            { name: '以利沙', start: 848, end: 797, note: '承接以利亞雙倍之靈；行無數神蹟；在世期間如以色列的守護者。（王下2–13）' },
+            { name: '約拿',   start: 793, end: 753, note: '被差往亞述首都尼尼微；魚腹三日；全城悔改；預表基督復活。（拿1–4）' },
+            { name: '阿摩司', start: 762, end: 750, note: '提哥亞牧人；在北國伯特利傳講；嚴斥社會不公；預言以色列被擄。（摩1–9）' },
+            { name: '何西阿', start: 760, end: 722, note: '婚姻象徵神對以色列不渝之愛；「我要以慈愛聘你」；預言北國亡國。（何1–14）' },
+        ],
+        empire_regional: [
+            { name: '便哈達一世', empire: '亞蘭', empireTag: 'bg-yellow-600', start: 900, end: 860, bg: 'bg-yellow-50', border: 'border-yellow-500', note: '亞蘭（大馬士革）與以色列多次交戰。' },
+            { name: '便哈達二世', empire: '亞蘭', empireTag: 'bg-yellow-600', start: 860, end: 843, bg: 'bg-yellow-50', border: 'border-yellow-500', note: '在基列拉末與亞哈交戰；以利沙時代主要外患。' },
+            { name: '哈薛',       empire: '亞蘭', empireTag: 'bg-yellow-600', start: 843, end: 796, bg: 'bg-yellow-50', border: 'border-yellow-500', note: '以利沙預言其將大傷以色列；攻打耶路撒冷索取贖金。（王下8:12）' },
+            { name: '便哈達三世', empire: '亞蘭', empireTag: 'bg-yellow-600', start: 796, end: 773, bg: 'bg-yellow-50', border: 'border-yellow-500', note: '北國約阿施三次從其手中奪回城邑。（王下13:25）' },
+            { name: '法老尼哥二世', empire: '埃及', empireTag: 'bg-lime-600', start: 610, end: 586, bg: 'bg-lime-50', border: 'border-lime-500', note: '609 BC 殺死約西亞；廢約哈斯立約雅敬；605 BC 卡基米施大敗於巴比倫。' },
+        ],
+        empire_super: [
+            { name: '撒縵以色三世', empire: '亞述', empireTag: 'bg-orange-600', start: 858, end: 824, bg: 'bg-orange-50', border: 'border-orange-500', note: '加爾加之役對抗亞哈聯軍；耶戶向其進貢（黑色方尖碑）。' },
+            { name: '阿達德尼拉里三世', empire: '亞述', empireTag: 'bg-orange-600', start: 811, end: 783, bg: 'bg-orange-50', border: 'border-orange-500', note: '攻打大馬士革；被認為是約哈斯時期「拯救者」的背景。（王下13:5）' },
+            { name: '提革拉毘列色三世', empire: '亞述', empireTag: 'bg-orange-600', start: 745, end: 727, bg: 'bg-orange-50', border: 'border-orange-500', note: '米拿現進貢；擄走北國大批居民；以賽亞7章危機的外部背景。' },
+            { name: '撒縵以色五世', empire: '亞述', empireTag: 'bg-orange-600', start: 727, end: 722, bg: 'bg-orange-50', border: 'border-orange-500', note: '圍攻撒馬利亞三年。（王下17:3–5）' },
+            { name: '撒珥根二世', empire: '亞述', empireTag: 'bg-orange-600', start: 722, end: 705, bg: 'bg-orange-50', border: 'border-orange-500', note: '完成攻陷撒馬利亞；北國以色列正式滅亡（722 BC）。' },
+            { name: '西拿基立', empire: '亞述', empireTag: 'bg-orange-600', start: 705, end: 681, bg: 'bg-orange-50', border: 'border-orange-500', note: '701 BC 圍攻耶路撒冷；神使185,000人一夜斃命；以賽亞36–37章應驗。' },
+            { name: '以撒哈頓', empire: '亞述', empireTag: 'bg-orange-600', start: 681, end: 669, bg: 'bg-orange-50', border: 'border-orange-500', note: '征服埃及；曾擄瑪拿西至巴比倫（代下33:11）。' },
+            { name: '亞述巴尼拔', empire: '亞述', empireTag: 'bg-orange-600', start: 669, end: 627, bg: 'bg-orange-50', border: 'border-orange-500', note: '亞述帝國全盛；那鴻預言其首都尼尼微必傾覆（663–612 BC）。' },
+            { name: '拿波帕拉薩', empire: '巴比倫', empireTag: 'bg-red-700', start: 626, end: 605, bg: 'bg-red-50', border: 'border-red-500', note: '新巴比倫帝國奠基者；612 BC 攻滅尼尼微，亞述帝國覆滅。' },
+            { name: '尼布甲尼撒二世', empire: '巴比倫', empireTag: 'bg-red-700', start: 605, end: 562, bg: 'bg-red-50', border: 'border-red-500', note: '605 BC 卡基米施大捷；三次入侵猶大（605、597、586 BC）；耶路撒冷陷落。' },
+        ],
+    };
 
+    // ═════════════════════════════════════════════════════
+    //  ATLAS DATA — Biblical locations
+    // ═════════════════════════════════════════════════════
+    const atlasData = {
+        eras: [
+            { id: 'all',        name: '全部地點',   color: '#292524' },
+            { id: 'patriarch',   name: '族長時期',   color: '#0d9488' },
+            { id: 'exodus',      name: '出埃及',     color: '#d97706' },
+            { id: 'united',      name: '統一王國',   color: '#2563eb' },
+            { id: 'divided',     name: '分裂王國',   color: '#dc2626' },
+            { id: 'empire',      name: '外邦帝國',   color: '#7c3aed' },
+        ],
+        locations: [
+            // ── 族長時期 ──
+            { name: '吾珥', nameEn: 'Ur of the Chaldees', lat: 30.9640, lng: 46.1028, era: 'patriarch',
+              desc: '亞伯拉罕的故鄉，蘇美文明中心城市。神呼召亞伯拉罕離開此地前往應許之地。', ref: '創11:31, 15:7', icon: '🏛️' },
+            { name: '哈蘭', nameEn: 'Haran', lat: 36.8614, lng: 39.0310, era: 'patriarch',
+              desc: '亞伯拉罕家族遷居之處；他拉死於此處。雅各逃往此處投靠拉班二十年。', ref: '創11:31–32, 27:43', icon: '🏕️' },
+            { name: '示劍', nameEn: 'Shechem', lat: 32.2132, lng: 35.2851, era: 'patriarch',
+              desc: '亞伯拉罕進迦南地第一站；雅各買地建壇。後成為北國初期首都。', ref: '創12:6, 33:18–19', icon: '⛺' },
+            { name: '伯特利', nameEn: 'Bethel', lat: 31.9300, lng: 35.2310, era: 'patriarch',
+              desc: '雅各夢見天梯之處；意為「神的殿」。後被耶羅波安設立金牛犢。', ref: '創28:10–19', icon: '🪜' },
+            { name: '希伯崙', nameEn: 'Hebron', lat: 31.5326, lng: 35.0998, era: 'patriarch',
+              desc: '亞伯拉罕居住地；購買麥比拉洞作家族墳墓。大衛初期在此作猶大王七年。', ref: '創13:18, 23:2–20', icon: '🪦' },
+            { name: '別是巴', nameEn: 'Beersheba', lat: 31.2518, lng: 34.7913, era: 'patriarch',
+              desc: '亞伯拉罕、以撒與亞比米勒立約之地，意為「盟誓之井」。以色列南界標記。', ref: '創21:22–34', icon: '💧' },
 
+            // ── 出埃及 ──
+            { name: '歌珊地', nameEn: 'Goshen', lat: 30.85, lng: 31.85, era: 'exodus',
+              desc: '以色列人在埃及居住的肥沃地區，位於尼羅河三角洲東部。', ref: '創46:28–34', icon: '🌾' },
+            { name: '西奈山', nameEn: 'Mount Sinai', lat: 28.5394, lng: 33.9736, era: 'exodus',
+              desc: '摩西領受十誡之處；神與以色列人立約之聖山。以利亞也曾逃至此地。', ref: '出19–20', icon: '⛰️' },
+            { name: '耶利哥', nameEn: 'Jericho', lat: 31.8711, lng: 35.4444, era: 'exodus',
+              desc: '約書亞率以色列人進迦南後攻克的第一座城；城牆倒塌的神蹟。', ref: '書5–6', icon: '🏚️' },
+            { name: '加低斯巴尼亞', nameEn: 'Kadesh Barnea', lat: 30.6277, lng: 34.3980, era: 'exodus',
+              desc: '以色列人曠野漂流的主要駐紮地；十二探子從此出發窺探迦南。', ref: '民13:1–26', icon: '🏜️' },
 
-        // ─────────────────────────────────────────────
-        //  DATA
-        // ─────────────────────────────────────────────
-        const data = {
-            patriarchs: [
-                { name: '亞當', period: '壽 930 歲', eval: 'mixed', label: '始', note: '人類始祖；因犯罪失落伊甸園，死亡從此進入世界。（創2–3）' },
-                { name: '挪亞', period: '壽 950 歲', eval: 'good',  label: '義', note: '因信造方舟渡大洪水；蒙神立彩虹之約永不再毀滅全地。（創6–9）' },
-            ],
-            founders: [
-                { name: '亞伯拉罕', period: '壽 175 歲', eval: 'good', label: '信', note: '信心之父；蒙召離開吾珥；領受割禮之約；以撒為應許之子。（創12–25）' },
-                { name: '雅各',     period: '壽 147 歲', eval: 'good', label: '以色列', note: '與天使摔跤後改名以色列；十二支派之父；以色列民族的起源。（創25–50）' },
-            ],
-            exodus: [
-                { name: '摩西',   period: '壽 120 歲',       eval: 'good', label: '律', note: '領民出埃及；西奈山領受十誡；著摩西五經；帶領曠野四十年。（出1–申34）' },
-                { name: '撒母耳', period: '約 1060–1010 BC', eval: 'good', label: '聖', note: '最後一位士師兼先知；膏立掃羅為王後又膏立大衛；守護王朝交替。（撒上1–16）' },
-            ],
-            united: [
-                { name: '掃羅',   period: '1050–1010 BC', eval: 'bad',   label: '惡', note: '以色列首位君王；因悖逆神擅自獻祭、留下亞瑪力戰利品而被廢黜；戰死基利波山。（撒上9–31）' },
-                { name: '大衛',   period: '1010–970 BC',  eval: 'good',  label: '好', note: '合神心意的人；定都耶路撒冷；蒙神立「大衛之約」——王位永立。（撒下1–王上2）' },
-                { name: '所羅門', period: '970–930 BC',   eval: 'mixed', label: '變', note: '建造第一聖殿；一代極智慧；晚年隨從外邦假神，王國因此分裂為南北。（王上1–11）' },
-            ],
+            // ── 統一王國 ──
+            { name: '耶路撒冷', nameEn: 'Jerusalem', lat: 31.7683, lng: 35.2137, era: 'united',
+              desc: '大衛從耶布斯人手中攻取，定為都城。所羅門在此建造第一聖殿，成為信仰中心。', ref: '撒下5:6–10, 王上6–8', icon: '🕍' },
+            { name: '伯利恆', nameEn: 'Bethlehem', lat: 31.7054, lng: 35.2024, era: 'united',
+              desc: '大衛的出生地；路得記的場景；被先知彌迦預言為彌賽亞降生之地。', ref: '撒上16:1–13, 彌5:2', icon: '⭐' },
+            { name: '基利波山', nameEn: 'Mount Gilboa', lat: 32.4937, lng: 35.4088, era: 'united',
+              desc: '掃羅與其子約拿單戰死之處。大衛為此寫下著名的哀歌。', ref: '撒上31, 撒下1:17–27', icon: '⚔️' },
 
-            // ── South Kingdom (Judah) – 20 kings ──
-            south: [
-                { name: '羅波安',   start: 931, end: 913, eval: 'bad',   label: '惡', note: '不聽老臣之言加重賦稅，致王國分裂為南北。（王上12）' },
-                { name: '亞比央',   start: 913, end: 911, eval: 'bad',   label: '惡', note: '又稱亞比雅；效父行惡；惟因大衛之故神仍保守燈火不滅。（王上15:1–8）' },
-                { name: '亞撒',     start: 911, end: 870, eval: 'good',  label: '好', note: '大宗教改革；除偶像、廢太后祖母；仰賴神勝埃軍百萬。（王上15:9–24）' },
-                { name: '約沙法',   start: 873, end: 848, eval: 'good',  label: '好', note: '設律法教師巡行全國；建立公義法院；與北國亞哈結親為一生敗筆。（代下17–20）' },
-                { name: '約蘭',     start: 848, end: 841, eval: 'bad',   label: '惡', note: '娶亞哈之女；行北國之惡；以東與立拿相繼叛離。（王下8:16–24）' },
-                { name: '亞哈謝',   start: 841, end: 841, eval: 'bad',   label: '惡', note: '亞哈之外孫；與北國約蘭同往迎戰耶戶，在那裡被耶戶殺死。（王下8:25–29）' },
-                { name: '亞他利雅', start: 841, end: 835, eval: 'bad',   label: '篡', note: '亞哈之女；剿滅大衛後裔篡奪王位；後被祭司耶何耶大發動政變廢殺。（王下11）' },
-                { name: '約阿施',   start: 835, end: 796, eval: 'mixed', label: '變', note: '幼年蒙耶何耶大藏匿存活；修繕聖殿；祭司死後轉向偶像。（王下12）' },
-                { name: '亞瑪謝',   start: 796, end: 767, eval: 'mixed', label: '變', note: '初期行正；勝以東後拜以東神；驕傲挑釁北國，大敗於伯示麥。（王下14:1–20）' },
-                { name: '烏西雅',   start: 792, end: 740, eval: 'mixed', label: '變', note: '國力強盛；晚年僭越獻香患痲瘋終身。以賽亞蒙召之年。（代下26）' },
-                { name: '約坦',     start: 750, end: 735, eval: 'good',  label: '好', note: '因父患痲瘋代理國政；修建聖殿上門；一生行正事。（王下15:32–38）' },
-                { name: '亞哈斯',   start: 735, end: 715, eval: 'bad',   label: '惡', note: '引進亞述祭壇；使子女經火；封閉聖殿門。賽7章背景。（王下16）' },
-                { name: '希西家',   start: 715, end: 686, eval: 'good',  label: '好', note: '大宗教復興；信靠神退亞述軍18.5萬；病癒命延十五年。（王下18–20）' },
-                { name: '瑪拿西',   start: 696, end: 642, eval: 'bad',   label: '惡', note: '在位最長（55年）；大規模重建偶像；被擄後悔改蒙神接納。（代下33）' },
-                { name: '亞們',     start: 642, end: 640, eval: 'bad',   label: '惡', note: '效父行惡卻不悔改；在位二年被臣僕謀殺。（王下21:19–26）' },
-                { name: '約西亞',   start: 640, end: 609, eval: 'good',  label: '好', note: '發現律法書；大規模廢除偶像；舉行盛大逾越節；戰死米吉多。（代下34–35）' },
-                { name: '約哈斯',   start: 609, end: 609, eval: 'bad',   label: '惡', note: '百姓所立；在位三個月被埃及法老廢黜，擄往埃及客死。（代下36:1–4）' },
-                { name: '約雅敬',   start: 609, end: 598, eval: 'bad',   label: '惡', note: '法老所立；燒耶利米書卷；首批被擄（但以理）。（代下36:5–8）' },
-                { name: '約雅斤',   start: 598, end: 597, eval: 'bad',   label: '惡', note: '在位三個月十天即降服；第二批被擄（以西結）。（代下36:9–10）' },
-                { name: '西底家',   start: 597, end: 586, eval: 'bad',   label: '惡', note: '末代王；拒聽耶利米；聖殿被焚，耶路撒冷陷落，猶大亡。（代下36:11–21）' },
-            ],
+            // ── 分裂王國 ──
+            { name: '撒馬利亞', nameEn: 'Samaria', lat: 32.2747, lng: 35.1900, era: 'divided',
+              desc: '暗利所建，北國以色列的首都。722 BC 被亞述攻陷，北國滅亡。', ref: '王上16:24, 王下17', icon: '🏰' },
+            { name: '但', nameEn: 'Dan', lat: 33.2489, lng: 35.6524, era: 'divided',
+              desc: '以色列最北端城市。耶羅波安在此設立金牛犢，使以色列人陷入偶像崇拜。', ref: '王上12:28–30', icon: '🐂' },
+            { name: '迦密山', nameEn: 'Mount Carmel', lat: 32.7353, lng: 35.0429, era: 'divided',
+              desc: '以利亞獨對450位巴力先知之處；天降火燒盡燔祭，百姓高呼「耶和華是神！」', ref: '王上18:16–46', icon: '🔥' },
+            { name: '米吉多', nameEn: 'Megiddo', lat: 32.5852, lng: 35.1845, era: 'divided',
+              desc: '戰略要地，控制中東主要貿易通道。好王約西亞在此戰死於埃及法老尼哥之手。', ref: '代下35:20–24', icon: '🏹' },
+            { name: '拉吉', nameEn: 'Lachish', lat: 31.5644, lng: 34.8494, era: 'divided',
+              desc: '猶大第二大城，西拿基立圍攻此城的浮雕至今保存於大英博物館。', ref: '王下18:13–14', icon: '🛡️' },
 
-            // ── North Kingdom (Israel) – 19 kings ──
-            north: [
-                { name: '耶羅波安一世', start: 931, end: 910, eval: 'bad',   label: '惡', note: '設立伯特利與但的金牛犢；「行耶羅波安的罪」成為北國定語。（王上12–14）' },
-                { name: '拿答',         start: 910, end: 909, eval: 'bad',   label: '惡', note: '效父行惡；在位二年被巴沙謀殺，耶羅波安家族滅絕。（王上15:25–31）' },
-                { name: '巴沙',         start: 909, end: 886, eval: 'bad',   label: '惡', note: '弒君奪位；在位二十四年；仍行耶羅波安之罪。（王上15:33–16:7）' },
-                { name: '以拉',         start: 886, end: 885, eval: 'bad',   label: '惡', note: '酒醉被心利謀殺；巴沙家族應驗先知預言而滅絕。（王上16:8–14）' },
-                { name: '心利',         start: 885, end: 885, eval: 'bad',   label: '惡', note: '弒君自立；在位僅七天；城破後自焚而死。（王上16:15–20）' },
-                { name: '暗利',         start: 885, end: 874, eval: 'bad',   label: '惡', note: '建撒馬利亞城為首都；亞述銘文稱以色列為「暗利之地」。（王上16:21–28）' },
-                { name: '亞哈',         start: 874, end: 853, eval: 'bad',   label: '惡', note: '娶耶洗別引入巴力崇拜；逼迫以利亞先知；行惡超過前人。（王上16–22）' },
-                { name: '亞哈謝(北)',   start: 853, end: 852, eval: 'bad',   label: '惡', note: '亞哈長子；拜巴力；因傷問偶像，被以利亞譴責而死。（王下1）' },
-                { name: '約蘭(北)',     start: 852, end: 841, eval: 'bad',   label: '惡', note: '亞哈次子；除巴力柱像但仍行耶羅波安之罪；被耶戶射殺。（王下3–9）' },
-                { name: '耶戶',         start: 841, end: 814, eval: 'mixed', label: '變', note: '受膏滅亞哈家；剿除巴力崇拜；但仍拜金牛犢。（王下9–10）' },
-                { name: '約哈斯(北)',   start: 814, end: 798, eval: 'bad',   label: '惡', note: '受亞蘭王哈薛嚴重壓制；求告神得暫時拯救。（王下13:1–9）' },
-                { name: '約阿施(北)',   start: 798, end: 782, eval: 'bad',   label: '惡', note: '三次戰勝亞蘭；到以利沙臨終床前哭泣；仍行惡。（王下13:10–25）' },
-                { name: '耶羅波安二世', start: 793, end: 753, eval: 'bad',   label: '惡', note: '北國全盛期；大幅擴張疆土；貧富極度不均。阿摩司、何西阿時代。（王下14:23–29）' },
-                { name: '撒迦利雅',     start: 753, end: 752, eval: 'bad',   label: '惡', note: '在位六個月被沙龍謀殺；耶戶四代之約應驗。（王下15:8–12）' },
-                { name: '沙龍',         start: 752, end: 752, eval: 'bad',   label: '惡', note: '弒君自立；在位一個月被米拿現殺死。（王下15:13–16）' },
-                { name: '米拿現',       start: 752, end: 742, eval: 'bad',   label: '惡', note: '向亞述王提革拉毘列色進貢以鞏固王位。（王下15:17–22）' },
-                { name: '比加轄',       start: 742, end: 740, eval: 'bad',   label: '惡', note: '米拿現之子；在位二年被比加謀殺。（王下15:23–26）' },
-                { name: '比加',         start: 740, end: 732, eval: 'bad',   label: '惡', note: '弒君；聯亞蘭攻猶大（賽7章）；亞述擄走大批居民。（王下15:27–31）' },
-                { name: '何細亞',       start: 732, end: 722, eval: 'bad',   label: '惡', note: '北國末代王；倚靠埃及謀反亞述；撒馬利亞陷落，北國亡。（王下17）' },
-            ],
+            // ── 外邦帝國 ──
+            { name: '大馬士革', nameEn: 'Damascus', lat: 33.5138, lng: 36.2765, era: 'empire',
+              desc: '亞蘭王國首都，以色列北方的長期勁敵。便哈達、哈薛皆從此出兵。', ref: '王上20, 王下8:7–15', icon: '🗡️' },
+            { name: '尼尼微', nameEn: 'Nineveh', lat: 36.3590, lng: 43.1530, era: 'empire',
+              desc: '亞述帝國首都。約拿在此傳道全城悔改；約150年後，那鴻預言其傾覆，612 BC 應驗。', ref: '拿1–4, 鴻1–3', icon: '🐟' },
+            { name: '巴比倫', nameEn: 'Babylon', lat: 32.5363, lng: 44.4209, era: 'empire',
+              desc: '新巴比倫帝國首都。尼布甲尼撒三次圍攻耶路撒冷，586 BC 焚毀聖殿，猶大被擄。', ref: '王下24–25, 耶52', icon: '🏯' },
+            { name: '推羅', nameEn: 'Tyre', lat: 33.2705, lng: 35.2038, era: 'empire',
+              desc: '腓尼基沿海商業大城。所羅門建殿木料來自此處的希蘭王。以西結預言其毀滅。', ref: '王上5, 結26–28', icon: '⚓' },
+            { name: '西頓', nameEn: 'Sidon', lat: 33.5571, lng: 35.3729, era: 'empire',
+              desc: '腓尼基古城，耶洗別的出生地。以利亞曾在此寄居於寡婦家中。', ref: '王上16:31, 17:8–24', icon: '🚢' },
+            { name: '卡基米施', nameEn: 'Carchemish', lat: 36.8290, lng: 38.0080, era: 'empire',
+              desc: '605 BC 新巴比倫在此決定性地擊敗埃及，奠定尼布甲尼撒的霸權。', ref: '耶46:2', icon: '⚔️' },
+        ],
+    };
 
-            // ── South-focused prophets ──
-            prophets_south: [
-                { name: '俄巴底亞', start: 848, end: 841, note: '最短先知書；預言以東因欺壓兄弟以色列後裔必遭滅絕審判。（俄1）' },
-                { name: '約珥',     start: 835, end: 796, note: '以蝗災警告審判；預言末後聖靈澆灌全人類（使徒行傳2章引用）。（珥1–3）' },
-                { name: '以賽亞',   start: 740, end: 700, note: '烏西雅崩年蒙召；預言童女懷孕（賽7）與受苦僕人（賽53）；稱「舊約福音書」。（賽1–66）' },
-                { name: '彌迦',     start: 735, end: 700, note: '預言彌賽亞降生伯利恆（彌5:2）；「行公義、好憐憫、存謙卑的心」。（彌1–7）' },
-                { name: '那鴻',     start: 663, end: 612, note: '預言亞述首都尼尼微必傾覆；約拿後約150年，尼尼微果真滅亡。（鴻1–3）' },
-                { name: '西番雅',   start: 640, end: 609, note: '約西亞時期；預言耶和華大日降臨；呼籲謙卑悔改；末日中有餘民得救。（番1–3）' },
-                { name: '哈巴谷',   start: 612, end: 598, note: '與神對話的先知；「義人必因信得生」；面對巴比倫侵略仍歡呼讚美神。（哈1–3）' },
-                { name: '耶利米',   start: 627, end: 586, note: '眼淚先知；幼年蒙召；預言七十年被擄與新約；親歷耶路撒冷陷落。（耶1–52）' },
-            ],
+    // ═════════════════════════════════════════════════════
+    //  SHARED COMPONENTS
+    // ═════════════════════════════════════════════════════
 
-            // ── North-focused prophets ──
-            prophets_north: [
-                { name: '以利亞', start: 875, end: 848, note: '在迦密山勝480位巴力先知；呼喚天火；乘火車火馬升天。（王上17–王下2）' },
-                { name: '以利沙', start: 848, end: 797, note: '承接以利亞雙倍之靈；行無數神蹟；在世期間如以色列的守護者。（王下2–13）' },
-                { name: '約拿',   start: 793, end: 753, note: '被差往亞述首都尼尼微；魚腹三日；全城悔改；預表基督復活。（拿1–4）' },
-                { name: '阿摩司', start: 762, end: 750, note: '提哥亞牧人；在北國伯特利傳講；嚴斥社會不公；預言以色列被擄。（摩1–9）' },
-                { name: '何西阿', start: 760, end: 722, note: '婚姻象徵神對以色列不渝之愛；「我要以慈愛聘你」；預言北國亡國。（何1–14）' },
-            ],
+    const DetailModal = ({ item, onClose }) => {
+        if (!item) return null;
+        useEffect(() => {
+            const handleEsc = (e) => { if (e.key === 'Escape') onClose(); };
+            window.addEventListener('keydown', handleEsc);
+            return () => window.removeEventListener('keydown', handleEsc);
+        }, [onClose]);
 
-            // ── Regional powers: Aram (Damascus) + Egypt ──
-            // These two don't overlap on the timeline: Aram ends 732, Egypt active 610–586
-            empire_regional: [
-                { name: '便哈達一世', empire: '亞蘭', empireTag: 'bg-yellow-600', start: 900, end: 860, bg: 'bg-yellow-50', border: 'border-yellow-500',
-                  note: '亞蘭（大馬士革）與以色列多次交戰。' },
-                { name: '便哈達二世', empire: '亞蘭', empireTag: 'bg-yellow-600', start: 860, end: 843, bg: 'bg-yellow-50', border: 'border-yellow-500',
-                  note: '在基列拉末與亞哈交戰；以利沙時代主要外患。' },
-                { name: '哈薛',       empire: '亞蘭', empireTag: 'bg-yellow-600', start: 843, end: 796, bg: 'bg-yellow-50', border: 'border-yellow-500',
-                  note: '以利沙預言其將大傷以色列；攻打耶路撒冷索取贖金。（王下8:12）' },
-                { name: '便哈達三世', empire: '亞蘭', empireTag: 'bg-yellow-600', start: 796, end: 773, bg: 'bg-yellow-50', border: 'border-yellow-500',
-                  note: '北國約阿施三次從其手中奪回城邑。（王下13:25）' },
-                { name: '法老尼哥二世', empire: '埃及', empireTag: 'bg-lime-600', start: 610, end: 586, bg: 'bg-lime-50', border: 'border-lime-500',
-                  note: '609 BC 殺死約西亞；廢約哈斯立約雅敬；605 BC 卡基米施大敗於巴比倫。' },
-            ],
-
-            // ── Superpower empires: Assyria → Babylon ──
-            // Sequential: Assyria 858–627, Babylon 626–586 (no overlap)
-            empire_super: [
-                { name: '撒縵以色三世', empire: '亞述', empireTag: 'bg-orange-600', start: 858, end: 824, bg: 'bg-orange-50', border: 'border-orange-500',
-                  note: '加爾加之役對抗亞哈聯軍；耶戶向其進貢（黑色方尖碑）。' },
-                { name: '阿達德尼拉里三世', empire: '亞述', empireTag: 'bg-orange-600', start: 811, end: 783, bg: 'bg-orange-50', border: 'border-orange-500',
-                  note: '攻打大馬士革；被認為是約哈斯時期「拯救者」的背景。（王下13:5）' },
-                { name: '提革拉毘列色三世', empire: '亞述', empireTag: 'bg-orange-600', start: 745, end: 727, bg: 'bg-orange-50', border: 'border-orange-500',
-                  note: '米拿現進貢；擄走北國大批居民；以賽亞7章危機的外部背景。' },
-                { name: '撒縵以色五世', empire: '亞述', empireTag: 'bg-orange-600', start: 727, end: 722, bg: 'bg-orange-50', border: 'border-orange-500',
-                  note: '圍攻撒馬利亞三年。（王下17:3–5）' },
-                { name: '撒珥根二世', empire: '亞述', empireTag: 'bg-orange-600', start: 722, end: 705, bg: 'bg-orange-50', border: 'border-orange-500',
-                  note: '完成攻陷撒馬利亞；北國以色列正式滅亡（722 BC）。' },
-                { name: '西拿基立', empire: '亞述', empireTag: 'bg-orange-600', start: 705, end: 681, bg: 'bg-orange-50', border: 'border-orange-500',
-                  note: '701 BC 圍攻耶路撒冷；神使185,000人一夜斃命；以賽亞36–37章應驗。' },
-                { name: '以撒哈頓', empire: '亞述', empireTag: 'bg-orange-600', start: 681, end: 669, bg: 'bg-orange-50', border: 'border-orange-500',
-                  note: '征服埃及；曾擄瑪拿西至巴比倫（代下33:11）。' },
-                { name: '亞述巴尼拔', empire: '亞述', empireTag: 'bg-orange-600', start: 669, end: 627, bg: 'bg-orange-50', border: 'border-orange-500',
-                  note: '亞述帝國全盛；那鴻預言其首都尼尼微必傾覆（663–612 BC）。' },
-                { name: '拿波帕拉薩', empire: '巴比倫', empireTag: 'bg-red-700', start: 626, end: 605, bg: 'bg-red-50', border: 'border-red-500',
-                  note: '新巴比倫帝國奠基者；612 BC 攻滅尼尼微，亞述帝國覆滅。' },
-                { name: '尼布甲尼撒二世', empire: '巴比倫', empireTag: 'bg-red-700', start: 605, end: 562, bg: 'bg-red-50', border: 'border-red-500',
-                  note: '605 BC 卡基米施大捷；三次入侵猶大（605、597、586 BC）；耶路撒冷陷落。' },
-            ],
-        };
-
-        // ─────────────────────────────────────────────
-        //  COMPONENTS
-        // ─────────────────────────────────────────────
-
-        const DetailModal = ({ item, onClose }) => {
-            if (!item) return null;
-
-            useEffect(() => {
-                const handleEsc = (e) => { if (e.key === 'Escape') onClose(); };
-                window.addEventListener('keydown', handleEsc);
-                return () => window.removeEventListener('keydown', handleEsc);
-            }, [onClose]);
-
-            const evalColors = item.eval === 'good'  ? 'good-bg border-teal-600'  :
-                               item.eval === 'bad'   ? 'bad-bg border-rose-600'   :
-                               item.eval === 'mixed' ? 'mixed-bg border-amber-600' : 
-                               'bg-white border-stone-400';
-            const badgeColor = item.eval === 'good'  ? 'bg-teal-600'  :
-                               item.eval === 'bad'   ? 'bg-rose-600'  :
-                               item.eval === 'mixed' ? 'bg-amber-600' :
-                               'bg-stone-600';
-
-            return (
-                <div className="fixed inset-0 z-[100] flex items-center justify-center p-4 bg-stone-900/60 backdrop-blur-sm cursor-pointer"
-                     onClick={onClose}>
-                    <div className={`bg-white rounded-[2.5rem] shadow-2xl max-w-2xl w-full overflow-hidden border-2 cursor-default ${evalColors}`}
-                         onClick={e => e.stopPropagation()}>
-                        <div className="p-8 md:p-10">
-                            <div className="flex justify-between items-start mb-6">
-                                <div>
-                                    <div className="flex items-center gap-3 mb-2">
-                                        <h3 className="text-3xl md:text-4xl font-black text-stone-900">{item.name}</h3>
-                                        {item.label && (
-                                            <span className={`text-sm text-white px-2 py-1 rounded-md font-bold ${badgeColor}`}>
-                                                {item.label}
-                                            </span>
-                                        )}
-                                        {item.empire && (
-                                            <span className={`text-sm text-white px-2 py-1 rounded-md font-bold ${item.empireTag || 'bg-stone-600'}`}>
-                                                {item.empire}
-                                            </span>
-                                        )}
-                                    </div>
-                                    <p className="text-xl font-mono text-stone-500 font-bold">
-                                        {item.period ? item.period : `${item.start}–${item.end} BC`}
-                                    </p>
+        const evalColors = item.eval === 'good'  ? 'good-bg border-teal-600'  :
+                           item.eval === 'bad'   ? 'bad-bg border-rose-600'   :
+                           item.eval === 'mixed' ? 'mixed-bg border-amber-600' :
+                           'bg-white border-stone-400';
+        const badgeColor = item.eval === 'good'  ? 'bg-teal-600'  :
+                           item.eval === 'bad'   ? 'bg-rose-600'  :
+                           item.eval === 'mixed' ? 'bg-amber-600' :
+                           'bg-stone-600';
+        return (
+            <div className="fixed inset-0 z-[100] flex items-center justify-center p-4 bg-stone-900/60 backdrop-blur-sm cursor-pointer"
+                 onClick={onClose}>
+                <div className={`bg-white rounded-[2.5rem] shadow-2xl max-w-2xl w-full overflow-hidden border-2 cursor-default ${evalColors}`}
+                     onClick={e => e.stopPropagation()}>
+                    <div className="p-8 md:p-10">
+                        <div className="flex justify-between items-start mb-6">
+                            <div>
+                                <div className="flex items-center gap-3 mb-2">
+                                    <h3 className="text-3xl md:text-4xl font-black text-stone-900">{item.name}</h3>
+                                    {item.label && (
+                                        <span className={`text-sm text-white px-2 py-1 rounded-md font-bold ${badgeColor}`}>
+                                            {item.label}
+                                        </span>
+                                    )}
+                                    {item.empire && (
+                                        <span className={`text-sm text-white px-2 py-1 rounded-md font-bold ${item.empireTag || 'bg-stone-600'}`}>
+                                            {item.empire}
+                                        </span>
+                                    )}
                                 </div>
-                                <button onClick={onClose} className="text-stone-400 hover:text-stone-900 transition-colors">
-                                    <svg className="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M6 18L18 6M6 6l12 12" />
-                                    </svg>
-                                </button>
-                            </div>
-                            <div className="prose prose-stone">
-                                <p className="text-lg md:text-xl text-stone-700 leading-relaxed italic border-l-4 border-stone-200 pl-6 py-2">
-                                    {item.note}
+                                <p className="text-xl font-mono text-stone-500 font-bold">
+                                    {item.period ? item.period : `${item.start}–${item.end} BC`}
                                 </p>
                             </div>
-                            <div className="mt-10 flex justify-end">
-                                <button onClick={onClose} 
-                                        className="bg-stone-900 text-white px-8 py-3 rounded-2xl font-black shadow-lg hover:bg-black transition-all active:scale-95">
-                                    關閉窗口
-                                </button>
-                            </div>
+                            <button onClick={onClose} className="text-stone-400 hover:text-stone-900 transition-colors">
+                                <svg className="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M6 18L18 6M6 6l12 12" />
+                                </svg>
+                            </button>
+                        </div>
+                        <div className="prose prose-stone">
+                            <p className="text-lg md:text-xl text-stone-700 leading-relaxed italic border-l-4 border-stone-200 pl-6 py-2">
+                                {item.note}
+                            </p>
+                        </div>
+                        <div className="mt-10 flex justify-end">
+                            <button onClick={onClose}
+                                    className="bg-stone-900 text-white px-8 py-3 rounded-2xl font-black shadow-lg hover:bg-black transition-all active:scale-95">
+                                關閉窗口
+                            </button>
                         </div>
                     </div>
                 </div>
-            );
-        };
+            </div>
+        );
+    };
+
+    // ═════════════════════════════════════════════════════
+    //  PAGE 1: TIMELINE (年代圖譜)
+    // ═════════════════════════════════════════════════════
+
+    const TimelinePage = () => {
+        const [selectedDetail, setSelectedDetail] = useState(null);
+        const START_YEAR = 931;
+        const END_YEAR   = 586;
+        const YEAR_PX    = 22;
+        const data = timelineData;
 
         const KingCard = ({ item, onClick }) => {
             const duration = Math.max(Math.abs(item.start - item.end), 0);
@@ -294,7 +405,6 @@
             );
         };
 
-        /** Empire / foreign-power card */
         const EmpireCard = ({ item, onClick }) => {
             const clampedStart = Math.min(item.start, START_YEAR);
             const clampedEnd   = Math.max(item.end,   END_YEAR);
@@ -324,7 +434,7 @@
                                item.eval === 'bad'   ? 'bg-rose-600'  :
                                'bg-amber-600';
             return (
-                <div className={`king-card p-4 border-l-4 rounded-r-lg shadow-sm border cursor-pointer ${evalColors}`} 
+                <div className={`king-card p-4 border-l-4 rounded-r-lg shadow-sm border cursor-pointer ${evalColors}`}
                      onClick={() => onClick(item)}
                      style={{ minHeight:'88px' }}>
                     <div className="flex justify-between items-start mb-1">
@@ -353,31 +463,19 @@
             );
         };
 
-        // ─────────────────────────────────────────────
-        //  RENDER
-        // ─────────────────────────────────────────────
         const totalHeight = (START_YEAR - END_YEAR) * YEAR_PX + 400;
-        // Grid: South(2fr) | S.Prophets(1fr) | Regional(0.9fr) | Super(0.9fr) | N.Prophets(1fr) | North(2fr)
         const gridCols = '2fr 1fr 0.9fr 0.9fr 1fr 2fr';
 
         return (
-            <div className="bg-stone-200 min-h-screen p-4 md:p-8 flex flex-col items-center">
-
-                {/* ── Title Bar ── */}
-                <div className="max-w-7xl w-full bg-white/95 backdrop-blur rounded-3xl p-8 mb-8 shadow-2xl border border-white flex flex-col md:flex-row justify-between items-center gap-6">
-                    <div className="text-center md:text-left">
-                        <h1 className="text-2xl md:text-5xl font-black text-stone-800 tracking-tighter">
-                            Visio Divina
-                        </h1>
-                        <p className="text-stone-500 text-base mt-2 leading-relaxed">
+            <div className="page-enter">
+                <div className="bg-stone-50 w-full max-w-7xl mx-auto shadow-2xl rounded-[3rem] p-6 md:p-12 border border-stone-300">
+                    
+                    <div className="text-center mb-10 pb-6 border-b border-stone-200">
+                        <p className="text-stone-500 text-sm md:text-base leading-relaxed">
                             依據列王記上下、歷代志上下及各先知書 · 年代採 Thiele 福音派年表<br/>
                             南國猶大全部20王 · 北國以色列全部19王 · 書寫先知13位 · 外邦強國歷代君王
                         </p>
                     </div>
-
-                </div>
-
-                <div ref={timelineRef} className="bg-stone-50 w-full max-w-7xl shadow-2xl rounded-[3rem] p-6 md:p-12 border border-stone-300">
 
                     {/* ── Section 1: Pre-Kingdom Lineage ── */}
                     <div className="flex flex-col items-center mb-16">
@@ -392,7 +490,7 @@
                         ))}
                     </div>
 
-                    {/* ── Section 2: Proportional Split-Kingdom Timeline ── */}
+                    {/* ── Section 2: Split-Kingdom Timeline ── */}
                     <div className="border-t-4 border-double border-stone-200 pt-12">
                         <h2 className="text-center text-2xl md:text-3xl font-black mb-2 text-blue-900 tracking-tighter">
                             分裂王國、先知與外邦強國對照（比例時間軸）
@@ -401,7 +499,6 @@
                             931 BC（王國分裂）→ 722 BC（北國亞述滅）→ 586 BC（南國巴比倫滅）
                         </p>
 
-                        {/* Column header labels */}
                         <div className="grid gap-1 md:gap-2 mb-3 ml-18" style={{ gridTemplateColumns: gridCols }}>
                             <div className="py-2 px-2 bg-sky-950 text-white text-center font-black rounded-xl shadow text-sm md:text-base">
                                 南國 猶大<br/><span className="text-[11px] opacity-60 font-normal">Judah · 20王</span>
@@ -427,57 +524,31 @@
                             <Ruler />
                             <div className="grid gap-1 md:gap-2 flex-grow relative"
                                  style={{ gridTemplateColumns: gridCols, height:`${totalHeight}px` }}>
-
-                                {/* Col 1 – South (Judah) */}
-                                <div className="relative">
-                                    <div className="relative h-full">
-                                        {data.south.map((k, i) => <KingCard key={i} item={k} onClick={setSelectedDetail} />)}
-                                    </div>
-                                </div>
-
-                                {/* Col 2 – South Prophets */}
-                                <div className="relative">
-                                    <div className="relative h-full">
-                                        {data.prophets_south.map((p, i) => (
-                                            <ProphetCard key={i} item={p} colorClass="bg-violet-50" borderClass="border-violet-600" onClick={setSelectedDetail} />
-                                        ))}
-                                    </div>
-                                </div>
-
-                                {/* Col 3 – Regional powers (Aram + Egypt) */}
-                                <div className="relative">
-                                    <div className="relative h-full">
-                                        {data.empire_regional.map((e, i) => <EmpireCard key={i} item={e} onClick={setSelectedDetail} />)}
-                                    </div>
-                                </div>
-
-                                {/* Col 4 – Superpowers (Assyria → Babylon) */}
-                                <div className="relative">
-                                    <div className="relative h-full">
-                                        {data.empire_super.map((e, i) => <EmpireCard key={i} item={e} onClick={setSelectedDetail} />)}
-                                    </div>
-                                </div>
-
-                                {/* Col 5 – North Prophets */}
-                                <div className="relative">
-                                    <div className="relative h-full">
-                                        {data.prophets_north.map((p, i) => (
-                                            <ProphetCard key={i} item={p} colorClass="bg-emerald-50" borderClass="border-emerald-600" onClick={setSelectedDetail} />
-                                        ))}
-                                    </div>
-                                </div>
-
-                                {/* Col 6 – North (Israel) */}
-                                <div className="relative">
-                                    <div className="relative h-full">
-                                        {data.north.map((k, i) => <KingCard key={i} item={k} onClick={setSelectedDetail} />)}
-                                    </div>
-                                </div>
-
+                                <div className="relative"><div className="relative h-full">
+                                    {data.south.map((k, i) => <KingCard key={i} item={k} onClick={setSelectedDetail} />)}
+                                </div></div>
+                                <div className="relative"><div className="relative h-full">
+                                    {data.prophets_south.map((p, i) => (
+                                        <ProphetCard key={i} item={p} colorClass="bg-violet-50" borderClass="border-violet-600" onClick={setSelectedDetail} />
+                                    ))}
+                                </div></div>
+                                <div className="relative"><div className="relative h-full">
+                                    {data.empire_regional.map((e, i) => <EmpireCard key={i} item={e} onClick={setSelectedDetail} />)}
+                                </div></div>
+                                <div className="relative"><div className="relative h-full">
+                                    {data.empire_super.map((e, i) => <EmpireCard key={i} item={e} onClick={setSelectedDetail} />)}
+                                </div></div>
+                                <div className="relative"><div className="relative h-full">
+                                    {data.prophets_north.map((p, i) => (
+                                        <ProphetCard key={i} item={p} colorClass="bg-emerald-50" borderClass="border-emerald-600" onClick={setSelectedDetail} />
+                                    ))}
+                                </div></div>
+                                <div className="relative"><div className="relative h-full">
+                                    {data.north.map((k, i) => <KingCard key={i} item={k} onClick={setSelectedDetail} />)}
+                                </div></div>
                             </div>
                         </div>
 
-                        {/* Modal Render */}
                         {selectedDetail && <DetailModal item={selectedDetail} onClose={() => setSelectedDetail(null)} />}
                     </div>
 
@@ -506,8 +577,197 @@
                             </p>
                         </div>
                     </div>
-
                 </div>
+            </div>
+        );
+    };
+
+    // ═════════════════════════════════════════════════════
+    //  PAGE 2: ATLAS (聖經地理)
+    // ═════════════════════════════════════════════════════
+
+    const AtlasPage = () => {
+        const mapRef = useRef(null);
+        const mapInstanceRef = useRef(null);
+        const markersRef = useRef([]);
+        const [activeEra, setActiveEra] = useState('all');
+
+        const eraColors = {
+            patriarch: '#0d9488',
+            exodus:    '#d97706',
+            united:    '#2563eb',
+            divided:   '#dc2626',
+            empire:    '#7c3aed',
+        };
+
+        useEffect(() => {
+            if (mapInstanceRef.current) return;
+            const map = L.map(mapRef.current, {
+                center: [31.5, 35.5],
+                zoom: 7,
+                zoomControl: false,
+                scrollWheelZoom: true,
+            });
+
+            L.control.zoom({ position: 'bottomright' }).addTo(map);
+
+            // Google Maps-like tile layer (CartoDB Voyager)
+            L.tileLayer('https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png', {
+                attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OSM</a> &copy; <a href="https://carto.com/">CARTO</a>',
+                subdomains: 'abcd',
+                maxZoom: 19,
+            }).addTo(map);
+
+            mapInstanceRef.current = map;
+
+            // Add all markers
+            atlasData.locations.forEach(loc => {
+                const color = eraColors[loc.era] || '#78716c';
+                const icon = L.divIcon({
+                    className: '',
+                    html: `<div style="
+                        width: 36px; height: 36px;
+                        background: ${color};
+                        border: 3px solid white;
+                        border-radius: 50%;
+                        display: flex; align-items: center; justify-content: center;
+                        font-size: 16px;
+                        box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+                        cursor: pointer;
+                        transition: transform 0.2s ease;
+                    " onmouseover="this.style.transform='scale(1.2)'" onmouseout="this.style.transform='scale(1)'">${loc.icon}</div>`,
+                    iconSize: [36, 36],
+                    iconAnchor: [18, 18],
+                    popupAnchor: [0, -20],
+                });
+
+                const marker = L.marker([loc.lat, loc.lng], { icon }).addTo(map);
+                marker._eraId = loc.era;
+
+                const popupContent = `
+                    <div class="map-popup">
+                        <div class="subtitle">${loc.nameEn}</div>
+                        <h3>${loc.icon} ${loc.name}</h3>
+                        <div class="desc">${loc.desc}</div>
+                        <div class="ref">📖 ${loc.ref}</div>
+                    </div>
+                `;
+                marker.bindPopup(popupContent, { maxWidth: 320, closeButton: true });
+                markersRef.current.push(marker);
+            });
+
+            return () => {
+                map.remove();
+                mapInstanceRef.current = null;
+                markersRef.current = [];
+            };
+        }, []);
+
+        // Filter markers by era
+        useEffect(() => {
+            if (!mapInstanceRef.current) return;
+            markersRef.current.forEach(marker => {
+                if (activeEra === 'all' || marker._eraId === activeEra) {
+                    marker.addTo(mapInstanceRef.current);
+                } else {
+                    marker.remove();
+                }
+            });
+        }, [activeEra]);
+
+        return (
+            <div className="page-enter">
+                <div className="w-full max-w-7xl mx-auto">
+                    {/* Era filter chips */}
+                    <div className="bg-white/95 backdrop-blur rounded-2xl p-4 mb-4 shadow-lg border border-white flex flex-wrap gap-2 items-center justify-center">
+                        <span className="text-stone-400 font-bold text-sm mr-2" style={{ fontFamily: 'Inter, sans-serif' }}>時代篩選</span>
+                        {atlasData.eras.map(era => (
+                            <button key={era.id}
+                                    className={`era-chip ${activeEra === era.id ? 'active' : ''}`}
+                                    style={{ background: activeEra === era.id ? era.color : '#f5f5f4', color: activeEra === era.id ? 'white' : '#78716c' }}
+                                    onClick={() => setActiveEra(era.id)}>
+                                {era.name}
+                            </button>
+                        ))}
+                    </div>
+
+                    {/* Map container */}
+                    <div className="rounded-[2rem] overflow-hidden shadow-2xl border-2 border-stone-300" style={{ height: 'calc(100vh - 200px)', minHeight: '500px' }}>
+                        <div ref={mapRef} style={{ width: '100%', height: '100%' }}></div>
+                    </div>
+
+                    {/* Stats bar */}
+                    <div className="mt-4 bg-white/95 backdrop-blur rounded-2xl p-4 shadow-lg border border-white">
+                        <div className="flex flex-wrap justify-center gap-6 text-sm font-bold text-stone-500" style={{ fontFamily: 'Inter, sans-serif' }}>
+                            <span>📍 {atlasData.locations.length} 個聖經地點</span>
+                            <span>🏛️ 族長時期 {atlasData.locations.filter(l => l.era === 'patriarch').length} 處</span>
+                            <span>🏜️ 出埃及 {atlasData.locations.filter(l => l.era === 'exodus').length} 處</span>
+                            <span>🕍 統一王國 {atlasData.locations.filter(l => l.era === 'united').length} 處</span>
+                            <span>🏰 分裂王國 {atlasData.locations.filter(l => l.era === 'divided').length} 處</span>
+                            <span>🗡️ 外邦帝國 {atlasData.locations.filter(l => l.era === 'empire').length} 處</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        );
+    };
+
+    // ═════════════════════════════════════════════════════
+    //  APP SHELL (Navigation + Routing)
+    // ═════════════════════════════════════════════════════
+
+    const App = () => {
+        const [currentPage, setCurrentPage] = useState(() => {
+            const hash = window.location.hash.replace('#', '');
+            return hash === 'atlas' ? 'atlas' : 'timeline';
+        });
+
+        useEffect(() => {
+            const handleHash = () => {
+                const hash = window.location.hash.replace('#', '');
+                setCurrentPage(hash === 'atlas' ? 'atlas' : 'timeline');
+            };
+            window.addEventListener('hashchange', handleHash);
+            return () => window.removeEventListener('hashchange', handleHash);
+        }, []);
+
+        const navigate = (page) => {
+            window.location.hash = page;
+        };
+
+        return (
+            <div className="bg-stone-200 min-h-screen p-4 md:p-8 flex flex-col items-center">
+                
+                {/* ── Header & Tabs ── */}
+                <div className="max-w-7xl w-full bg-white/95 backdrop-blur rounded-[2rem] p-4 md:p-6 mb-6 shadow-xl border border-white">
+                    <div className="flex flex-col md:flex-row justify-between items-center gap-4">
+                        <h1 className="text-xl md:text-3xl font-black text-stone-800 tracking-tighter" style={{ fontFamily: 'Inter, Noto Serif TC, serif' }}>
+                            Visio Divina
+                        </h1>
+                        
+                        <div className="flex bg-stone-100 p-1.5 rounded-2xl w-full md:w-auto">
+                            <button className={`flex-1 md:flex-none px-6 py-2.5 rounded-xl font-bold text-sm md:text-base transition-all ${currentPage === 'timeline' ? 'bg-white text-stone-900 shadow cursor-default' : 'text-stone-500 hover:text-stone-800 cursor-pointer'}`}
+                                    onClick={() => navigate('timeline')}>
+                                📜 舊約年代表
+                            </button>
+                            <button className={`flex-1 md:flex-none px-6 py-2.5 rounded-xl font-bold text-sm md:text-base transition-all ${currentPage === 'atlas' ? 'bg-white text-stone-900 shadow cursor-default' : 'text-stone-500 hover:text-stone-800 cursor-pointer'}`}
+                                    onClick={() => navigate('atlas')}>
+                                🗺️ 聖經地理
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                {/* ── Page Content ── */}
+                <main className="w-full max-w-7xl">
+                    {currentPage === 'timeline' && <TimelinePage />}
+                    {currentPage === 'atlas' && <AtlasPage />}
+                </main>
+
+                {/* ── Footer ── */}
+                <footer className="text-center py-6 text-stone-400 text-xs font-bold" style={{ fontFamily: 'Inter, sans-serif' }}>
+                    Visio Divina · 聖經視覺化平台
+                </footer>
             </div>
         );
     };
