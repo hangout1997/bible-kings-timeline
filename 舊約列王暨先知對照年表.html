@@ -61,7 +61,6 @@
         .leaflet-popup-content-wrapper {
             border-radius: 1.5rem !important;
             padding: 0 !important;
-            overflow: hidden;
             box-shadow: 0 20px 25px -5px rgb(0 0 0 / 0.15) !important;
         }
         .leaflet-popup-content {
@@ -76,6 +75,33 @@
         .map-popup .subtitle { font-family: 'Inter', sans-serif; font-size: 0.75rem; color: #a8a29e; font-weight: 600; letter-spacing: 0.05em; text-transform: uppercase; }
         .map-popup .desc { font-size: 0.875rem; color: #57534e; line-height: 1.6; margin-top: 0.75rem; font-style: italic; }
         .map-popup .ref { font-size: 0.75rem; color: #0d9488; font-weight: 700; margin-top: 0.5rem; }
+        .ref-container { position: relative; display: inline-block; cursor: help; }
+        .verse-tooltip {
+            position: absolute;
+            bottom: calc(100% + 10px);
+            left: 50%;
+            transform: translateX(-50%);
+            width: 250px;
+            background: #1c1917;
+            color: #f5f5f4;
+            padding: 1rem;
+            border-radius: 1rem;
+            font-size: 0.85rem;
+            line-height: 1.6;
+            font-family: 'Noto Serif TC', serif;
+            box-shadow: 0 20px 25px -5px rgb(0 0 0 / 0.3);
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.2s ease;
+            z-index: 9999;
+            pointer-events: none;
+            font-weight: normal;
+        }
+        .verse-tooltip::after {
+            content: ''; position: absolute; top: 100%; left: 50%; transform: translateX(-50%);
+            border-width: 6px; border-style: solid; border-color: #1c1917 transparent transparent transparent;
+        }
+        .ref-container:hover .verse-tooltip { opacity: 1; visibility: visible; transform: translateX(-50%) translateY(-4px); }
         .era-chip {
             display: inline-block;
             padding: 0.25rem 0.75rem;
@@ -220,61 +246,85 @@
         locations: [
             // ── 族長時期 ──
             { name: '吾珥', nameEn: 'Ur of the Chaldees', lat: 30.9640, lng: 46.1028, era: 'patriarch',
-              desc: '亞伯拉罕的故鄉，蘇美文明中心城市。神呼召亞伯拉罕離開此地前往應許之地。', ref: '創11:31, 15:7', icon: '🏛️' },
+              desc: '亞伯拉罕的故鄉，蘇美文明中心城市。神呼召亞伯拉罕離開此地前往應許之地。', ref: '創11:31, 15:7', icon: '🏛️',
+              rcuvText: '耶和華又對他說：「我是耶和華，曾領你出了迦勒底的吾珥，為要將這地賜你為業。」（創15:7）' },
             { name: '哈蘭', nameEn: 'Haran', lat: 36.8614, lng: 39.0310, era: 'patriarch',
-              desc: '亞伯拉罕家族遷居之處；他拉死於此處。雅各逃往此處投靠拉班二十年。', ref: '創11:31–32, 27:43', icon: '🏕️' },
+              desc: '亞伯拉罕家族遷居之處；他拉死於此處。雅各逃往此處投靠拉班二十年。', ref: '創11:31–32, 27:43', icon: '🏕️',
+              rcuvText: '他們就帶著這一切從迦勒底的吾珥出來…來到哈蘭，就住在那裏。（創11:31）' },
             { name: '示劍', nameEn: 'Shechem', lat: 32.2132, lng: 35.2851, era: 'patriarch',
-              desc: '亞伯拉罕進迦南地第一站；雅各買地建壇。後成為北國初期首都。', ref: '創12:6, 33:18–19', icon: '⛺' },
+              desc: '亞伯拉罕進迦南地第一站；雅各買地建壇。後成為北國初期首都。', ref: '創12:6, 33:18–19', icon: '⛺',
+              rcuvText: '亞伯蘭經過那地，到了示劍地方，摩利橡樹那裏。當時，迦南人住在那地。（創12:6）' },
             { name: '伯特利', nameEn: 'Bethel', lat: 31.9300, lng: 35.2310, era: 'patriarch',
-              desc: '雅各夢見天梯之處；意為「神的殿」。後被耶羅波安設立金牛犢。', ref: '創28:10–19', icon: '🪜' },
+              desc: '雅各夢見天梯之處；意為「神的殿」。後被耶羅波安設立金牛犢。', ref: '創28:10–19', icon: '🪜',
+              rcuvText: '他就懼怕，說：「這地方何等可畏…是上帝的殿，是天的門。」他就給那地方起名叫伯特利…（創28:17,19）' },
             { name: '希伯崙', nameEn: 'Hebron', lat: 31.5326, lng: 35.0998, era: 'patriarch',
-              desc: '亞伯拉罕居住地；購買麥比拉洞作家族墳墓。大衛初期在此作猶大王七年。', ref: '創13:18, 23:2–20', icon: '🪦' },
+              desc: '亞伯拉罕居住地；購買麥比拉洞作家族墳墓。大衛初期在此作猶大王七年。', ref: '創13:18, 23:2–20', icon: '🪦',
+              rcuvText: '亞伯蘭就搬了帳棚，來到希伯崙幔利的橡樹那裏居住，在那裏為耶和華築了一座壇。（創13:18）' },
             { name: '別是巴', nameEn: 'Beersheba', lat: 31.2518, lng: 34.7913, era: 'patriarch',
-              desc: '亞伯拉罕、以撒與亞比米勒立約之地，意為「盟誓之井」。以色列南界標記。', ref: '創21:22–34', icon: '💧' },
+              desc: '亞伯拉罕、以撒與亞比米勒立約之地，意為「盟誓之井」。以色列南界標記。', ref: '創21:22–34', icon: '💧',
+              rcuvText: '所以他給那地方起名叫別是巴，因為他們二人在那裏起了誓。（創21:31）' },
 
             // ── 出埃及 ──
             { name: '歌珊地', nameEn: 'Goshen', lat: 30.85, lng: 31.85, era: 'exodus',
-              desc: '以色列人在埃及居住的肥沃地區，位於尼羅河三角洲東部。', ref: '創46:28–34', icon: '🌾' },
+              desc: '以色列人在埃及居住的肥沃地區，位於尼羅河三角洲東部。', ref: '創46:28–34', icon: '🌾',
+              rcuvText: '以色列人住在埃及的歌珊地。他們在那裏置了產業，並且繁衍，人口極其增多。（創47:27）' },
             { name: '西奈山', nameEn: 'Mount Sinai', lat: 28.5394, lng: 33.9736, era: 'exodus',
-              desc: '摩西領受十誡之處；神與以色列人立約之聖山。以利亞也曾逃至此地。', ref: '出19–20', icon: '⛰️' },
+              desc: '摩西領受十誡之處；神與以色列人立約之聖山。以利亞也曾逃至此地。', ref: '出19–20', icon: '⛰️',
+              rcuvText: '耶和華降臨在西奈山頂，耶和華召摩西上山頂，摩西就上去。（出19:20）' },
             { name: '耶利哥', nameEn: 'Jericho', lat: 31.8711, lng: 35.4444, era: 'exodus',
-              desc: '約書亞率以色列人進迦南後攻克的第一座城；城牆倒塌的神蹟。', ref: '書5–6', icon: '🏚️' },
+              desc: '約書亞率以色列人進迦南後攻克的第一座城；城牆倒塌的神蹟。', ref: '書5–6', icon: '🏚️',
+              rcuvText: '耶和華對約書亞說：「看，我已經把耶利哥和耶利哥的王，以及大能的勇士，都交在你手中了。」（書6:2）' },
             { name: '加低斯巴尼亞', nameEn: 'Kadesh Barnea', lat: 30.6277, lng: 34.3980, era: 'exodus',
-              desc: '以色列人曠野漂流的主要駐紮地；十二探子從此出發窺探迦南。', ref: '民13:1–26', icon: '🏜️' },
+              desc: '以色列人曠野漂流的主要駐紮地；十二探子從此出發窺探迦南。', ref: '民13:1–26', icon: '🏜️',
+              rcuvText: '到了巴蘭曠野的加低斯，見摩西、亞倫，並以色列全會眾，回報摩西、亞倫…又把那地的果子給他們看。（民13:26）' },
 
             // ── 統一王國 ──
             { name: '耶路撒冷', nameEn: 'Jerusalem', lat: 31.7683, lng: 35.2137, era: 'united',
-              desc: '大衛從耶布斯人手中攻取，定為都城。所羅門在此建造第一聖殿，成為信仰中心。', ref: '撒下5:6–10, 王上6–8', icon: '🕍' },
+              desc: '大衛從耶布斯人手中攻取，定為都城。所羅門在此建造第一聖殿，成為信仰中心。', ref: '撒下5:6–10, 王上6–8', icon: '🕍',
+              rcuvText: '然而大衛攻取了錫安的保障，就是大衛的城。（撒下5:7）' },
             { name: '伯利恆', nameEn: 'Bethlehem', lat: 31.7054, lng: 35.2024, era: 'united',
-              desc: '大衛的出生地；路得記的場景；被先知彌迦預言為彌賽亞降生之地。', ref: '撒上16:1–13, 彌5:2', icon: '⭐' },
+              desc: '大衛的出生地；路得記的場景；被先知彌迦預言為彌賽亞降生之地。', ref: '撒上16:1–13, 彌5:2', icon: '⭐',
+              rcuvText: '伯利恆的以法他啊，你在猶大諸城中為小，將來必有一位從你那裏出來，在以色列中為我作掌權者。（彌5:2）' },
             { name: '基利波山', nameEn: 'Mount Gilboa', lat: 32.4937, lng: 35.4088, era: 'united',
-              desc: '掃羅與其子約拿單戰死之處。大衛為此寫下著名的哀歌。', ref: '撒上31, 撒下1:17–27', icon: '⚔️' },
+              desc: '掃羅與其子約拿單戰死之處。大衛為此寫下著名的哀歌。', ref: '撒上31, 撒下1:17–27', icon: '⚔️',
+              rcuvText: '非利士人與以色列人爭戰；以色列人在非利士人面前逃跑，在基利波山有被殺仆倒的。（撒上31:1）' },
 
             // ── 分裂王國 ──
             { name: '撒馬利亞', nameEn: 'Samaria', lat: 32.2747, lng: 35.1900, era: 'divided',
-              desc: '暗利所建，北國以色列的首都。722 BC 被亞述攻陷，北國滅亡。', ref: '王上16:24, 王下17', icon: '🏰' },
+              desc: '暗利所建，北國以色列的首都。722 BC 被亞述攻陷，北國滅亡。', ref: '王上16:24, 王下17', icon: '🏰',
+              rcuvText: '暗利用二他連得銀子向撒瑪買了撒馬利亞山，在山上造城…給所造的城起名叫撒馬利亞。（王上16:24）' },
             { name: '但', nameEn: 'Dan', lat: 33.2489, lng: 35.6524, era: 'divided',
-              desc: '以色列最北端城市。耶羅波安在此設立金牛犢，使以色列人陷入偶像崇拜。', ref: '王上12:28–30', icon: '🐂' },
+              desc: '以色列最北端城市。耶羅波安在此設立金牛犢，使以色列人陷入偶像崇拜。', ref: '王上12:28–30', icon: '🐂',
+              rcuvText: '他（耶羅波安）就把牛犢一隻安在伯特利，一隻安在但。（王上12:29）' },
             { name: '迦密山', nameEn: 'Mount Carmel', lat: 32.7353, lng: 35.0429, era: 'divided',
-              desc: '以利亞獨對450位巴力先知之處；天降火燒盡燔祭，百姓高呼「耶和華是神！」', ref: '王上18:16–46', icon: '🔥' },
+              desc: '以利亞獨對450位巴力先知之處；天降火燒盡燔祭，百姓高呼「耶和華是神！」', ref: '王上18:16–46', icon: '🔥',
+              rcuvText: '耶和華的火降下，燒盡燔祭…眾百姓看見了，就俯伏在地，說：「耶和華是上帝！耶和華是上帝！」（王上18:38-39）' },
             { name: '米吉多', nameEn: 'Megiddo', lat: 32.5852, lng: 35.1845, era: 'divided',
-              desc: '戰略要地，控制中東主要貿易通道。好王約西亞在此戰死於埃及法老尼哥之手。', ref: '代下35:20–24', icon: '🏹' },
+              desc: '戰略要地，控制中東主要貿易通道。好王約西亞在此戰死於埃及法老尼哥之手。', ref: '代下35:20–24', icon: '🏹',
+              rcuvText: '約西亞卻不肯轉身離開他…來到米吉多平原爭戰。弓箭手射中約西亞王。（代下35:22-23）' },
             { name: '拉吉', nameEn: 'Lachish', lat: 31.5644, lng: 34.8494, era: 'divided',
-              desc: '猶大第二大城，西拿基立圍攻此城的浮雕至今保存於大英博物館。', ref: '王下18:13–14', icon: '🛡️' },
+              desc: '猶大第二大城，西拿基立圍攻此城的浮雕至今保存於大英博物館。', ref: '王下18:13–14', icon: '🛡️',
+              rcuvText: '猶大王希西家派人前往拉吉去見亞述王，說：「我有罪了，求你離開我；凡你罰我的，我必承當。」（王下18:14）' },
 
             // ── 外邦帝國 ──
             { name: '大馬士革', nameEn: 'Damascus', lat: 33.5138, lng: 36.2765, era: 'empire',
-              desc: '亞蘭王國首都，以色列北方的長期勁敵。便哈達、哈薛皆從此出兵。', ref: '王上20, 王下8:7–15', icon: '🗡️' },
+              desc: '亞蘭王國首都，以色列北方的長期勁敵。便哈達、哈薛皆從此出兵。', ref: '王上20, 王下8:7–15', icon: '🗡️',
+              rcuvText: '以利沙來到大馬士革，亞蘭王便哈達正患病。有人告訴王說：「神人來到這裏了。」（王下8:7）' },
             { name: '尼尼微', nameEn: 'Nineveh', lat: 36.3590, lng: 43.1530, era: 'empire',
-              desc: '亞述帝國首都。約拿在此傳道全城悔改；約150年後，那鴻預言其傾覆，612 BC 應驗。', ref: '拿1–4, 鴻1–3', icon: '🐟' },
+              desc: '亞述帝國首都。約拿在此傳道全城悔改；約150年後，那鴻預言其傾覆，612 BC 應驗。', ref: '拿1–4, 鴻1–3', icon: '🐟',
+              rcuvText: '這尼尼微是極大的城，步行需要三天。約拿進城走了一天，宣告說：「再等四十天，尼尼微必傾覆了！」（拿3:3-4）' },
             { name: '巴比倫', nameEn: 'Babylon', lat: 32.5363, lng: 44.4209, era: 'empire',
-              desc: '新巴比倫帝國首都。尼布甲尼撒三次圍攻耶路撒冷，586 BC 焚毀聖殿，猶大被擄。', ref: '王下24–25, 耶52', icon: '🏯' },
+              desc: '新巴比倫帝國首都。尼布甲尼撒三次圍攻耶路撒冷，586 BC 焚毀聖殿，猶大被擄。', ref: '王下24–25, 耶52', icon: '🏯',
+              rcuvText: '巴比倫王在利比拉…剜了西底家的眼睛，用銅銬鎖著他，帶到巴比倫去。（耶52:10-11）' },
             { name: '推羅', nameEn: 'Tyre', lat: 33.2705, lng: 35.2038, era: 'empire',
-              desc: '腓尼基沿海商業大城。所羅門建殿木料來自此處的希蘭王。以西結預言其毀滅。', ref: '王上5, 結26–28', icon: '⚓' },
+              desc: '腓尼基沿海商業大城。所羅門建殿木料來自此處的希蘭王。以西結預言其毀滅。', ref: '王上5, 結26–28', icon: '⚓',
+              rcuvText: '主耶和華如此說：推羅啊，看哪，我必與你為敵，使許多國民上來攻擊你，如同海使波浪湧上來一樣。（結26:3）' },
             { name: '西頓', nameEn: 'Sidon', lat: 33.5571, lng: 35.3729, era: 'empire',
-              desc: '腓尼基古城，耶洗別的出生地。以利亞曾在此寄居於寡婦家中。', ref: '王上16:31, 17:8–24', icon: '🚢' },
+              desc: '腓尼基古城，耶洗別的出生地。以利亞曾在此寄居於寡婦家中。', ref: '王上16:31, 17:8–24', icon: '🚢',
+              rcuvText: '耶和華的話臨到他說：「你起身往西頓的撒勒法去，住在那裏；我已吩咐那裏的一個寡婦供養你。」（王上17:8-9）' },
             { name: '卡基米施', nameEn: 'Carchemish', lat: 36.8290, lng: 38.0080, era: 'empire',
-              desc: '605 BC 新巴比倫在此決定性地擊敗埃及，奠定尼布甲尼撒的霸權。', ref: '耶46:2', icon: '⚔️' },
+              desc: '605 BC 新巴比倫在此決定性地擊敗埃及，奠定尼布甲尼撒的霸權。', ref: '耶46:2', icon: '⚔️',
+              rcuvText: '對於埃及…也就是巴比倫王尼布甲尼撒在幼發拉底河畔的卡基米施所打敗的軍隊…（耶46:2）' },
         ],
     };
 
@@ -649,7 +699,17 @@
                         <div class="subtitle">${loc.nameEn}</div>
                         <h3>${loc.icon} ${loc.name}</h3>
                         <div class="desc">${loc.desc}</div>
-                        <div class="ref">📖 ${loc.ref}</div>
+                        <div class="ref mt-2">
+                            <span class="ref-container">
+                                📖 <span>${loc.ref}</span>
+                                ${loc.rcuvText ? `
+                                <div class="verse-tooltip">
+                                    <div style="font-family: 'Inter', sans-serif; font-size: 0.65rem; color: #5eead4; font-weight: 800; letter-spacing: 0.1em; margin-bottom: 0.35rem;">和合本修訂版 RCUV</div>
+                                    ${loc.rcuvText}
+                                </div>
+                                ` : ''}
+                            </span>
+                        </div>
                     </div>
                 `;
                 marker.bindPopup(popupContent, { maxWidth: 320, closeButton: true });
