@@ -636,11 +636,10 @@
     //  PAGE 2: ATLAS (聖經地理)
     // ═════════════════════════════════════════════════════
 
-    const AtlasPage = () => {
+    const AtlasPage = ({ activeEra }) => {
         const mapRef = useRef(null);
         const mapInstanceRef = useRef(null);
         const markersRef = useRef([]);
-        const [activeEra, setActiveEra] = useState('all');
 
         const eraColors = {
             patriarch: '#0d9488',
@@ -761,33 +760,20 @@
         return (
             <div className="page-enter">
                 <div className="w-full max-w-7xl mx-auto">
-                    {/* Era filter chips */}
-                    <div className="bg-white/95 backdrop-blur rounded-2xl p-4 mb-4 shadow-lg border border-white flex flex-wrap gap-2 items-center justify-center">
-                        <span className="text-stone-400 font-bold text-sm mr-2" style={{ fontFamily: 'Inter, sans-serif' }}>時代篩選</span>
-                        {atlasData.eras.map(era => (
-                            <button key={era.id}
-                                    className={`era-chip ${activeEra === era.id ? 'active' : ''}`}
-                                    style={{ background: activeEra === era.id ? era.color : '#f5f5f4', color: activeEra === era.id ? 'white' : '#78716c' }}
-                                    onClick={() => setActiveEra(era.id)}>
-                                {era.name}
-                            </button>
-                        ))}
-                    </div>
-
                     {/* Map container */}
-                    <div className="rounded-[2rem] overflow-hidden shadow-2xl border-2 border-stone-300" style={{ height: 'calc(100vh - 200px)', minHeight: '500px' }}>
+                    <div className="rounded-[1.5rem] overflow-hidden shadow-2xl border-2 border-stone-300" style={{ height: 'calc(100vh - 165px)', minHeight: '500px' }}>
                         <div ref={mapRef} style={{ width: '100%', height: '100%' }}></div>
                     </div>
 
                     {/* Stats bar */}
-                    <div className="mt-4 bg-white/95 backdrop-blur rounded-2xl p-4 shadow-lg border border-white">
-                        <div className="flex flex-wrap justify-center gap-6 text-sm font-bold text-stone-500" style={{ fontFamily: 'Inter, sans-serif' }}>
+                    <div className="mt-3 bg-white/95 backdrop-blur rounded-[1rem] p-3 shadow-sm border border-stone-200">
+                        <div className="flex flex-wrap justify-center gap-4 md:gap-6 text-xs md:text-sm font-bold text-stone-500" style={{ fontFamily: 'Inter, sans-serif' }}>
                             <span>📍 {atlasData.locations.length} 個聖經地點</span>
-                            <span>🏛️ 族長時期 {atlasData.locations.filter(l => l.era === 'patriarch').length} 處</span>
-                            <span>🏜️ 出埃及 {atlasData.locations.filter(l => l.era === 'exodus').length} 處</span>
-                            <span>🕍 統一王國 {atlasData.locations.filter(l => l.era === 'united').length} 處</span>
-                            <span>🏰 分裂王國 {atlasData.locations.filter(l => l.era === 'divided').length} 處</span>
-                            <span>🗡️ 外邦帝國 {atlasData.locations.filter(l => l.era === 'empire').length} 處</span>
+                            <span className="hidden sm:inline">🏛️ 族長時期 {atlasData.locations.filter(l => l.era === 'patriarch').length}</span>
+                            <span className="hidden sm:inline">🏜️ 出埃及 {atlasData.locations.filter(l => l.era === 'exodus').length}</span>
+                            <span className="hidden sm:inline">🕍 統一王國 {atlasData.locations.filter(l => l.era === 'united').length}</span>
+                            <span className="hidden sm:inline">🏰 分裂王國 {atlasData.locations.filter(l => l.era === 'divided').length}</span>
+                            <span className="hidden sm:inline">🗡️ 外邦帝國 {atlasData.locations.filter(l => l.era === 'empire').length}</span>
                         </div>
                     </div>
                 </div>
@@ -804,6 +790,7 @@
             const hash = window.location.hash.replace('#', '');
             return hash === 'atlas' ? 'atlas' : 'timeline';
         });
+        const [activeEra, setActiveEra] = useState('all');
 
         useEffect(() => {
             const handleHash = () => {
@@ -819,32 +806,54 @@
         };
 
         return (
-            <div className="bg-stone-200 min-h-screen p-4 md:p-8 flex flex-col items-center">
+            <div className="bg-stone-200 min-h-screen p-2 md:p-4 flex flex-col items-center">
                 
-                {/* ── Header & Tabs ── */}
-                <div className="max-w-7xl w-full bg-white/95 backdrop-blur rounded-[2rem] p-4 md:p-6 mb-6 shadow-xl border border-white">
-                    <div className="flex flex-col md:flex-row justify-between items-center gap-4">
-                        <h1 className="text-xl md:text-3xl font-black text-stone-800 tracking-tighter" style={{ fontFamily: 'Inter, Noto Serif TC, serif' }}>
+                {/* ── Unified Header & Tabs ── */}
+                <div className="max-w-7xl w-full bg-white/95 backdrop-blur rounded-2xl p-3 px-4 md:px-6 mb-4 shadow-md border border-white">
+                    <div className="flex justify-between items-center gap-3">
+                        <h1 className="text-xl md:text-2xl font-black text-stone-800 tracking-tighter" style={{ fontFamily: 'Inter, Noto Serif TC, serif' }}>
                             Visio Divina
                         </h1>
                         
-                        <div className="flex bg-stone-100 p-1.5 rounded-2xl w-full md:w-auto">
-                            <button className={`flex-1 md:flex-none px-6 py-2.5 rounded-xl font-bold text-sm md:text-base transition-all ${currentPage === 'timeline' ? 'bg-white text-stone-900 shadow cursor-default' : 'text-stone-500 hover:text-stone-800 cursor-pointer'}`}
+                        <div className="flex bg-stone-100 p-1 rounded-xl">
+                            <button className={`px-4 py-1.5 rounded-lg font-bold text-sm transition-all ${currentPage === 'timeline' ? 'bg-white text-stone-900 shadow cursor-default' : 'text-stone-500 hover:text-stone-800 cursor-pointer'}`}
                                     onClick={() => navigate('timeline')}>
                                 📜 舊約年代表
                             </button>
-                            <button className={`flex-1 md:flex-none px-6 py-2.5 rounded-xl font-bold text-sm md:text-base transition-all ${currentPage === 'atlas' ? 'bg-white text-stone-900 shadow cursor-default' : 'text-stone-500 hover:text-stone-800 cursor-pointer'}`}
+                            <button className={`px-4 py-1.5 rounded-lg font-bold text-sm transition-all ${currentPage === 'atlas' ? 'bg-white text-stone-900 shadow cursor-default' : 'text-stone-500 hover:text-stone-800 cursor-pointer'}`}
                                     onClick={() => navigate('atlas')}>
                                 🗺️ 聖經地理
                             </button>
                         </div>
                     </div>
+
+                    {/* ── Secondary Sub-menu (Era Filter) ── */}
+                    {currentPage === 'atlas' && (
+                        <div className="mt-3 pt-3 border-t border-stone-100 flex flex-nowrap md:flex-wrap gap-2 overflow-x-auto items-center pb-1">
+                            <span className="text-stone-400 font-bold text-[11px] mr-1 uppercase tracking-wider shrink-0" style={{ fontFamily: 'Inter, sans-serif' }}>
+                                時代篩選
+                            </span>
+                            {atlasData.eras.map(era => (
+                                <button key={era.id}
+                                        className={`era-chip shrink-0 ${activeEra === era.id ? 'active' : ''}`}
+                                        style={{ 
+                                            background: activeEra === era.id ? era.color : '#f5f5f4', 
+                                            color: activeEra === era.id ? 'white' : '#78716c',
+                                            padding: '0.25rem 0.75rem',
+                                            fontSize: '0.75rem'
+                                        }}
+                                        onClick={() => setActiveEra(era.id)}>
+                                    {era.name}
+                                </button>
+                            ))}
+                        </div>
+                    )}
                 </div>
 
                 {/* ── Page Content ── */}
-                <main className="w-full max-w-7xl">
+                <main className="w-full max-w-7xl flex-grow flex flex-col">
                     {currentPage === 'timeline' && <TimelinePage />}
-                    {currentPage === 'atlas' && <AtlasPage />}
+                    {currentPage === 'atlas' && <AtlasPage activeEra={activeEra} />}
                 </main>
 
                 {/* ── Footer ── */}
