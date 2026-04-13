@@ -675,6 +675,29 @@
             });
         }, [activeEra]);
 
+        // Support closing map popups via Escape key and clicking completely outside the map
+        useEffect(() => {
+            const handleKeyDown = (e) => {
+                if (e.key === 'Escape' && mapInstanceRef.current) {
+                    mapInstanceRef.current.closePopup();
+                }
+            };
+            const handleOutsideClick = (e) => {
+                if (mapInstanceRef.current && mapRef.current) {
+                    // 如果點擊的位置不在地圖容器內，也就是點到上方的 Tab 或外面
+                    if (!mapRef.current.contains(e.target)) {
+                        mapInstanceRef.current.closePopup();
+                    }
+                }
+            };
+            document.addEventListener('keydown', handleKeyDown);
+            document.addEventListener('mousedown', handleOutsideClick);
+            return () => {
+                document.removeEventListener('keydown', handleKeyDown);
+                document.removeEventListener('mousedown', handleOutsideClick);
+            };
+        }, []);
+
         return (
             <div className="page-enter">
                 <div className="w-full max-w-7xl mx-auto">
