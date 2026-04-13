@@ -895,6 +895,51 @@
     };
 
     // ═════════════════════════════════════════════════════
+    //  PRIVACY PAGE
+    // ═════════════════════════════════════════════════════
+    const PrivacyPage = () => {
+        return (
+            <div className="w-full max-w-4xl mx-auto bg-white/95 backdrop-blur rounded-[1.5rem] shadow-sm border border-stone-200 p-8 md:p-12 text-stone-700 page-enter my-4">
+                <h2 className="text-3xl font-black text-stone-900 mb-6" style={{ fontFamily: 'Noto Serif TC, serif' }}>隱私權政策 Privacy Policy</h2>
+                <p className="text-sm text-stone-500 mb-8 font-bold" style={{ fontFamily: 'Inter, sans-serif' }}>最後更新日期：2026年4月</p>
+
+                <div className="space-y-8 leading-relaxed text-[0.95rem]">
+                    <section>
+                        <h3 className="text-xl font-bold text-stone-800 mb-3" style={{ fontFamily: 'Noto Serif TC, serif' }}>1. 資訊收集與使用 (Information Collection & Use)</h3>
+                        <p>歡迎您造訪「看見聖經 Visio Divina」。為了提升本網站的服務品質與使用者體驗，我們使用了 Google Analytics 4 (GA4) 流量分析工具。當您瀏覽本網站時，GA4 會透過 Cookie 自動收集某些去識別化的資訊，例如：</p>
+                        <ul className="list-disc pl-5 mt-2 space-y-1 text-stone-600">
+                            <li>您使用的瀏覽器類型與裝置型號</li>
+                            <li>大略的地理位置 (例如國家或城市層級，絕非精準定位)</li>
+                            <li>您在網站上的瀏覽行為 (例如頁面的停留時間、點擊的特定功能)</li>
+                        </ul>
+                    </section>
+
+                    <section>
+                        <h3 className="text-xl font-bold text-stone-800 mb-3" style={{ fontFamily: 'Noto Serif TC, serif' }}>2. 我們如何使用您的資訊 (How We Use Information)</h3>
+                        <p>上述收集的資訊僅做為內部流量統計與了解使用者偏好之用，幫助我們未來更新與優化「舊約年代表」或「聖經地理」功能時，能提供更符合大家需求的設計。我們<strong className="text-stone-900">絕對不會</strong>將這些資料用於識別您的個人身分，亦不會將這些資料出售、租借或以任何形式洩漏給第三方商業機構。</p>
+                    </section>
+
+                    <section>
+                        <h3 className="text-xl font-bold text-stone-800 mb-3" style={{ fontFamily: 'Noto Serif TC, serif' }}>3. 第三方服務與連結 (Third-Party Services)</h3>
+                        <p>本網站的「聖經地理」功能使用了 Leaflet.js 地圖庫與 CARTO 圖資服務。這些第三方服務可能會根據其營運需求收集非個人可識別的基礎連線資訊，建議您可參閱其個別的隱私權政策。此外，本網站若包含外部網站連結，其隱私權規範不屬本政策範圍內。</p>
+                    </section>
+
+                    <section>
+                        <h3 className="text-xl font-bold text-stone-800 mb-3" style={{ fontFamily: 'Noto Serif TC, serif' }}>4. 您的權利與選擇 (Your Rights)</h3>
+                        <p>若您不希望個人的瀏覽數據被 GA4 記錄，您隨時可透過瀏覽器設定來停用、封鎖 Cookie，或安裝由 Google 官方提供的「<a href="https://tools.google.com/dlpage/gaoptout" target="_blank" className="text-teal-600 hover:text-teal-800 underline transition-colors">Google Analytics (分析) 不透露資訊瀏覽器外掛程式</a>」。即使您停用 Cookie，仍可正常瀏覽並使用本網站絕大部分的功能。</p>
+                    </section>
+
+                    <section>
+                        <h3 className="text-xl font-bold text-stone-800 mb-3" style={{ fontFamily: 'Noto Serif TC, serif' }}>5. 聯絡我們 (Contact Us)</h3>
+                        <p>如果您對本隱私權政策有任何疑問或建議，歡迎透過電子郵件與我們聯繫：</p>
+                        <a href="mailto:support@visiodivina.uk" className="inline-block mt-2 text-teal-600 hover:text-teal-800 font-bold transition-colors">✉ support@visiodivina.uk</a>
+                    </section>
+                </div>
+            </div>
+        );
+    };
+
+    // ═════════════════════════════════════════════════════
     //  LANDING PAGE
     // ═════════════════════════════════════════════════════
 
@@ -978,9 +1023,13 @@
                     <p className="text-stone-400 text-xs font-bold">
                         © 2026 Visio Divina · 看見聖經
                     </p>
-                    <a href="mailto:support@visiodivina.uk" className="inline-flex items-center gap-1.5 mt-2 text-stone-400 hover:text-stone-600 text-xs transition-colors">
-                        <span>✉</span><span>support@visiodivina.uk</span>
-                    </a>
+                    <div className="flex items-center justify-center gap-3 mt-2">
+                        <a href="mailto:support@visiodivina.uk" className="inline-flex items-center gap-1.5 text-stone-400 hover:text-stone-600 text-xs transition-colors">
+                            <span>✉</span><span>support@visiodivina.uk</span>
+                        </a>
+                        <span className="text-stone-300 text-xs">|</span>
+                        <a href="#privacy" onClick={() => onNavigate('privacy')} className="text-stone-400 hover:text-stone-600 text-xs transition-colors" style={{ fontFamily: 'Noto Serif TC, serif', fontWeight: 700 }}>隱私權政策</a>
+                    </div>
                 </div>
             </div>
         );
@@ -995,6 +1044,7 @@
             const hash = window.location.hash.replace('#', '');
             if (hash === 'atlas') return 'atlas';
             if (hash === 'timeline') return 'timeline';
+            if (hash === 'privacy') return 'privacy';
             return 'home';
         });
         const [activeEra, setActiveEra] = useState('patriarch');
@@ -1004,6 +1054,7 @@
                 const hash = window.location.hash.replace('#', '');
                 if (hash === 'atlas') setCurrentPage('atlas');
                 else if (hash === 'timeline') setCurrentPage('timeline');
+                else if (hash === 'privacy') setCurrentPage('privacy');
                 else setCurrentPage('home');
             };
             window.addEventListener('hashchange', handleHash);
@@ -1070,16 +1121,21 @@
                 <main className="w-full max-w-7xl flex-grow flex flex-col">
                     {currentPage === 'timeline' && <TimelinePage />}
                     {currentPage === 'atlas' && <AtlasPage activeEra={activeEra} />}
+                    {currentPage === 'privacy' && <PrivacyPage />}
                 </main>
 
                 {/* ── Footer ── */}
-                <footer className="text-center py-6" style={{ fontFamily: 'Inter, sans-serif' }}>
+                <footer className="text-center py-8" style={{ fontFamily: 'Inter, sans-serif' }}>
                     <p className="text-stone-400 text-xs font-bold">
                         © 2026 Visio Divina · 看見聖經
                     </p>
-                    <a href="mailto:support@visiodivina.uk" className="inline-flex items-center gap-1.5 mt-1.5 text-stone-400 hover:text-stone-600 text-xs transition-colors">
-                        <span>✉</span><span>support@visiodivina.uk</span>
-                    </a>
+                    <div className="flex items-center justify-center gap-3 mt-2">
+                        <a href="mailto:support@visiodivina.uk" className="inline-flex items-center gap-1.5 text-stone-400 hover:text-stone-600 text-[11px] transition-colors">
+                            <span>✉</span><span>support@visiodivina.uk</span>
+                        </a>
+                        <span className="text-stone-300 text-[11px]">|</span>
+                        <a href="#privacy" className="text-stone-400 hover:text-stone-600 text-[11px] transition-colors" style={{ fontFamily: 'Noto Serif TC, serif', fontWeight: 700 }}>隱私權政策</a>
+                    </div>
                 </footer>
             </div>
         );
