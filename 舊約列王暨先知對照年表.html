@@ -33,7 +33,7 @@
 <div id="root"></div>
 
 <script type="text/babel">
-    const { useState, useRef, Fragment } = React;
+    const { useState, useRef, useEffect, Fragment } = React;
 
     const App = () => {
         const [isExporting, setIsExporting] = useState(false);
@@ -203,6 +203,13 @@
 
         const DetailModal = ({ item, onClose }) => {
             if (!item) return null;
+
+            useEffect(() => {
+                const handleEsc = (e) => { if (e.key === 'Escape') onClose(); };
+                window.addEventListener('keydown', handleEsc);
+                return () => window.removeEventListener('keydown', handleEsc);
+            }, [onClose]);
+
             const evalColors = item.eval === 'good'  ? 'good-bg border-teal-600'  :
                                item.eval === 'bad'   ? 'bad-bg border-rose-600'   :
                                item.eval === 'mixed' ? 'mixed-bg border-amber-600' : 
@@ -213,9 +220,9 @@
                                'bg-stone-600';
 
             return (
-                <div className="fixed inset-0 z-[100] flex items-center justify-center p-4 bg-stone-900/60 backdrop-blur-sm"
+                <div className="fixed inset-0 z-[100] flex items-center justify-center p-4 bg-stone-900/60 backdrop-blur-sm cursor-pointer"
                      onClick={onClose}>
-                    <div className={`bg-white rounded-[2.5rem] shadow-2xl max-w-2xl w-full overflow-hidden border-2 ${evalColors}`}
+                    <div className={`bg-white rounded-[2.5rem] shadow-2xl max-w-2xl w-full overflow-hidden border-2 cursor-default ${evalColors}`}
                          onClick={e => e.stopPropagation()}>
                         <div className="p-8 md:p-10">
                             <div className="flex justify-between items-start mb-6">
