@@ -790,7 +790,7 @@
             const hash = window.location.hash.replace('#', '');
             return hash === 'atlas' ? 'atlas' : 'timeline';
         });
-        const [activeEra, setActiveEra] = useState('all');
+        const [activeEra, setActiveEra] = useState('patriarch');
 
         useEffect(() => {
             const handleHash = () => {
