@@ -268,20 +268,32 @@
             from { opacity: 0; transform: translateY(12px); }
             to { opacity: 1; transform: translateY(0); }
         }
-        .book-stagger { animation: bookStagger 0.4s ease-out both; }
-
         /* Atlas multi-location highlight pulse */
         @keyframes atlasPulse {
             0%   { transform: scale(0.5); opacity: 1; }
             70%  { transform: scale(2.5); opacity: 0.3; }
-            100% { transform: scale(3);   opacity: 0; }
+            100% { transform: scale(3.5); opacity: 0; }
         }
         .atlas-highlight-pulse {
             width: 40px; height: 40px; border-radius: 50%;
             background: var(--pulse-color, #0891b2);
             opacity: 0.6;
-            animation: atlasPulse 1.8s ease-out infinite;
+            animation: atlasPulse 2s ease-out infinite;
             pointer-events: none;
+            overflow: visible;
+        }
+        .atlas-label-tag {
+            white-space: nowrap;
+            color: white;
+            padding: 3px 10px;
+            border-radius: 12px;
+            font-size: 13px;
+            font-weight: 800;
+            font-family: 'Inter', sans-serif;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+            transform: translate(-50%, -45px);
+            pointer-events: none;
+            border: 2px solid white;
         }
     </style>
 </head>
@@ -921,6 +933,8 @@
         const mapRef = useRef(null);
         const mapInstanceRef = useRef(null);
         const markersRef = useRef([]);
+        const [isFocusMode, setIsFocusMode] = useState(false);
+        const [focusedBookName, setFocusedBookName] = useState('');
 
         const eraColors = {
             patriarch: '#0d9488',
@@ -1036,17 +1050,35 @@
             };
         }, []);
 
-        // Filter markers by era
+        // Filter markers by era and focus mode
         useEffect(() => {
             if (!mapInstanceRef.current) return;
+            const isMulti = Array.isArray(focusLocation);
+            const focusList = isMulti ? focusLocation : (focusLocation ? [focusLocation] : []);
+            
             markersRef.current.forEach(marker => {
-                if (activeEra === 'all' || marker._eraId === activeEra) {
-                    marker.addTo(mapInstanceRef.current);
+                const isTarget = focusList.includes(marker._name);
+                const matchesEra = activeEra === 'all' || marker._eraId === activeEra;
+                
+                if (isFocusMode) {
+                    // In focus mode, only show targets
+                    if (isTarget) {
+                        marker.addTo(mapInstanceRef.current);
+                        marker.setOpacity(1);
+                    } else {
+                        marker.remove();
+                    }
                 } else {
-                    marker.remove();
+                    // Normal mode
+                    if (matchesEra) {
+                        marker.addTo(mapInstanceRef.current);
+                        marker.setOpacity(1);
+                    } else {
+                        marker.remove();
+                    }
                 }
             });
-        }, [activeEra]);
+        }, [activeEra, isFocusMode, focusLocation]);
 
         // Support closing map popups via Escape key and clicking completely outside the map
         useEffect(() => {
@@ -1072,13 +1104,11 @@
         }, []);
 
         // Focus location(s) when navigated from Bible Structure page
-        // focusLocation can be a string (single) or array of strings (multi)
         const highlightLayerRef = useRef(null);
         useEffect(() => {
             if (!focusLocation || !mapInstanceRef.current) return;
             const map = mapInstanceRef.current;
-            // Show all markers first
-            markersRef.current.forEach(marker => marker.addTo(map));
+            
             // Clean up previous highlights
             if (highlightLayerRef.current) { highlightLayerRef.current.remove(); highlightLayerRef.current = null; }
 
@@ -1088,11 +1118,13 @@
 
             if (targetLocs.length === 0) return;
 
+            setIsFocusMode(true);
+
             if (isMulti && targetLocs.length > 1) {
-                // Multi-location: fitBounds + highlight circles
+                // Multi-location: fitBounds + permanent pulsing highlights
                 const bounds = L.latLngBounds(targetLocs.map(l => [l.lat, l.lng]));
-                map.flyToBounds(bounds.pad(0.3), { duration: 1.2, maxZoom: 8 });
-                // Add pulsing highlight circles after animation
+                map.flyToBounds(bounds.pad(0.4), { duration: 1.2, maxZoom: 8 });
+                
                 setTimeout(() => {
                     const highlightGroup = L.layerGroup();
                     targetLocs.forEach(loc => {
@@ -1104,44 +1136,76 @@
                             iconSize: [40, 40],
                             iconAnchor: [20, 20],
                         });
-                        L.marker([loc.lat, loc.lng], { icon: pulseIcon, interactive: false }).addTo(highlightGroup);
-                        // Label
+                        L.marker([loc.lat, loc.lng], { icon: pulseIcon, interactive: false, zIndexOffset: -100 }).addTo(highlightGroup);
+                        
+                        // Permanent Label
                         const labelIcon = L.divIcon({
                             className: '',
-                            html: `<div style="white-space:nowrap;background:${color};color:white;padding:2px 8px;border-radius:10px;font-size:12px;font-weight:800;font-family:Inter,sans-serif;box-shadow:0 2px 8px rgba(0,0,0,.25);transform:translateY(-28px);pointer-events:none;">${loc.icon} ${loc.name}</div>`,
-                            iconSize: [0, 0],
+                            html: `<div class="atlas-label-tag" style="background:${color}">${loc.icon} ${loc.name}</div>`,
+                            iconSize: [1, 1],
                             iconAnchor: [0, 0],
                         });
-                        L.marker([loc.lat, loc.lng], { icon: labelIcon, interactive: false }).addTo(highlightGroup);
+                        L.marker([loc.lat, loc.lng], { icon: labelIcon, interactive: false, zIndexOffset: 1000 }).addTo(highlightGroup);
                     });
                     highlightGroup.addTo(map);
                     highlightLayerRef.current = highlightGroup;
-                    // Auto-remove highlights after 8 seconds
-                    setTimeout(() => {
-                        if (highlightLayerRef.current) { highlightLayerRef.current.remove(); highlightLayerRef.current = null; }
-                    }, 8000);
                 }, 1400);
             } else {
                 // Single location: flyTo + open popup
                 const loc = targetLocs[0];
-                const targetMarker = markersRef.current.find(m => {
-                    const ll = m.getLatLng();
-                    return Math.abs(ll.lat - loc.lat) < 0.01 && Math.abs(ll.lng - loc.lng) < 0.01;
-                });
+                const targetMarker = markersRef.current.find(m => m._name === loc.name);
                 if (targetMarker) {
                     map.flyTo([loc.lat, loc.lng], 9, { duration: 1.2 });
-                    setTimeout(() => { targetMarker.openPopup(); }, 1300);
+                    setTimeout(() => { 
+                        targetMarker.openPopup();
+                        // Also show a pulse for single focus
+                        const color = eraColors[loc.era] || '#78716c';
+                        const pulseIcon = L.divIcon({
+                            className: '',
+                            html: `<div class="atlas-highlight-pulse" style="--pulse-color: ${color}"></div>`,
+                            iconSize: [40, 40],
+                            iconAnchor: [20, 20],
+                        });
+                        const highlightGroup = L.layerGroup();
+                        L.marker([loc.lat, loc.lng], { icon: pulseIcon, interactive: false, zIndexOffset: -100 }).addTo(highlightGroup);
+                        highlightGroup.addTo(map);
+                        highlightLayerRef.current = highlightGroup;
+                    }, 1300);
                 }
             }
             if (onClearFocus) onClearFocus();
         }, [focusLocation]);
 
+        const clearFocus = () => {
+            setIsFocusMode(false);
+            if (highlightLayerRef.current) {
+                highlightLayerRef.current.remove();
+                highlightLayerRef.current = null;
+            }
+        };
+
         return (
             <div className="page-enter">
                 <div className="w-full max-w-7xl mx-auto">
                     {/* Map container */}
-                    <div className="rounded-[1.5rem] overflow-hidden shadow-2xl border-2 border-stone-300" style={{ height: 'calc(100vh - 165px)', minHeight: '500px' }}>
+                    <div className="rounded-[1.5rem] overflow-hidden shadow-2xl border-2 border-stone-300 relative" style={{ height: 'calc(100vh - 165px)', minHeight: '500px' }}>
                         <div ref={mapRef} style={{ width: '100%', height: '100%' }}></div>
+                        
+                        {/* Focus Mode Indicator */}
+                        {isFocusMode && (
+                            <div className="absolute top-4 left-1/2 -translate-x-1/2 z-[1000] flex items-center gap-4 bg-white/90 backdrop-blur px-6 py-3 rounded-2xl shadow-xl border border-stone-200">
+                                <div className="flex items-center gap-2">
+                                    <span className="animate-pulse w-3 h-3 rounded-full bg-cyan-500"></span>
+                                    <span className="font-black text-stone-800 tracking-tight">專注模式：書卷相關地點</span>
+                                </div>
+                                <button 
+                                    onClick={clearFocus}
+                                    className="bg-stone-800 text-white px-4 py-1.5 rounded-xl text-xs font-bold hover:bg-black transition-all active:scale-95 shadow-lg"
+                                >
+                                    返回全部地點
+                                </button>
+                            </div>
+                        )}
                     </div>
 
                     {/* Stats bar */}
