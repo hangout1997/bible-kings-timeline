@@ -269,6 +269,20 @@
             to { opacity: 1; transform: translateY(0); }
         }
         .book-stagger { animation: bookStagger 0.4s ease-out both; }
+
+        /* Atlas multi-location highlight pulse */
+        @keyframes atlasPulse {
+            0%   { transform: scale(0.5); opacity: 1; }
+            70%  { transform: scale(2.5); opacity: 0.3; }
+            100% { transform: scale(3);   opacity: 0; }
+        }
+        .atlas-highlight-pulse {
+            width: 40px; height: 40px; border-radius: 50%;
+            background: var(--pulse-color, #0891b2);
+            opacity: 0.6;
+            animation: atlasPulse 1.8s ease-out infinite;
+            pointer-events: none;
+        }
     </style>
 </head>
 <body class="bg-stone-200 text-stone-900">
@@ -1057,20 +1071,65 @@
             };
         }, []);
 
-        // Focus a specific location when navigated from Bible Structure page
+        // Focus location(s) when navigated from Bible Structure page
+        // focusLocation can be a string (single) or array of strings (multi)
+        const highlightLayerRef = useRef(null);
         useEffect(() => {
             if (!focusLocation || !mapInstanceRef.current) return;
+            const map = mapInstanceRef.current;
             // Show all markers first
-            markersRef.current.forEach(marker => marker.addTo(mapInstanceRef.current));
-            // Find the target marker
-            const targetLoc = atlasData.locations.find(loc => loc.name === focusLocation);
-            if (targetLoc) {
+            markersRef.current.forEach(marker => marker.addTo(map));
+            // Clean up previous highlights
+            if (highlightLayerRef.current) { highlightLayerRef.current.remove(); highlightLayerRef.current = null; }
+
+            const isMulti = Array.isArray(focusLocation);
+            const names = isMulti ? focusLocation : [focusLocation];
+            const targetLocs = names.map(n => atlasData.locations.find(l => l.name === n)).filter(Boolean);
+
+            if (targetLocs.length === 0) return;
+
+            if (isMulti && targetLocs.length > 1) {
+                // Multi-location: fitBounds + highlight circles
+                const bounds = L.latLngBounds(targetLocs.map(l => [l.lat, l.lng]));
+                map.flyToBounds(bounds.pad(0.3), { duration: 1.2, maxZoom: 8 });
+                // Add pulsing highlight circles after animation
+                setTimeout(() => {
+                    const highlightGroup = L.layerGroup();
+                    targetLocs.forEach(loc => {
+                        const color = eraColors[loc.era] || '#78716c';
+                        // Outer pulse ring
+                        const pulseIcon = L.divIcon({
+                            className: '',
+                            html: `<div class="atlas-highlight-pulse" style="--pulse-color: ${color}"></div>`,
+                            iconSize: [40, 40],
+                            iconAnchor: [20, 20],
+                        });
+                        L.marker([loc.lat, loc.lng], { icon: pulseIcon, interactive: false }).addTo(highlightGroup);
+                        // Label
+                        const labelIcon = L.divIcon({
+                            className: '',
+                            html: `<div style="white-space:nowrap;background:${color};color:white;padding:2px 8px;border-radius:10px;font-size:12px;font-weight:800;font-family:Inter,sans-serif;box-shadow:0 2px 8px rgba(0,0,0,.25);transform:translateY(-28px);pointer-events:none;">${loc.icon} ${loc.name}</div>`,
+                            iconSize: [0, 0],
+                            iconAnchor: [0, 0],
+                        });
+                        L.marker([loc.lat, loc.lng], { icon: labelIcon, interactive: false }).addTo(highlightGroup);
+                    });
+                    highlightGroup.addTo(map);
+                    highlightLayerRef.current = highlightGroup;
+                    // Auto-remove highlights after 8 seconds
+                    setTimeout(() => {
+                        if (highlightLayerRef.current) { highlightLayerRef.current.remove(); highlightLayerRef.current = null; }
+                    }, 8000);
+                }, 1400);
+            } else {
+                // Single location: flyTo + open popup
+                const loc = targetLocs[0];
                 const targetMarker = markersRef.current.find(m => {
                     const ll = m.getLatLng();
-                    return Math.abs(ll.lat - targetLoc.lat) < 0.01 && Math.abs(ll.lng - targetLoc.lng) < 0.01;
+                    return Math.abs(ll.lat - loc.lat) < 0.01 && Math.abs(ll.lng - loc.lng) < 0.01;
                 });
                 if (targetMarker) {
-                    mapInstanceRef.current.flyTo([targetLoc.lat, targetLoc.lng], 9, { duration: 1.2 });
+                    map.flyTo([loc.lat, loc.lng], 9, { duration: 1.2 });
                     setTimeout(() => { targetMarker.openPopup(); }, 1300);
                 }
             }
@@ -1360,12 +1419,12 @@
                                     <button
                                         onClick={() => {
                                             onClose();
-                                            if (onNavigateToLocation) onNavigateToLocation(relatedLocations[0].name);
+                                            if (onNavigateToLocation) onNavigateToLocation(relatedLocations.map(l => l.name));
                                         }}
                                         className="mt-3 text-xs font-bold text-cyan-700 hover:text-cyan-900 transition-colors flex items-center gap-1"
                                         style={{ fontFamily: 'Inter, sans-serif' }}
                                     >
-                                        🗺️ 在聖經地圖上查看
+                                        🗺️ 在聖經地圖上查看全部 {relatedLocations.length} 個地點
                                     </button>
                                 </div>
                             )}
