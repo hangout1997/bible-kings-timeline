@@ -934,7 +934,7 @@
         const mapInstanceRef = useRef(null);
         const markersRef = useRef([]);
         const [isFocusMode, setIsFocusMode] = useState(false);
-        const [focusedBookName, setFocusedBookName] = useState('');
+        const [currentFocusList, setCurrentFocusList] = useState([]);
 
         const eraColors = {
             patriarch: '#0d9488',
@@ -989,6 +989,7 @@
 
                 const marker = L.marker([loc.lat, loc.lng], { icon }).addTo(map);
                 marker._eraId = loc.era;
+                marker._name = loc.name;
 
                 const popupContent = `
                     <div class="map-popup">
@@ -1053,11 +1054,9 @@
         // Filter markers by era and focus mode
         useEffect(() => {
             if (!mapInstanceRef.current) return;
-            const isMulti = Array.isArray(focusLocation);
-            const focusList = isMulti ? focusLocation : (focusLocation ? [focusLocation] : []);
             
             markersRef.current.forEach(marker => {
-                const isTarget = focusList.includes(marker._name);
+                const isTarget = currentFocusList.includes(marker._name);
                 const matchesEra = activeEra === 'all' || marker._eraId === activeEra;
                 
                 if (isFocusMode) {
@@ -1078,7 +1077,7 @@
                     }
                 }
             });
-        }, [activeEra, isFocusMode, focusLocation]);
+        }, [activeEra, isFocusMode, currentFocusList]);
 
         // Support closing map popups via Escape key and clicking completely outside the map
         useEffect(() => {
@@ -1109,16 +1108,17 @@
             if (!focusLocation || !mapInstanceRef.current) return;
             const map = mapInstanceRef.current;
             
-            // Clean up previous highlights
-            if (highlightLayerRef.current) { highlightLayerRef.current.remove(); highlightLayerRef.current = null; }
-
+            // Sync to local state
             const isMulti = Array.isArray(focusLocation);
             const names = isMulti ? focusLocation : [focusLocation];
             const targetLocs = names.map(n => atlasData.locations.find(l => l.name === n)).filter(Boolean);
-
             if (targetLocs.length === 0) return;
 
+            setCurrentFocusList(names);
             setIsFocusMode(true);
+            
+            // Clean up previous highlights
+            if (highlightLayerRef.current) { highlightLayerRef.current.remove(); highlightLayerRef.current = null; }
 
             if (isMulti && targetLocs.length > 1) {
                 // Multi-location: fitBounds + permanent pulsing highlights
@@ -1153,31 +1153,36 @@
             } else {
                 // Single location: flyTo + open popup
                 const loc = targetLocs[0];
-                const targetMarker = markersRef.current.find(m => m._name === loc.name);
-                if (targetMarker) {
-                    map.flyTo([loc.lat, loc.lng], 9, { duration: 1.2 });
-                    setTimeout(() => { 
+                map.flyTo([loc.lat, loc.lng], 9, { duration: 1.2 });
+                
+                setTimeout(() => { 
+                    // Verify correct marker is on map and open it
+                    const targetMarker = markersRef.current.find(m => m._name === loc.name);
+                    if (targetMarker) {
+                        targetMarker.addTo(map); // Force add just in case
                         targetMarker.openPopup();
-                        // Also show a pulse for single focus
-                        const color = eraColors[loc.era] || '#78716c';
-                        const pulseIcon = L.divIcon({
-                            className: '',
-                            html: `<div class="atlas-highlight-pulse" style="--pulse-color: ${color}"></div>`,
-                            iconSize: [40, 40],
-                            iconAnchor: [20, 20],
-                        });
-                        const highlightGroup = L.layerGroup();
-                        L.marker([loc.lat, loc.lng], { icon: pulseIcon, interactive: false, zIndexOffset: -100 }).addTo(highlightGroup);
-                        highlightGroup.addTo(map);
-                        highlightLayerRef.current = highlightGroup;
-                    }, 1300);
-                }
+                    }
+                    
+                    // Also show a pulse for single focus
+                    const color = eraColors[loc.era] || '#78716c';
+                    const pulseIcon = L.divIcon({
+                        className: '',
+                        html: `<div class="atlas-highlight-pulse" style="--pulse-color: ${color}"></div>`,
+                        iconSize: [40, 40],
+                        iconAnchor: [20, 20],
+                    });
+                    const highlightGroup = L.layerGroup();
+                    L.marker([loc.lat, loc.lng], { icon: pulseIcon, interactive: false, zIndexOffset: -100 }).addTo(highlightGroup);
+                    highlightGroup.addTo(map);
+                    highlightLayerRef.current = highlightGroup;
+                }, 1300);
             }
             if (onClearFocus) onClearFocus();
         }, [focusLocation]);
 
         const clearFocus = () => {
             setIsFocusMode(false);
+            setCurrentFocusList([]);
             if (highlightLayerRef.current) {
                 highlightLayerRef.current.remove();
                 highlightLayerRef.current = null;
