@@ -211,6 +211,64 @@
             background: radial-gradient(circle at 30% 30%, rgba(255,255,255,0.25), transparent 60%);
         }
         .feature-card:hover::before { opacity: 1; }
+        /* Bible Structure Page */
+        .bible-book-card {
+            position: relative;
+            padding: 1rem 1.25rem;
+            border-radius: 1rem;
+            border: 1.5px solid rgba(0,0,0,0.06);
+            cursor: pointer;
+            transition: all 0.25s cubic-bezier(.25,.8,.25,1);
+            overflow: hidden;
+        }
+        .bible-book-card:hover {
+            transform: translateY(-3px) scale(1.01);
+            box-shadow: 0 12px 24px -8px rgba(0,0,0,0.15);
+        }
+        .bible-book-card::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            opacity: 0;
+            transition: opacity 0.25s ease;
+            border-radius: 1rem;
+            background: radial-gradient(circle at 20% 20%, rgba(255,255,255,0.4), transparent 60%);
+        }
+        .bible-book-card:hover::before { opacity: 1; }
+        .bible-section-header {
+            position: relative;
+            padding-left: 1.25rem;
+        }
+        .bible-section-header::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 4px;
+            height: 70%;
+            border-radius: 4px;
+        }
+        .bible-testament-divider {
+            position: relative;
+            text-align: center;
+            margin: 3rem 0 2rem;
+        }
+        .bible-testament-divider::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 0;
+            right: 0;
+            height: 2px;
+            background: linear-gradient(90deg, transparent, currentColor, transparent);
+            opacity: 0.15;
+        }
+        @keyframes bookStagger {
+            from { opacity: 0; transform: translateY(12px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        .book-stagger { animation: bookStagger 0.4s ease-out both; }
     </style>
 </head>
 <body class="bg-stone-200 text-stone-900">
@@ -904,6 +962,320 @@
     };
 
     // ═════════════════════════════════════════════════════
+    //  PAGE 3: BIBLE STRUCTURE (聖經架構)
+    // ═════════════════════════════════════════════════════
+
+    const bibleStructureData = {
+        oldTestament: {
+            title: '舊約聖經',
+            titleEn: 'Old Testament',
+            count: 39,
+            desc: '描述神創造宇宙與人類、撒但的干擾、人類的墮落，以及神為拯救人類所預備的救恩計畫，其中包括律法書、歷史書、詩歌智慧書與先知書等。',
+            sections: [
+                {
+                    name: '律法書（摩西五經）',
+                    nameEn: 'Pentateuch / Torah',
+                    count: 5,
+                    color: '#b45309',
+                    bg: 'from-amber-50 to-yellow-50',
+                    icon: '📜',
+                    books: [
+                        { name: '創世記', nameEn: 'Genesis', desc: '神創造天地萬物與人類；人類墮落；洪水與巴別塔；族長亞伯拉罕、以撒、雅各、約瑟的事蹟。' },
+                        { name: '出埃及記', nameEn: 'Exodus', desc: '以色列人在埃及為奴；摩西帶領出埃及；十災與逾越節；過紅海；西奈山領受十誡與律法。' },
+                        { name: '利未記', nameEn: 'Leviticus', desc: '祭祀條例、潔淨與不潔淨的規定、贖罪日、聖潔法則，建立以色列人敬拜神的方式。' },
+                        { name: '民數記', nameEn: 'Numbers', desc: '以色列人在曠野漂流四十年的記載；兩次人口普查；百姓多次悖逆與神的管教。' },
+                        { name: '申命記', nameEn: 'Deuteronomy', desc: '摩西臨終前的三篇講道，重申律法與盟約；摩西之歌與祝福；摩西之死。' },
+                    ]
+                },
+                {
+                    name: '歷史書',
+                    nameEn: 'Historical Books',
+                    count: 12,
+                    color: '#0369a1',
+                    bg: 'from-sky-50 to-blue-50',
+                    icon: '🏛️',
+                    books: [
+                        { name: '約書亞記', nameEn: 'Joshua', desc: '記述摩西的繼承人約書亞率領以色列人進迦南的經過。' },
+                        { name: '士師記', nameEn: 'Judges', desc: '以色列人在迦南地反覆悖逆神、受壓制、呼求神、蒙拯救的循環；記載多位士師的事蹟。' },
+                        { name: '路得記', nameEn: 'Ruth', desc: '摩押女子路得忠貞跟隨婆婆拿俄米；波阿斯作近親救贖者；大衛的曾祖母。' },
+                        { name: '撒母耳記上', nameEn: '1 Samuel', desc: '撒母耳、掃羅、大衛的故事。' },
+                        { name: '撒母耳記下', nameEn: '2 Samuel', desc: '大衛做以色列與猶大的王，押沙龍的故事。' },
+                        { name: '列王紀上', nameEn: '1 Kings', desc: '所羅門的故事，與以色列分裂為猶大、以色列兩國後之諸王之事。' },
+                        { name: '列王紀下', nameEn: '2 Kings', desc: '先知以利沙、以色列王耶戶的故事。' },
+                        { name: '歷代志上', nameEn: '1 Chronicles', desc: '講述以色列人血脈家譜關係，並大衛的記事。' },
+                        { name: '歷代志下', nameEn: '2 Chronicles', desc: '所羅門的記事、建造聖殿、以色列分裂、猶大各王：亞撒王→約沙法→約蘭→亞哈謝→亞她利雅篡位→約阿施→亞瑪謝→烏西雅→約坦→亞哈斯→希西家→瑪拿西→亞們→約西亞→約哈斯→約雅敬→約雅斤→西底家。' },
+                        { name: '以斯拉記', nameEn: 'Ezra', desc: '塞魯士命猶大人返國，重建聖殿；以斯拉帶領第二批歸回，推動信仰復興。' },
+                        { name: '尼希米記', nameEn: 'Nehemiah', desc: '祭司尼希米重建耶路撒冷城牆，恢復聖約與敬拜的秩序。' },
+                        { name: '以斯帖記', nameEn: 'Esther', desc: '亞哈隨魯王與王后以斯帖對猶大人的歷史；普珥節的由來。' },
+                    ]
+                },
+                {
+                    name: '詩歌與智慧書',
+                    nameEn: 'Poetry & Wisdom',
+                    count: 5,
+                    color: '#7c3aed',
+                    bg: 'from-violet-50 to-purple-50',
+                    icon: '🎵',
+                    books: [
+                        { name: '約伯記', nameEn: 'Job', desc: '義人約伯受苦的故事；探討苦難的意義；神從旋風中回應，揭示神的主權與智慧。' },
+                        { name: '詩篇', nameEn: 'Psalms', desc: '150篇詩歌與禱告的合集；涵蓋讚美、哀嘆、感恩、智慧等主題；大衛為主要作者。' },
+                        { name: '箴言', nameEn: 'Proverbs', desc: '所羅門等人的智慧格言集；「敬畏耶和華是智慧的開端」；涵蓋生活各層面的實用智慧。' },
+                        { name: '傳道書', nameEn: 'Ecclesiastes', desc: '傳道者省思人生的虛空與意義；「日光之下並無新事」；結論是敬畏神、謹守誡命。' },
+                        { name: '雅歌', nameEn: 'Song of Songs', desc: '描繪愛情之美的詩歌；傳統上也被視為神與子民之間愛的寓意。' },
+                    ]
+                },
+                {
+                    name: '預言書（先知書）',
+                    nameEn: 'Prophetic Books',
+                    count: 17,
+                    color: '#dc2626',
+                    bg: 'from-red-50 to-rose-50',
+                    icon: '🔥',
+                    books: [
+                        { name: '以賽亞書', nameEn: 'Isaiah', desc: '被稱為「舊約的福音書」；預言彌賽亞的降生（7章）與受苦（53章）；神的審判與救贖。', major: true },
+                        { name: '耶利米書', nameEn: 'Jeremiah', desc: '眼淚先知耶利米在猶大滅亡前的警告與預言；預言七十年被擄與新約（31:31）。', major: true },
+                        { name: '耶利米哀歌', nameEn: 'Lamentations', desc: '耶路撒冷陷落後的五首哀歌；在極深的悲痛中仍宣告神的信實與慈愛。', major: true },
+                        { name: '以西結書', nameEn: 'Ezekiel', desc: '被擄至巴比倫的祭司以西結所見的異象；枯骨復甦的異象；新聖殿的藍圖。', major: true },
+                        { name: '但以理書', nameEn: 'Daniel', desc: '但以理在巴比倫宮廷的信仰見證；獅子坑；解夢；末世異象與七十個七的預言。', major: true },
+                        { name: '何西阿書', nameEn: 'Hosea', desc: '先知以婚姻象徵神對以色列不渝之愛；「我要以慈繩愛索牽引你們」。' },
+                        { name: '約珥書', nameEn: 'Joel', desc: '以蝗災警告審判；預言末後聖靈澆灌全人類（使徒行傳2章引用）。' },
+                        { name: '阿摩司書', nameEn: 'Amos', desc: '提哥亞牧人；嚴斥社會不公與虛假敬拜；「惟願公平如大水滾滾」。' },
+                        { name: '俄巴底亞書', nameEn: 'Obadiah', desc: '最短的先知書；預言以東因欺壓兄弟以色列後裔必遭審判。' },
+                        { name: '約拿書', nameEn: 'Jonah', desc: '被差往亞述首都尼尼微；魚腹三日；全城悔改；預表基督復活。' },
+                        { name: '彌迦書', nameEn: 'Micah', desc: '預言彌賽亞降生伯利恆（5:2）；「行公義、好憐憫、存謙卑的心與神同行」。' },
+                        { name: '那鴻書', nameEn: 'Nahum', desc: '預言亞述首都尼尼微必傾覆；約拿後約150年，尼尼微果真滅亡。' },
+                        { name: '哈巴谷書', nameEn: 'Habakkuk', desc: '與神對話的先知；「義人必因信得生」；面對巴比倫侵略仍歡呼讚美神。' },
+                        { name: '西番雅書', nameEn: 'Zephaniah', desc: '預言耶和華大日降臨；呼籲謙卑悔改；末日中有餘民得救。' },
+                        { name: '哈該書', nameEn: 'Haggai', desc: '被擄歸回後鼓勵百姓重建聖殿；「你們要省察自己的行為」。' },
+                        { name: '撒迦利亞書', nameEn: 'Zechariah', desc: '八個夜間異象；預言彌賽亞騎驢進耶路撒冷（9:9）與被扎（12:10）。' },
+                        { name: '瑪拉基書', nameEn: 'Malachi', desc: '舊約最後一位先知；責備百姓對神的輕慢；預言以利亞再來；為新約開路。' },
+                    ]
+                },
+            ]
+        },
+        newTestament: {
+            title: '新約聖經',
+            titleEn: 'New Testament',
+            count: 27,
+            desc: '闡述耶穌基督的生平、教導、救贖與使徒時期教會的建立，最終描繪末後的盼望與完全救贖。',
+            sections: [
+                {
+                    name: '福音書（耶穌行跡）',
+                    nameEn: 'The Gospels',
+                    count: 4,
+                    color: '#0d9488',
+                    bg: 'from-teal-50 to-emerald-50',
+                    icon: '✝️',
+                    books: [
+                        { name: '馬太福音', nameEn: 'Matthew', desc: '以猶太人為對象，強調耶穌是舊約預言的彌賽亞君王；收錄登山寶訓等五大講論。' },
+                        { name: '馬可福音', nameEn: 'Mark', desc: '最早成書的福音書；以簡潔生動的筆法記載耶穌的行動與神蹟；強調耶穌是受苦的僕人。' },
+                        { name: '路加福音', nameEn: 'Luke', desc: '醫生路加所寫，最詳細的福音書；強調耶穌對弱者、女性、罪人的憐憫與接納。' },
+                        { name: '約翰福音', nameEn: 'John', desc: '與前三卷不同的神學視角；七個「我是」宣告；強調耶穌的神性與永生的應許。' },
+                    ]
+                },
+                {
+                    name: '歷史書',
+                    nameEn: 'History',
+                    count: 1,
+                    color: '#2563eb',
+                    bg: 'from-blue-50 to-indigo-50',
+                    icon: '🌍',
+                    books: [
+                        { name: '使徒行傳', nameEn: 'Acts', desc: '聖靈降臨與初代教會的建立；彼得與保羅的宣教旅程；福音從耶路撒冷傳到地極。' },
+                    ]
+                },
+                {
+                    name: '保羅書信（收信對象）',
+                    nameEn: 'Pauline Epistles',
+                    count: 14,
+                    color: '#c2410c',
+                    bg: 'from-orange-50 to-amber-50',
+                    icon: '✉️',
+                    books: [
+                        { name: '羅馬書', nameEn: 'Romans', desc: '保羅神學的巔峰之作；系統闡述因信稱義、成聖、揀選與基督徒的生活。' },
+                        { name: '哥林多前書', nameEn: '1 Corinthians', desc: '處理教會分裂、道德問題、屬靈恩賜；著名的「愛的真諦」（13章）。' },
+                        { name: '哥林多後書', nameEn: '2 Corinthians', desc: '保羅為使徒身分辯護；軟弱中的剛強；「我的恩典夠你用的」。' },
+                        { name: '加拉太書', nameEn: 'Galatians', desc: '駁斥猶太主義者；強調因信稱義的自由；「基督釋放了我們，叫我們得以自由」。' },
+                        { name: '以弗所書', nameEn: 'Ephesians', desc: '論述教會是基督的身體；揭示神在基督裡的永恆旨意；屬靈爭戰的全副軍裝。' },
+                        { name: '腓立比書', nameEn: 'Philippians', desc: '喜樂書信；保羅在獄中仍教導喜樂；基督虛己的頌歌（2:5-11）。' },
+                        { name: '歌羅西書', nameEn: 'Colossians', desc: '基督在萬有中的超越地位；「祂是那不能看見之神的像，是首生的，在一切被造的以先」。' },
+                        { name: '帖撒羅尼迦前書', nameEn: '1 Thessalonians', desc: '安慰初信者對基督再來的盼望；鼓勵聖潔生活。' },
+                        { name: '帖撒羅尼迦後書', nameEn: '2 Thessalonians', desc: '澄清末日時間表的誤解；勉勵持守信仰、勤勉工作。' },
+                        { name: '提摩太前書', nameEn: '1 Timothy', desc: '教牧書信；指導年輕牧者提摩太管理教會、對抗異端。' },
+                        { name: '提摩太後書', nameEn: '2 Timothy', desc: '保羅殉道前的最後書信；「那美好的仗我已經打過了」。' },
+                        { name: '提多書', nameEn: 'Titus', desc: '教牧書信；指導提多在克里特建立教會秩序與健全教導。' },
+                        { name: '腓利門書', nameEn: 'Philemon', desc: '最短的保羅書信；為逃走的奴隸阿尼西謀求赦免，體現基督裡的新關係。' },
+                        { name: '希伯來書', nameEn: 'Hebrews', desc: '論證基督超越天使、摩西、舊約祭司體系；信心英雄榜（11章）；新約中品。' },
+                    ]
+                },
+                {
+                    name: '一般書信（寫信人）',
+                    nameEn: 'General Epistles',
+                    count: 7,
+                    color: '#4338ca',
+                    bg: 'from-indigo-50 to-violet-50',
+                    icon: '📨',
+                    books: [
+                        { name: '雅各書', nameEn: 'James', desc: '信心與行為並行；「信心沒有行為也是死的」；舌頭的力量；忍耐的智慧。' },
+                        { name: '彼得前書', nameEn: '1 Peter', desc: '安慰受苦的信徒；「你們是被揀選的族類、是有君尊的祭司」。' },
+                        { name: '彼得後書', nameEn: '2 Peter', desc: '警告假教師；主的日子必要來到；勉勵在恩典和知識上長進。' },
+                        { name: '約翰一書', nameEn: '1 John', desc: '「神就是光」「神就是愛」；辨別真偽的標準；彼此相愛的命令。' },
+                        { name: '約翰二書', nameEn: '2 John', desc: '在真理中行走；警告不可接待傳異端的人。' },
+                        { name: '約翰三書', nameEn: '3 John', desc: '稱讚該猶的忠心接待；責備丟特腓的驕傲；勉勵效法善行。' },
+                        { name: '猶大書', nameEn: 'Jude', desc: '嚴厲警告滲入教會的假教師；「要為從前一次交付聖徒的真道竭力地爭辯」。' },
+                    ]
+                },
+                {
+                    name: '預言書',
+                    nameEn: 'Prophecy',
+                    count: 1,
+                    color: '#be123c',
+                    bg: 'from-rose-50 to-pink-50',
+                    icon: '👑',
+                    books: [
+                        { name: '啟示錄', nameEn: 'Revelation', desc: '使徒約翰在拔摩島所見的異象；七教會的書信；末世審判、大災難、基督再來、新天新地的終極盼望。' },
+                    ]
+                },
+            ]
+        },
+    };
+
+    const BibleStructurePage = () => {
+        const [expandedBook, setExpandedBook] = useState(null);
+        const [activeTestament, setActiveTestament] = useState('all');
+
+        const BookCard = ({ book, sectionColor, index }) => (
+            <div
+                className={`bible-book-card bg-gradient-to-br ${book.major ? 'ring-1 ring-red-200' : ''}`}
+                style={{
+                    background: `linear-gradient(135deg, white, rgba(${sectionColor === '#b45309' ? '180,83,9' : sectionColor === '#0369a1' ? '3,105,161' : sectionColor === '#7c3aed' ? '124,58,237' : sectionColor === '#dc2626' ? '220,38,38' : sectionColor === '#0d9488' ? '13,148,136' : sectionColor === '#2563eb' ? '37,99,235' : sectionColor === '#c2410c' ? '194,65,12' : sectionColor === '#4338ca' ? '67,56,202' : '190,18,60'}, 0.04))`,
+                    animationDelay: `${index * 0.05}s`,
+                }}
+                onClick={() => setExpandedBook(expandedBook === book.nameEn ? null : book.nameEn)}
+            >
+                <div className="flex justify-between items-start gap-2">
+                    <div className="flex-1 min-w-0">
+                        <div className="flex items-center gap-2 flex-wrap">
+                            <span className="font-black text-stone-800 text-[15px] md:text-base">{book.name}</span>
+                            {book.major && (
+                                <span className="text-[10px] font-bold text-red-600 bg-red-50 px-1.5 py-0.5 rounded" style={{ fontFamily: 'Inter, sans-serif' }}>大先知書</span>
+                            )}
+                        </div>
+                        <span className="text-[11px] font-bold text-stone-400 block mt-0.5" style={{ fontFamily: 'Inter, sans-serif' }}>{book.nameEn}</span>
+                    </div>
+                    <span className="text-stone-300 text-sm mt-1 shrink-0 transition-transform" style={{ transform: expandedBook === book.nameEn ? 'rotate(180deg)' : 'none' }}>▼</span>
+                </div>
+                {expandedBook === book.nameEn && (
+                    <p className="text-[13px] text-stone-600 leading-relaxed mt-2 pt-2 border-t border-stone-100 italic">{book.desc}</p>
+                )}
+            </div>
+        );
+
+        const SectionBlock = ({ section, testament }) => (
+            <div className="mb-10">
+                <div className="bible-section-header mb-4" style={{ '--section-color': section.color }}>
+                    <div style={{ position: 'absolute', left: 0, top: '50%', transform: 'translateY(-50%)', width: '4px', height: '70%', borderRadius: '4px', background: section.color }}></div>
+                    <div className="flex items-center gap-3 flex-wrap">
+                        <span className="text-2xl">{section.icon}</span>
+                        <h3 className="text-xl md:text-2xl font-black text-stone-800" style={{ fontFamily: 'Noto Serif TC, serif' }}>{section.name}</h3>
+                        <span className="text-[11px] font-bold px-2 py-0.5 rounded-full text-white" style={{ background: section.color, fontFamily: 'Inter, sans-serif' }}>
+                            {section.count} 卷
+                        </span>
+                        <span className="text-[11px] font-bold text-stone-400 hidden md:inline" style={{ fontFamily: 'Inter, sans-serif' }}>{section.nameEn}</span>
+                    </div>
+                </div>
+                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-2.5">
+                    {section.books.map((book, i) => (
+                        <BookCard key={book.nameEn} book={book} sectionColor={section.color} index={i} />
+                    ))}
+                </div>
+            </div>
+        );
+
+        const TestamentBlock = ({ data, gradient, borderColor }) => (
+            <div className="mb-8">
+                <div className="bible-testament-divider" style={{ color: borderColor }}>
+                    <div className="inline-flex items-center gap-3 bg-stone-50 px-6 py-2 relative z-10 rounded-full">
+                        <span className="text-3xl md:text-4xl font-black text-stone-800" style={{ fontFamily: 'Noto Serif TC, serif' }}>{data.title}</span>
+                        <span className="text-sm font-bold text-stone-400" style={{ fontFamily: 'Inter, sans-serif' }}>{data.titleEn}</span>
+                        <span className="text-[11px] font-bold px-2.5 py-1 rounded-full text-white" style={{ background: borderColor, fontFamily: 'Inter, sans-serif' }}>
+                            {data.count} 卷
+                        </span>
+                    </div>
+                </div>
+                <p className="text-center text-stone-500 text-sm md:text-base leading-relaxed max-w-3xl mx-auto mb-8 italic px-4">{data.desc}</p>
+                {data.sections.map((section, i) => (
+                    <SectionBlock key={i} section={section} testament={data === bibleStructureData.oldTestament ? 'old' : 'new'} />
+                ))}
+            </div>
+        );
+
+        const otData = bibleStructureData.oldTestament;
+        const ntData = bibleStructureData.newTestament;
+
+        return (
+            <div className="page-enter">
+                <div className="bg-stone-50 w-full max-w-7xl mx-auto shadow-2xl rounded-[3rem] p-6 md:p-12 border border-stone-300">
+                    {/* Header */}
+                    <div className="text-center mb-8">
+                        <h2 className="text-3xl md:text-4xl font-black text-stone-800 mb-3" style={{ fontFamily: 'Noto Serif TC, serif' }}>聖經架構總覽</h2>
+                        <p className="text-stone-500 text-sm md:text-base max-w-2xl mx-auto leading-relaxed">
+                            聖經共66卷，舊約39卷、新約27卷，橫跨約1500年寫成。下方以書卷分類方式呈現其完整結構。
+                        </p>
+                    </div>
+
+                    {/* Stats bar */}
+                    <div className="flex flex-wrap justify-center gap-3 mb-8">
+                        <button
+                            className={`px-4 py-2 rounded-xl text-sm font-bold transition-all ${
+                                activeTestament === 'all' ? 'bg-stone-800 text-white shadow-lg' : 'bg-stone-100 text-stone-500 hover:bg-stone-200'
+                            }`}
+                            onClick={() => setActiveTestament('all')}
+                        >
+                            📖 全部 66 卷
+                        </button>
+                        <button
+                            className={`px-4 py-2 rounded-xl text-sm font-bold transition-all ${
+                                activeTestament === 'old' ? 'bg-amber-700 text-white shadow-lg' : 'bg-stone-100 text-stone-500 hover:bg-stone-200'
+                            }`}
+                            onClick={() => setActiveTestament('old')}
+                        >
+                            📜 舊約 39 卷
+                        </button>
+                        <button
+                            className={`px-4 py-2 rounded-xl text-sm font-bold transition-all ${
+                                activeTestament === 'new' ? 'bg-teal-700 text-white shadow-lg' : 'bg-stone-100 text-stone-500 hover:bg-stone-200'
+                            }`}
+                            onClick={() => setActiveTestament('new')}
+                        >
+                            ✝️ 新約 27 卷
+                        </button>
+                    </div>
+
+                    {/* Content */}
+                    {(activeTestament === 'all' || activeTestament === 'old') && (
+                        <TestamentBlock data={otData} gradient="from-amber-600 to-orange-600" borderColor="#b45309" />
+                    )}
+                    {(activeTestament === 'all' || activeTestament === 'new') && (
+                        <TestamentBlock data={ntData} gradient="from-teal-600 to-emerald-600" borderColor="#0d9488" />
+                    )}
+
+                    {/* Footer note */}
+                    <div className="mt-12 pt-8 border-t border-stone-200">
+                        <div className="bg-stone-100 rounded-2xl p-5 max-w-4xl mx-auto">
+                            <p className="text-[13px] text-stone-500 leading-relaxed">
+                                <strong>分類說明：</strong>本頁按照基督教新教傳統的分類方式排列。天主教聖經含有7卷次經（多俾亞傳、猶滴傳、瑪加伯上下、智慧篇、德訓篇、巴錄書），共73卷。
+                                東正教聖經則額外收錄部分書卷。希伯來聖經（塔納赫）的書卷數量相同但排列順序不同，分為律法書（Torah）、先知書（Nevi'im）、聖卷（Ketuvim）三大部分。<br/>
+                                <strong>先知書分類：</strong>傳統將以賽亞書、耶利米書、耶利米哀歌、以西結書、但以理書歸為「大先知書」（Major Prophets），其餘12卷為「小先知書」（Minor Prophets），此分類依書卷篇幅長短而非重要性。
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        );
+    };
+
+    // ═════════════════════════════════════════════════════
     //  PRIVACY PAGE
     // ═════════════════════════════════════════════════════
     const PrivacyPage = () => {
@@ -1000,7 +1372,23 @@
                 </div>
 
                 {/* Feature cards */}
-                <div className="relative z-10 grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-8 w-full max-w-3xl landing-fadeup landing-fadeup-delay3">
+                <div className="relative z-10 grid grid-cols-1 md:grid-cols-3 gap-6 md:gap-8 w-full max-w-5xl landing-fadeup landing-fadeup-delay3">
+                    {/* Bible Structure Card */}
+                    <div className="feature-card bg-gradient-to-br from-indigo-50 to-violet-50"
+                         onClick={() => onNavigate('structure')}>
+                        <div className="text-5xl mb-4 landing-float" style={{ animationDelay: '0.3s' }}>📖</div>
+                        <h2 className="text-2xl font-black text-stone-800 mb-2" style={{ fontFamily: 'Noto Serif TC, serif' }}>
+                            聖經架構
+                        </h2>
+                        <p className="text-stone-500 text-sm leading-relaxed mb-4">
+                            66卷書的完整分類與簡介，從律法書到啟示錄，一覽聖經的全貌架構。
+                        </p>
+                        <div className="flex items-center gap-2 text-indigo-700 font-bold text-sm" style={{ fontFamily: 'Inter, sans-serif' }}>
+                            <span>開始探索</span>
+                            <span>→</span>
+                        </div>
+                    </div>
+
                     {/* Timeline Card */}
                     <div className="feature-card bg-gradient-to-br from-amber-50 to-orange-50"
                          onClick={() => onNavigate('timeline')}>
@@ -1060,6 +1448,7 @@
             const hash = window.location.hash.replace('#', '');
             if (hash === 'atlas') return 'atlas';
             if (hash === 'timeline') return 'timeline';
+            if (hash === 'structure') return 'structure';
             if (hash === 'privacy') return 'privacy';
             return 'home';
         });
@@ -1070,6 +1459,7 @@
                 const hash = window.location.hash.replace('#', '');
                 if (hash === 'atlas') setCurrentPage('atlas');
                 else if (hash === 'timeline') setCurrentPage('timeline');
+                else if (hash === 'structure') setCurrentPage('structure');
                 else if (hash === 'privacy') setCurrentPage('privacy');
                 else setCurrentPage('home');
             };
@@ -1099,11 +1489,15 @@
                         </h1>
                         
                         <div className="flex bg-stone-100 p-1 rounded-xl">
-                            <button className={`px-4 py-1.5 rounded-lg font-bold text-sm transition-all ${currentPage === 'timeline' ? 'bg-white text-stone-900 shadow cursor-default' : 'text-stone-500 hover:text-stone-800 cursor-pointer'}`}
+                            <button className={`px-3 md:px-4 py-1.5 rounded-lg font-bold text-xs md:text-sm transition-all ${currentPage === 'structure' ? 'bg-white text-stone-900 shadow cursor-default' : 'text-stone-500 hover:text-stone-800 cursor-pointer'}`}
+                                    onClick={() => navigate('structure')}>
+                                📖 聖經架構
+                            </button>
+                            <button className={`px-3 md:px-4 py-1.5 rounded-lg font-bold text-xs md:text-sm transition-all ${currentPage === 'timeline' ? 'bg-white text-stone-900 shadow cursor-default' : 'text-stone-500 hover:text-stone-800 cursor-pointer'}`}
                                     onClick={() => navigate('timeline')}>
                                 📜 舊約年代表
                             </button>
-                            <button className={`px-4 py-1.5 rounded-lg font-bold text-sm transition-all ${currentPage === 'atlas' ? 'bg-white text-stone-900 shadow cursor-default' : 'text-stone-500 hover:text-stone-800 cursor-pointer'}`}
+                            <button className={`px-3 md:px-4 py-1.5 rounded-lg font-bold text-xs md:text-sm transition-all ${currentPage === 'atlas' ? 'bg-white text-stone-900 shadow cursor-default' : 'text-stone-500 hover:text-stone-800 cursor-pointer'}`}
                                     onClick={() => navigate('atlas')}>
                                 🗺️ 聖經地理
                             </button>
@@ -1135,6 +1529,7 @@
 
                 {/* ── Page Content ── */}
                 <main className="w-full max-w-7xl flex-grow flex flex-col">
+                    {currentPage === 'structure' && <BibleStructurePage />}
                     {currentPage === 'timeline' && <TimelinePage />}
                     {currentPage === 'atlas' && <AtlasPage activeEra={activeEra} />}
                     {currentPage === 'privacy' && <PrivacyPage />}
