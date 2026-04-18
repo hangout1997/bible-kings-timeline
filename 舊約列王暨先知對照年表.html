@@ -391,89 +391,207 @@
             { id: 'united',      name: '統一王國',   color: '#2563eb' },
             { id: 'divided',     name: '分裂王國',   color: '#dc2626' },
             { id: 'empire',      name: '外邦帝國',   color: '#7c3aed' },
+            { id: 'gospel',      name: '福音&事工',  color: '#0891b2' },
+            { id: 'epistle',     name: '書信&啟示',  color: '#be185d' },
         ],
         locations: [
-            // ── 族長時期 ──
+            // ══════════════════════ 族長時期 ══════════════════════
             { name: '吾珥', nameEn: 'Ur of the Chaldees', lat: 30.9640, lng: 46.1028, era: 'patriarch',
+              books: ['Genesis'],
               desc: '亞伯拉罕的故鄉，蘇美文明中心城市。神呼召亞伯拉罕離開此地前往應許之地。', ref: '創11:31, 15:7', icon: '🏛️',
               rcuvText: '耶和華又對他說：「我是耶和華，曾領你出了迦勒底的吾珥，為要將這地賜你為業。」（創15:7）' },
             { name: '哈蘭', nameEn: 'Haran', lat: 36.8614, lng: 39.0310, era: 'patriarch',
+              books: ['Genesis'],
               desc: '亞伯拉罕家族遷居之處；他拉死於此處。雅各逃往此處投靠拉班二十年。', ref: '創11:31–32, 27:43', icon: '🏕️',
               rcuvText: '他們就帶著這一切從迦勒底的吾珥出來…來到哈蘭，就住在那裏。（創11:31）' },
             { name: '示劍', nameEn: 'Shechem', lat: 32.2132, lng: 35.2851, era: 'patriarch',
-              desc: '亞伯拉罕進迦南地第一站；雅各買地建壇。後成為北國初期首都。', ref: '創12:6, 33:18–19', icon: '⛺',
+              books: ['Genesis', 'Joshua', 'Judges', '1 Kings'],
+              desc: '亞伯拉罕進迦南地第一站；雅各買地建壇。約書亞在此立約。後成為北國初期首都。', ref: '創12:6, 書24:1, 王上12:1', icon: '⛺',
               rcuvText: '亞伯蘭經過那地，到了示劍地方，摩利橡樹那裏。當時，迦南人住在那地。（創12:6）' },
             { name: '伯特利', nameEn: 'Bethel', lat: 31.9300, lng: 35.2310, era: 'patriarch',
-              desc: '雅各夢見天梯之處；意為「神的殿」。後被耶羅波安設立金牛犢。', ref: '創28:10–19', icon: '🪜',
+              books: ['Genesis', '1 Kings', 'Amos'],
+              desc: '雅各夢見天梯之處；意為「神的殿」。後被耶羅波安設立金牛犢。阿摩司在此宣告審判。', ref: '創28:10–19, 王上12:29', icon: '🪜',
               rcuvText: '他就懼怕，說：「這地方何等可畏…是上帝的殿，是天的門。」他就給那地方起名叫伯特利…（創28:17,19）' },
             { name: '希伯崙', nameEn: 'Hebron', lat: 31.5326, lng: 35.0998, era: 'patriarch',
-              desc: '亞伯拉罕居住地；購買麥比拉洞作家族墳墓。大衛初期在此作猶大王七年。', ref: '創13:18, 23:2–20', icon: '🪦',
+              books: ['Genesis', '2 Samuel', 'Joshua'],
+              desc: '亞伯拉罕居住地；購買麥比拉洞作家族墳墓。大衛初期在此作猶大王七年。', ref: '創13:18, 23:2–20, 撒下2:11', icon: '🪦',
               rcuvText: '亞伯蘭就搬了帳棚，來到希伯崙幔利的橡樹那裏居住，在那裏為耶和華築了一座壇。（創13:18）' },
             { name: '別是巴', nameEn: 'Beersheba', lat: 31.2518, lng: 34.7913, era: 'patriarch',
-              desc: '亞伯拉罕、以撒與亞比米勒立約之地，意為「盟誓之井」。以色列南界標記。', ref: '創21:22–34', icon: '💧',
+              books: ['Genesis', '1 Kings'],
+              desc: '亞伯拉罕、以撒與亞比米勒立約之地，意為「盟誓之井」。以色列南界「從但到別是巴」的南端。', ref: '創21:22–34', icon: '💧',
               rcuvText: '所以他給那地方起名叫別是巴，因為他們二人在那裏起了誓。（創21:31）' },
+            { name: '摩押平原', nameEn: 'Plains of Moab', lat: 31.53, lng: 35.75, era: 'patriarch',
+              books: ['Deuteronomy', 'Ruth', 'Numbers'],
+              desc: '約旦河東的地區。摩西在此發表申命記的講道，也是路得的故鄉。摩押人是亞伯拉罕姪兒羅得的後裔。', ref: '申1:1–5, 得1:1–4', icon: '🏔️',
+              rcuvText: '以下所記的是摩西在約旦河東的曠野…向以色列眾人所說的話。（申1:1）' },
 
-            // ── 出埃及 ──
+            // ══════════════════════ 出埃及 ══════════════════════
             { name: '歌珊地', nameEn: 'Goshen', lat: 30.85, lng: 31.85, era: 'exodus',
-              desc: '以色列人在埃及居住的肥沃地區，位於尼羅河三角洲東部。', ref: '創46:28–34', icon: '🌾',
+              books: ['Genesis', 'Exodus'],
+              desc: '以色列人在埃及居住的肥沃地區，位於尼羅河三角洲東部。', ref: '創46:28–34, 出8:22', icon: '🌾',
               rcuvText: '以色列人住在埃及的歌珊地。他們在那裏置了產業，並且繁衍，人口極其增多。（創47:27）' },
             { name: '西奈山', nameEn: 'Mount Sinai', lat: 28.5394, lng: 33.9736, era: 'exodus',
-              desc: '摩西領受十誡之處；神與以色列人立約之聖山。以利亞也曾逃至此地。', ref: '出19–20', icon: '⛰️',
+              books: ['Exodus', 'Leviticus', 'Numbers', '1 Kings'],
+              desc: '摩西領受十誡之處；神與以色列人立約之聖山。利未記和民數記前段律法也在此頒布。以利亞亦曾逃至此地。', ref: '出19–20, 王上19:8', icon: '⛰️',
               rcuvText: '耶和華降臨在西奈山頂，耶和華召摩西上山頂，摩西就上去。（出19:20）' },
             { name: '耶利哥', nameEn: 'Jericho', lat: 31.8711, lng: 35.4444, era: 'exodus',
-              desc: '約書亞率以色列人進迦南後攻克的第一座城；城牆倒塌的神蹟。', ref: '書5–6', icon: '🏚️',
+              books: ['Joshua', '2 Kings', 'Luke'],
+              desc: '約書亞率以色列人進迦南後攻克的第一座城；城牆倒塌的神蹟。以利沙在此治水。耶穌在此醫治盲人巴底買。', ref: '書5–6, 王下2:19–22, 路18:35', icon: '🏚️',
               rcuvText: '耶和華對約書亞說：「看，我已經把耶利哥和耶利哥的王，以及大能的勇士，都交在你手中了。」（書6:2）' },
             { name: '加低斯巴尼亞', nameEn: 'Kadesh Barnea', lat: 30.6277, lng: 34.3980, era: 'exodus',
-              desc: '以色列人曠野漂流的主要駐紮地；十二探子從此出發窺探迦南。', ref: '民13:1–26', icon: '🏜️',
+              books: ['Numbers', 'Deuteronomy'],
+              desc: '以色列人曠野漂流的主要駐紮地；十二探子從此出發窺探迦南。', ref: '民13:1–26, 申1:19–46', icon: '🏜️',
               rcuvText: '到了巴蘭曠野的加低斯，見摩西、亞倫，並以色列全會眾，回報摩西、亞倫…又把那地的果子給他們看。（民13:26）' },
+            { name: '約旦河', nameEn: 'Jordan River', lat: 32.30, lng: 35.56, era: 'exodus',
+              books: ['Joshua', '2 Kings', 'Matthew', 'Mark'],
+              desc: '以色列人渡河進入應許之地的神蹟之河。乃縵在此洗淨大痲瘋。施洗約翰在此為耶穌施洗。', ref: '書3:14–17, 王下5:10, 太3:13', icon: '🌊',
+              rcuvText: '那時，耶穌從加利利來到約旦河，到了約翰那裏，要受他的洗。（太3:13）' },
+            { name: '示羅', nameEn: 'Shiloh', lat: 32.056, lng: 35.290, era: 'exodus',
+              books: ['Joshua', 'Judges', '1 Samuel', 'Jeremiah'],
+              desc: '約書亞時代的宗教中心，約櫃在此安放約300年。撒母耳年幼時在此事奉。耶利米以示羅被棄為警告。', ref: '書18:1, 撒上1–3, 耶7:12', icon: '⛪',
+              rcuvText: '以色列全會眾都聚集在示羅，把會幕設立在那裏。（書18:1）' },
 
-            // ── 統一王國 ──
+            // ══════════════════════ 統一王國 ══════════════════════
             { name: '耶路撒冷', nameEn: 'Jerusalem', lat: 31.7683, lng: 35.2137, era: 'united',
-              desc: '大衛從耶布斯人手中攻取，定為都城。所羅門在此建造第一聖殿，成為信仰中心。', ref: '撒下5:6–10, 王上6–8', icon: '🕍',
+              books: ['2 Samuel', '1 Kings', '2 Kings', '1 Chronicles', '2 Chronicles', 'Ezra', 'Nehemiah', 'Psalms', 'Isaiah', 'Jeremiah', 'Lamentations', 'Ezekiel', 'Zechariah', 'Malachi', 'Matthew', 'Mark', 'Luke', 'John', 'Acts', 'Romans', 'Galatians', 'Revelation'],
+              desc: '大衛從耶布斯人手中攻取，定為都城。所羅門在此建造第一聖殿。耶穌在此受難復活。初代教會從此開始。', ref: '撒下5:6–10, 王上6–8, 路24:47', icon: '🕍',
               rcuvText: '然而大衛攻取了錫安的保障，就是大衛的城。（撒下5:7）' },
             { name: '伯利恆', nameEn: 'Bethlehem', lat: 31.7054, lng: 35.2024, era: 'united',
-              desc: '大衛的出生地；路得記的場景；被先知彌迦預言為彌賽亞降生之地。', ref: '撒上16:1–13, 彌5:2', icon: '⭐',
+              books: ['Ruth', '1 Samuel', 'Micah', 'Matthew', 'Luke'],
+              desc: '大衛的出生地；路得記的場景；被先知彌迦預言為彌賽亞降生之地。耶穌誕生於此。', ref: '撒上16:1–13, 彌5:2, 太2:1', icon: '⭐',
               rcuvText: '伯利恆的以法他啊，你在猶大諸城中為小，將來必有一位從你那裏出來，在以色列中為我作掌權者。（彌5:2）' },
             { name: '基利波山', nameEn: 'Mount Gilboa', lat: 32.4937, lng: 35.4088, era: 'united',
+              books: ['1 Samuel', '2 Samuel'],
               desc: '掃羅與其子約拿單戰死之處。大衛為此寫下著名的哀歌。', ref: '撒上31, 撒下1:17–27', icon: '⚔️',
               rcuvText: '非利士人與以色列人爭戰；以色列人在非利士人面前逃跑，在基利波山有被殺仆倒的。（撒上31:1）' },
 
-            // ── 分裂王國 ──
+            // ══════════════════════ 分裂王國 ══════════════════════
             { name: '撒馬利亞', nameEn: 'Samaria', lat: 32.2747, lng: 35.1900, era: 'divided',
-              desc: '暗利所建，北國以色列的首都。722 BC 被亞述攻陷，北國滅亡。', ref: '王上16:24, 王下17', icon: '🏰',
+              books: ['1 Kings', '2 Kings', 'Hosea', 'Amos', 'Micah', 'John', 'Acts'],
+              desc: '暗利所建，北國以色列的首都。722 BC 被亞述攻陷，北國滅亡。耶穌曾在此與撒馬利亞婦人談道。', ref: '王上16:24, 王下17, 約4:4–42', icon: '🏰',
               rcuvText: '暗利用二他連得銀子向撒瑪買了撒馬利亞山，在山上造城…給所造的城起名叫撒馬利亞。（王上16:24）' },
             { name: '但', nameEn: 'Dan', lat: 33.2489, lng: 35.6524, era: 'divided',
+              books: ['Judges', '1 Kings'],
               desc: '以色列最北端城市。耶羅波安在此設立金牛犢，使以色列人陷入偶像崇拜。', ref: '王上12:28–30', icon: '🐂',
               rcuvText: '他（耶羅波安）就把牛犢一隻安在伯特利，一隻安在但。（王上12:29）' },
             { name: '迦密山', nameEn: 'Mount Carmel', lat: 32.7353, lng: 35.0429, era: 'divided',
+              books: ['1 Kings', '2 Kings'],
               desc: '以利亞獨對450位巴力先知之處；天降火燒盡燔祭，百姓高呼「耶和華是神！」', ref: '王上18:16–46', icon: '🔥',
               rcuvText: '耶和華的火降下，燒盡燔祭…眾百姓看見了，就俯伏在地，說：「耶和華是上帝！耶和華是上帝！」（王上18:38-39）' },
             { name: '米吉多', nameEn: 'Megiddo', lat: 32.5852, lng: 35.1845, era: 'divided',
-              desc: '戰略要地，控制中東主要貿易通道。好王約西亞在此戰死於埃及法老尼哥之手。', ref: '代下35:20–24', icon: '🏹',
+              books: ['2 Kings', '2 Chronicles', 'Revelation'],
+              desc: '戰略要地，控制中東主要貿易通道。好王約西亞在此戰死。啟示錄中的「哈米吉多頓」即指此地。', ref: '代下35:20–24, 啟16:16', icon: '🏹',
               rcuvText: '約西亞卻不肯轉身離開他…來到米吉多平原爭戰。弓箭手射中約西亞王。（代下35:22-23）' },
             { name: '拉吉', nameEn: 'Lachish', lat: 31.5644, lng: 34.8494, era: 'divided',
-              desc: '猶大第二大城，西拿基立圍攻此城的浮雕至今保存於大英博物館。', ref: '王下18:13–14', icon: '🛡️',
+              books: ['2 Kings', '2 Chronicles', 'Jeremiah'],
+              desc: '猶大第二大城，西拿基立圍攻此城的浮雕至今保存於大英博物館。', ref: '王下18:13–14, 耶34:7', icon: '🛡️',
               rcuvText: '猶大王希西家派人前往拉吉去見亞述王，說：「我有罪了，求你離開我；凡你罰我的，我必承當。」（王下18:14）' },
+            { name: '多坍', nameEn: 'Dothan', lat: 32.40, lng: 35.22, era: 'divided',
+              books: ['Genesis', '2 Kings'],
+              desc: '約瑟被哥哥們賣掉的地方。先知以利沙在此被亞蘭軍隊包圍，神開僕人的眼睛看見滿山火車火馬。', ref: '創37:17, 王下6:13–17', icon: '🐴',
+              rcuvText: '以利沙禱告說：「耶和華啊，求你開這少年人的眼目，使他能看見。」…滿山有火車火馬。（王下6:17）' },
 
-            // ── 外邦帝國 ──
+            // ══════════════════════ 外邦帝國 ══════════════════════
             { name: '大馬士革', nameEn: 'Damascus', lat: 33.5138, lng: 36.2765, era: 'empire',
-              desc: '亞蘭王國首都，以色列北方的長期勁敵。便哈達、哈薛皆從此出兵。', ref: '王上20, 王下8:7–15', icon: '🗡️',
-              rcuvText: '以利沙來到大馬士革，亞蘭王便哈達正患病。有人告訴王說：「神人來到這裏了。」（王下8:7）' },
+              books: ['1 Kings', '2 Kings', 'Isaiah', 'Amos', 'Acts'],
+              desc: '亞蘭王國首都，以色列北方的長期勁敵。保羅在此路上遭遇大光歸主。', ref: '王上20, 王下8:7, 徒9:1–19', icon: '🗡️',
+              rcuvText: '掃羅行路，快到大馬士革的時候，忽然從天上發光，四面照著他。（徒9:3）' },
             { name: '尼尼微', nameEn: 'Nineveh', lat: 36.3590, lng: 43.1530, era: 'empire',
+              books: ['Jonah', 'Nahum', '2 Kings'],
               desc: '亞述帝國首都。約拿在此傳道全城悔改；約150年後，那鴻預言其傾覆，612 BC 應驗。', ref: '拿1–4, 鴻1–3', icon: '🐟',
               rcuvText: '這尼尼微是極大的城，步行需要三天。約拿進城走了一天，宣告說：「再等四十天，尼尼微必傾覆了！」（拿3:3-4）' },
             { name: '巴比倫', nameEn: 'Babylon', lat: 32.5363, lng: 44.4209, era: 'empire',
-              desc: '新巴比倫帝國首都。尼布甲尼撒三次圍攻耶路撒冷，586 BC 焚毀聖殿，猶大被擄。', ref: '王下24–25, 耶52', icon: '🏯',
+              books: ['2 Kings', 'Jeremiah', 'Lamentations', 'Ezekiel', 'Daniel', 'Ezra', 'Psalms', 'Revelation'],
+              desc: '新巴比倫帝國首都。尼布甲尼撒三次圍攻耶路撒冷，586 BC 焚毀聖殿。但以理在此宮廷服事。', ref: '王下24–25, 耶52, 但1–6', icon: '🏯',
               rcuvText: '巴比倫王在利比拉…剜了西底家的眼睛，用銅銬鎖著他，帶到巴比倫去。（耶52:10-11）' },
             { name: '推羅', nameEn: 'Tyre', lat: 33.2705, lng: 35.2038, era: 'empire',
+              books: ['1 Kings', 'Ezekiel', 'Matthew', 'Acts'],
               desc: '腓尼基沿海商業大城。所羅門建殿木料來自此處的希蘭王。以西結預言其毀滅。', ref: '王上5, 結26–28', icon: '⚓',
               rcuvText: '主耶和華如此說：推羅啊，看哪，我必與你為敵，使許多國民上來攻擊你，如同海使波浪湧上來一樣。（結26:3）' },
             { name: '西頓', nameEn: 'Sidon', lat: 33.5571, lng: 35.3729, era: 'empire',
-              desc: '腓尼基古城，耶洗別的出生地。以利亞曾在此寄居於寡婦家中。', ref: '王上16:31, 17:8–24', icon: '🚢',
+              books: ['1 Kings', 'Ezekiel', 'Matthew', 'Luke'],
+              desc: '腓尼基古城，耶洗別的出生地。以利亞曾在此寄居於寡婦家中。耶穌曾到訪此地。', ref: '王上16:31, 17:8–24, 太15:21', icon: '🚢',
               rcuvText: '耶和華的話臨到他說：「你起身往西頓的撒勒法去，住在那裏；我已吩咐那裏的一個寡婦供養你。」（王上17:8-9）' },
             { name: '卡基米施', nameEn: 'Carchemish', lat: 36.8290, lng: 38.0080, era: 'empire',
-              desc: '605 BC 新巴比倫在此決定性地擊敗埃及，奠定尼布甲尼撒的霸權。', ref: '耶46:2', icon: '⚔️',
+              books: ['Jeremiah', '2 Chronicles'],
+              desc: '605 BC 新巴比倫在此決定性地擊敗埃及，奠定尼布甲尼撒的霸權。', ref: '耶46:2, 代下35:20', icon: '⚔️',
               rcuvText: '對於埃及…也就是巴比倫王尼布甲尼撒在幼發拉底河畔的卡基米施所打敗的軍隊…（耶46:2）' },
+            { name: '書珊城', nameEn: 'Susa', lat: 32.19, lng: 48.25, era: 'empire',
+              books: ['Esther', 'Nehemiah', 'Daniel'],
+              desc: '波斯帝國冬宮所在地。以斯帖在此成為王后拯救猶大人。尼希米在此擔任王的酒政。但以理在此見到公綿羊與公山羊的異象。', ref: '斯1:2, 尼1:1, 但8:2', icon: '🏛️',
+              rcuvText: '亞哈隨魯王在書珊城的宮登基…設擺筵席。（斯1:2-3）' },
+            { name: '以東地', nameEn: 'Edom', lat: 30.73, lng: 35.40, era: 'empire',
+              books: ['Obadiah', 'Genesis', 'Deuteronomy'],
+              desc: '以掃後裔所居之地，位於死海南方的山地。俄巴底亞書整卷預言以東因驕傲與欺壓兄弟而遭審判。', ref: '俄1:1–21, 創36:1', icon: '🏔️',
+              rcuvText: '你因狂傲自欺…雖如大鷹高飛，在星宿之間搭窩，我必從那裏拉下你來。（俄1:3-4）' },
+
+            // ══════════════════════ 福音 & 事工 ══════════════════════
+            { name: '拿撒勒', nameEn: 'Nazareth', lat: 32.7019, lng: 35.3035, era: 'gospel',
+              books: ['Matthew', 'Mark', 'Luke', 'John'],
+              desc: '耶穌成長之地。天使加百列在此向馬利亞宣告聖靈感孕的消息。拿撒勒人因此不信耶穌是先知。', ref: '路1:26–38, 太2:23, 路4:16–30', icon: '🏠',
+              rcuvText: '到了一座城，名叫拿撒勒，就住在那裏。這是要應驗先知所說「他將稱為拿撒勒人」的話了。（太2:23）' },
+            { name: '迦百農', nameEn: 'Capernaum', lat: 32.8813, lng: 35.5753, era: 'gospel',
+              books: ['Matthew', 'Mark', 'Luke', 'John'],
+              desc: '耶穌公開傳道的基地城市，位於加利利海北岸。許多神蹟在此發生：醫治百夫長僕人、癱子從屋頂而降。', ref: '太4:13, 可2:1–12, 約6:59', icon: '🏘️',
+              rcuvText: '耶穌離開拿撒勒，往迦百農去，就住在那裏。（太4:13）' },
+            { name: '加利利海', nameEn: 'Sea of Galilee', lat: 32.8300, lng: 35.5900, era: 'gospel',
+              books: ['Matthew', 'Mark', 'Luke', 'John'],
+              desc: '耶穌事工的核心區域。在此呼召漁夫門徒、水上行走、平靜風浪、復活後在岸邊向門徒顯現。', ref: '太4:18–22, 14:22–33, 約21', icon: '⛵',
+              rcuvText: '耶穌在加利利海邊行走，看見弟兄二人…對他們說：「來，跟從我！」（太4:18-19）' },
+            { name: '迦拿', nameEn: 'Cana', lat: 32.7500, lng: 35.3400, era: 'gospel',
+              books: ['John'],
+              desc: '耶穌行第一個神蹟之處——在婚宴上將水變為酒。也是門徒拿但業的家鄉。', ref: '約2:1–11, 21:2', icon: '🍷',
+              rcuvText: '這是耶穌所行的第一件神蹟……顯出了他的榮耀來，他的門徒就信他了。（約2:11）' },
+            { name: '客西馬尼園', nameEn: 'Gethsemane', lat: 31.7794, lng: 35.2403, era: 'gospel',
+              books: ['Matthew', 'Mark', 'Luke'],
+              desc: '橄欖山腳的園子，耶穌被捕前在此禱告：「父啊！不要照我的意思，只要照你的意思。」猶大在此以親吻出賣耶穌。', ref: '太26:36–56, 可14:32–52', icon: '🫒',
+              rcuvText: '耶穌同門徒來到一個地方，名叫客西馬尼，就對他們說：「你們坐在這裏，等我到那邊去禱告。」（太26:36）' },
+            { name: '各各他', nameEn: 'Golgotha', lat: 31.7785, lng: 35.2299, era: 'gospel',
+              books: ['Matthew', 'Mark', 'Luke', 'John', 'Hebrews'],
+              desc: '耶穌被釘十字架處，意為「髑髏地」。在此成就了人類救贖的核心事件：「成了！」', ref: '太27:33–56, 約19:17–30', icon: '✝️',
+              rcuvText: '到了一個地方，名叫各各他，意思就是「髑髏地」。（太27:33）' },
+
+            // ══════════════════════ 書信 & 啟示 ══════════════════════
+            { name: '安提阿', nameEn: 'Antioch', lat: 36.2028, lng: 36.1596, era: 'epistle',
+              books: ['Acts', 'Galatians'],
+              desc: '初代教會的第二中心。門徒在此首次被稱為「基督徒」。保羅三次宣教旅程均從此出發。', ref: '徒11:26, 13:1–3, 加2:11', icon: '⛪',
+              rcuvText: '門徒稱為「基督徒」是從安提阿起的。（徒11:26）' },
+            { name: '以弗所', nameEn: 'Ephesus', lat: 37.9411, lng: 27.3420, era: 'epistle',
+              books: ['Acts', 'Ephesians', '1 Timothy', 'Revelation'],
+              desc: '小亞細亞第一大城。保羅在此宣教三年，引發銀匠底米丟暴動。啟示錄七教會之首。', ref: '徒19:1–41, 弗1:1, 啟2:1–7', icon: '🏛️',
+              rcuvText: '你要寫信給以弗所教會的使者說：「那右手拿著七星…的說…」（啟2:1）' },
+            { name: '哥林多', nameEn: 'Corinth', lat: 37.9058, lng: 22.8800, era: 'epistle',
+              books: ['Acts', '1 Corinthians', '2 Corinthians'],
+              desc: '希臘重要港口城市，以道德敗壞聞名。保羅在此宣教18個月，建立教會。寫下「愛的真諦」。', ref: '徒18:1–18, 林前13', icon: '🏺',
+              rcuvText: '保羅住了一年六個月，將上帝的道教訓他們。（徒18:11）' },
+            { name: '腓立比', nameEn: 'Philippi', lat: 41.0142, lng: 24.2861, era: 'epistle',
+              books: ['Acts', 'Philippians'],
+              desc: '歐洲第一間教會的誕生地。保羅和西拉在此被投入監牢後唱詩讚美，地震開了監門。', ref: '徒16:11–40, 腓1:1', icon: '⛓️',
+              rcuvText: '約在半夜，保羅和西拉禱告唱詩讚美上帝…忽然地大震動，監牢的地基都搖動了。（徒16:25-26）' },
+            { name: '帖撒羅尼迦', nameEn: 'Thessalonica', lat: 40.6401, lng: 22.9444, era: 'epistle',
+              books: ['Acts', '1 Thessalonians', '2 Thessalonians'],
+              desc: '馬其頓省首府。保羅在此建立教會，後來寫信安慰信徒關於基督再來的盼望。', ref: '徒17:1–9, 帖前4:13–18', icon: '📬',
+              rcuvText: '保羅照他素常的規矩進去，一連三個安息日，本著聖經與他們辯論。（徒17:2）' },
+            { name: '歌羅西', nameEn: 'Colossae', lat: 37.7874, lng: 29.2613, era: 'epistle',
+              books: ['Colossians', 'Philemon'],
+              desc: '小亞細亞的小城市。保羅雖未親訪，但寫了歌羅西書宣告基督在萬有中的至高地位。腓利門書也寫給此地的信徒。', ref: '西1:1–2, 門1:1–2', icon: '📜',
+              rcuvText: '祂是那不能看見之神的像，是首生的，在一切被造的以先。（西1:15）' },
+            { name: '羅馬', nameEn: 'Rome', lat: 41.9028, lng: 12.4964, era: 'epistle',
+              books: ['Acts', 'Romans', 'Philippians', '2 Timothy', 'Philemon'],
+              desc: '羅馬帝國首都。保羅在此被囚兩年，期間寫下監獄書信（弗、腓、西、門）。傳統認為彼得與保羅都在此殉道。', ref: '徒28:16–31, 羅1:7', icon: '🏛️',
+              rcuvText: '保羅在自己所租的房子裏住了足足兩年。凡來見他的人，他全都接待。（徒28:30）' },
+            { name: '克里特', nameEn: 'Crete', lat: 35.2401, lng: 24.8993, era: 'epistle',
+              books: ['Acts', 'Titus'],
+              desc: '地中海大島。保羅押解往羅馬途中曾停靠。後留提多在此設立教會秩序。', ref: '徒27:7–13, 多1:5', icon: '🏝️',
+              rcuvText: '我從前留你在克里特，是要你將那沒有辦完的事都辦整齊了，又照我所吩咐你的，在各城設立長老。（多1:5）' },
+            { name: '拔摩島', nameEn: 'Patmos', lat: 37.3175, lng: 26.5455, era: 'epistle',
+              books: ['Revelation'],
+              desc: '愛琴海小島，使徒約翰因信仰被流放至此。在此領受啟示錄的異象，記錄了七教會的書信與末世預言。', ref: '啟1:9–11', icon: '🏝️',
+              rcuvText: '我約翰…為上帝的道，並為給耶穌作的見證，曾在那名叫拔摩的海島上。（啟1:9）' },
+            { name: '加拉太', nameEn: 'Galatia', lat: 39.65, lng: 32.80, era: 'epistle',
+              books: ['Acts', 'Galatians'],
+              desc: '小亞細亞中部地區。保羅宣教旅程中多次經過，建立了多間教會。後寫加拉太書駁斥律法主義。', ref: '徒16:6, 加1:2', icon: '📄',
+              rcuvText: '我希奇你們這麼快離開那藉著基督之恩召你們的，去從別的福音。（加1:6）' },
         ],
     };
 
@@ -785,7 +903,7 @@
     //  PAGE 2: ATLAS (聖經地理)
     // ═════════════════════════════════════════════════════
 
-    const AtlasPage = ({ activeEra }) => {
+    const AtlasPage = ({ activeEra, focusLocation, onClearFocus }) => {
         const mapRef = useRef(null);
         const mapInstanceRef = useRef(null);
         const markersRef = useRef([]);
@@ -796,6 +914,8 @@
             united:    '#2563eb',
             divided:   '#dc2626',
             empire:    '#7c3aed',
+            gospel:    '#0891b2',
+            epistle:   '#be185d',
         };
 
         useEffect(() => {
@@ -937,6 +1057,26 @@
             };
         }, []);
 
+        // Focus a specific location when navigated from Bible Structure page
+        useEffect(() => {
+            if (!focusLocation || !mapInstanceRef.current) return;
+            // Show all markers first
+            markersRef.current.forEach(marker => marker.addTo(mapInstanceRef.current));
+            // Find the target marker
+            const targetLoc = atlasData.locations.find(loc => loc.name === focusLocation);
+            if (targetLoc) {
+                const targetMarker = markersRef.current.find(m => {
+                    const ll = m.getLatLng();
+                    return Math.abs(ll.lat - targetLoc.lat) < 0.01 && Math.abs(ll.lng - targetLoc.lng) < 0.01;
+                });
+                if (targetMarker) {
+                    mapInstanceRef.current.flyTo([targetLoc.lat, targetLoc.lng], 9, { duration: 1.2 });
+                    setTimeout(() => { targetMarker.openPopup(); }, 1300);
+                }
+            }
+            if (onClearFocus) onClearFocus();
+        }, [focusLocation]);
+
         return (
             <div className="page-enter">
                 <div className="w-full max-w-7xl mx-auto">
@@ -954,6 +1094,8 @@
                             <span className="hidden sm:inline">🕍 統一王國 {atlasData.locations.filter(l => l.era === 'united').length}</span>
                             <span className="hidden sm:inline">🏰 分裂王國 {atlasData.locations.filter(l => l.era === 'divided').length}</span>
                             <span className="hidden sm:inline">🗡️ 外邦帝國 {atlasData.locations.filter(l => l.era === 'empire').length}</span>
+                            <span className="hidden sm:inline">✝️ 福音&事工 {atlasData.locations.filter(l => l.era === 'gospel').length}</span>
+                            <span className="hidden sm:inline">📨 書信&啟示 {atlasData.locations.filter(l => l.era === 'epistle').length}</span>
                         </div>
                     </div>
                 </div>
@@ -1140,7 +1282,7 @@
         },
     };
 
-    const BibleStructurePage = () => {
+    const BibleStructurePage = ({ onNavigateToLocation }) => {
         const [selectedBook, setSelectedBook] = useState(null);
         const [activeTestament, setActiveTestament] = useState('all');
 
@@ -1152,10 +1294,15 @@
                 return () => window.removeEventListener('keydown', handleEsc);
             }, [onClose]);
 
+            // Dynamically find related atlas locations
+            const relatedLocations = atlasData.locations.filter(loc => loc.books && loc.books.includes(book.nameEn));
+            const eraColorMap = {};
+            atlasData.eras.forEach(e => { eraColorMap[e.id] = e.color; });
+
             return (
                 <div className="fixed inset-0 z-[100] flex items-center justify-center p-4 bg-stone-900/60 backdrop-blur-sm cursor-pointer"
                      onClick={onClose}>
-                    <div className="bg-white rounded-[2.5rem] shadow-2xl max-w-2xl w-full overflow-hidden cursor-default"
+                    <div className="bg-white rounded-[2.5rem] shadow-2xl max-w-2xl w-full overflow-hidden cursor-default max-h-[90vh] overflow-y-auto"
                          style={{ borderTop: `4px solid ${sectionColor}` }}
                          onClick={e => e.stopPropagation()}>
                         <div className="p-8 md:p-10">
@@ -1183,6 +1330,46 @@
                                     {book.desc}
                                 </p>
                             </div>
+
+                            {/* Related Atlas Locations */}
+                            {relatedLocations.length > 0 && (
+                                <div className="mt-6 pt-5 border-t border-stone-100">
+                                    <div className="flex items-center gap-2 mb-3">
+                                        <span className="text-lg">📍</span>
+                                        <span className="text-sm font-black text-stone-500" style={{ fontFamily: 'Inter, sans-serif' }}>
+                                            相關地點（{relatedLocations.length}）
+                                        </span>
+                                    </div>
+                                    <div className="flex flex-wrap gap-2">
+                                        {relatedLocations.map(loc => (
+                                            <button
+                                                key={loc.name}
+                                                onClick={() => {
+                                                    onClose();
+                                                    if (onNavigateToLocation) onNavigateToLocation(loc.name);
+                                                }}
+                                                className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full text-sm font-bold text-white shadow-sm hover:shadow-md hover:scale-105 transition-all active:scale-95 cursor-pointer"
+                                                style={{ background: eraColorMap[loc.era] || '#78716c' }}
+                                                title={loc.desc}
+                                            >
+                                                <span>{loc.icon}</span>
+                                                <span>{loc.name}</span>
+                                            </button>
+                                        ))}
+                                    </div>
+                                    <button
+                                        onClick={() => {
+                                            onClose();
+                                            if (onNavigateToLocation) onNavigateToLocation(relatedLocations[0].name);
+                                        }}
+                                        className="mt-3 text-xs font-bold text-cyan-700 hover:text-cyan-900 transition-colors flex items-center gap-1"
+                                        style={{ fontFamily: 'Inter, sans-serif' }}
+                                    >
+                                        🗺️ 在聖經地圖上查看
+                                    </button>
+                                </div>
+                            )}
+
                             <div className="mt-8 flex justify-end">
                                 <button onClick={onClose}
                                         className="bg-stone-900 text-white px-8 py-3 rounded-2xl font-black shadow-lg hover:bg-black transition-all active:scale-95">
@@ -1504,6 +1691,13 @@
             return 'home';
         });
         const [activeEra, setActiveEra] = useState('patriarch');
+        const [focusLocation, setFocusLocation] = useState(null);
+
+        const handleNavigateToLocation = (locationName) => {
+            setFocusLocation(locationName);
+            setActiveEra('all');
+            navigate('atlas');
+        };
 
         useEffect(() => {
             const handleHash = () => {
@@ -1580,9 +1774,9 @@
 
                 {/* ── Page Content ── */}
                 <main className="w-full max-w-7xl flex-grow flex flex-col">
-                    {currentPage === 'structure' && <BibleStructurePage />}
+                    {currentPage === 'structure' && <BibleStructurePage onNavigateToLocation={handleNavigateToLocation} />}
                     {currentPage === 'timeline' && <TimelinePage />}
-                    {currentPage === 'atlas' && <AtlasPage activeEra={activeEra} />}
+                    {currentPage === 'atlas' && <AtlasPage activeEra={activeEra} focusLocation={focusLocation} onClearFocus={() => setFocusLocation(null)} />}
                     {currentPage === 'privacy' && <PrivacyPage />}
                 </main>
 
