@@ -1161,32 +1161,35 @@
                                 </label>
                             </div>
 
-                            <div className="grid gap-1 md:gap-2 mb-3 ml-18" style={{ gridTemplateColumns: gridCols }}>
-                                <div className="py-2 px-2 bg-sky-950 text-white text-center font-black rounded-xl shadow text-sm md:text-base">
-                                    南國 猶大<br /><span className="text-[11px] opacity-60 font-normal">Judah · 20王</span>
-                                </div>
-                                {showProphets && (
-                                    <div className="py-2 px-1 bg-violet-800 text-white text-center font-black rounded-xl shadow text-[13px] md:text-sm">
-                                        先知（南）<br /><span className="text-[11px] opacity-60 font-normal">S. Prophets</span>
+                            <div className="flex gap-1 md:gap-2">
+                                <div className="hidden md:block w-16 shrink-0"></div> {/* Alignment placeholder for Ruler */}
+                                <div className="grid gap-1 md:gap-2 mb-3 flex-grow" style={{ gridTemplateColumns: gridCols }}>
+                                    <div className="py-2 px-2 bg-sky-950 text-white text-center font-black rounded-xl shadow text-sm md:text-base">
+                                        南國 猶大<br /><span className="text-[11px] opacity-60 font-normal">Judah · 20王</span>
                                     </div>
-                                )}
-                                {showEmpires && (
-                                    <Fragment>
-                                        <div className="py-2 px-1 bg-yellow-700 text-white text-center font-black rounded-xl shadow text-[13px] md:text-sm">
-                                            亞蘭・埃及<br /><span className="text-[11px] opacity-60 font-normal">Regional</span>
+                                    {showProphets && (
+                                        <div className="py-2 px-1 bg-violet-800 text-white text-center font-black rounded-xl shadow text-[13px] md:text-sm">
+                                            先知（南）<br /><span className="text-[11px] opacity-60 font-normal">S. Prophets</span>
                                         </div>
-                                        <div className="py-2 px-1 bg-orange-800 text-white text-center font-black rounded-xl shadow text-[13px] md:text-sm">
-                                            亞述・巴比倫<br /><span className="text-[11px] opacity-60 font-normal">Superpower</span>
+                                    )}
+                                    {showEmpires && (
+                                        <Fragment>
+                                            <div className="py-2 px-1 bg-yellow-700 text-white text-center font-black rounded-xl shadow text-[13px] md:text-sm">
+                                                亞蘭・埃及<br /><span className="text-[11px] opacity-60 font-normal">Regional</span>
+                                            </div>
+                                            <div className="py-2 px-1 bg-orange-800 text-white text-center font-black rounded-xl shadow text-[13px] md:text-sm">
+                                                亞述・巴比倫<br /><span className="text-[11px] opacity-60 font-normal">Superpower</span>
+                                            </div>
+                                        </Fragment>
+                                    )}
+                                    {showProphets && (
+                                        <div className="py-2 px-1 bg-emerald-800 text-white text-center font-black rounded-xl shadow text-[13px] md:text-sm">
+                                            先知（北）<br /><span className="text-[11px] opacity-60 font-normal">N. Prophets</span>
                                         </div>
-                                    </Fragment>
-                                )}
-                                {showProphets && (
-                                    <div className="py-2 px-1 bg-emerald-800 text-white text-center font-black rounded-xl shadow text-[13px] md:text-sm">
-                                        先知（北）<br /><span className="text-[11px] opacity-60 font-normal">N. Prophets</span>
+                                    )}
+                                    <div className="py-2 px-2 bg-emerald-950 text-white text-center font-black rounded-xl shadow text-sm md:text-base">
+                                        北國 以色列<br /><span className="text-[11px] opacity-60 font-normal">Israel · 19王</span>
                                     </div>
-                                )}
-                                <div className="py-2 px-2 bg-emerald-950 text-white text-center font-black rounded-xl shadow text-sm md:text-base">
-                                    北國 以色列<br /><span className="text-[11px] opacity-60 font-normal">Israel · 19王</span>
                                 </div>
                             </div>
 
