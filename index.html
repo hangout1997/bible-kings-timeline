@@ -64,6 +64,64 @@
             box-shadow: 0 10px 15px -3px rgb(0 0 0 / 0.15);
         }
 
+        /* Relationship Tree Styles */
+        .tree-node-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            position: relative;
+        }
+
+        .tree-children {
+            display: flex;
+            justify-content: center;
+            gap: 1rem;
+            margin-top: 1.5rem;
+            position: relative;
+        }
+
+        /* Horizontal connections */
+        .tree-children::before {
+            content: '';
+            position: absolute;
+            top: -0.75rem;
+            left: 50%;
+            transform: translateX(-50%);
+            width: calc(100% - 2rem);
+            height: 2px;
+            background: #d6d3d1;
+        }
+
+        /* Vertical connectors */
+        .tree-node-container::before {
+            content: '';
+            position: absolute;
+            top: -0.75rem;
+            left: 50%;
+            width: 2px;
+            height: 0.75rem;
+            background: #d6d3d1;
+        }
+
+        .tree-node-container:first-child::before,
+        .tree-node-container.is-root::before {
+            display: none;
+        }
+
+        .tree-node-container.has-parent::after {
+            content: '';
+            position: absolute;
+            top: -0.75rem;
+            left: 50%;
+            width: 2px;
+            height: 0.75rem;
+            background: #d6d3d1;
+        }
+
+        .tree-node-card {
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
         .nav-tab {
             position: relative;
             padding: 0.75rem 1.5rem;
@@ -1768,12 +1826,142 @@
             },
         };
 
+        const relationshipData = {
+            'Genesis': {
+                title: '創世記主要人物家族史',
+                root: {
+                    name: '亞當 & 夏娃',
+                    role: '人類始祖 (受造)',
+                    desc: '由神親自創造，安置於伊甸園，因犯罪墜落後被逐。',
+                    children: [
+                        { name: '該隱', role: '長子 (耕地者)', desc: '因嫉妒殺害亞伯，後流落各地建立城邑。' },
+                        { name: '亞伯', role: '次子 (牧羊者)', desc: '因獻祭蒙神悅納遭該隱殺害。' },
+                        {
+                            name: '塞特', role: '三子 (救贖線)',
+                            desc: '代理亞伯的後裔，救贖史的傳承者。',
+                            children: [
+                                {
+                                    name: '挪亞', role: '義人 (大洪水)',
+                                    desc: '建造方舟拯救一家八口，洪水後神與人立虹為約。',
+                                    children: [
+                                        { name: '含', role: '次子 (迦南之父)', desc: '其後裔分佈於非洲及迦南地。' },
+                                        {
+                                            name: '閃', role: '長子 (希伯來祖先)',
+                                            desc: '救贖線的承接者，其後裔分佈於亞洲。',
+                                            children: [
+                                                {
+                                                    name: '亞伯拉罕', role: '信心之父',
+                                                    desc: '蒙神呼召離開吾珥，神賜應許之地與眾多後裔。',
+                                                    children: [
+                                                        { name: '以實瑪利', role: '使女夏甲所生', desc: '蒙神祝福成為大國。' },
+                                                        {
+                                                            name: '以撒', role: '應許之子',
+                                                            desc: '亞伯拉罕與撒拉所生，順從神、經歷獻祭的考驗。',
+                                                            children: [
+                                                                { name: '以掃', role: '長子 (以東之祖)', desc: '因一碗紅豆湯出賣長子名分。' },
+                                                                {
+                                                                    name: '雅各', role: '更名以色列',
+                                                                    desc: '神的選民支派之父，在雅博渡口與神摔跤。',
+                                                                    children: [
+                                                                        { name: '流便', role: '長子' },
+                                                                        { name: '猶大', role: '四子 (國度支派)', desc: '君王從他而出，彌賽亞的家系。' },
+                                                                        { name: '約瑟', role: '十一子 (埃及宰相)', desc: '被賣至埃及，後拯救全家免於饑荒。' },
+                                                                        { name: '便雅憫', role: '幼子' },
+                                                                        { name: '其餘八子', role: '各支派領袖' }
+                                                                    ]
+                                                                }
+                                                            ]
+                                                        }
+                                                    ]
+                                                }
+                                            ]
+                                        },
+                                        { name: '雅弗', role: '三子 (外邦先祖)', desc: '其後裔分佈於歐洲與海島。' }
+                                    ]
+                                }
+                            ]
+                        }
+                    ]
+                }
+            }
+        };
+
+        const RelationshipMapModal = ({ bookName, onClose }) => {
+            const data = relationshipData[bookName];
+            if (!data) return null;
+
+            const [expandedNodes, setExpandedNodes] = useState({});
+
+            const toggleNode = (name) => {
+                setExpandedNodes(prev => ({ ...prev, [name]: !prev[name] }));
+            };
+
+            const TreeNode = ({ node, isRoot = false, depth = 0 }) => {
+                const isExpanded = expandedNodes[node.name] !== false; // Default expanded
+                const hasChildren = node.children && node.children.length > 0;
+
+                return (
+                    <div className={`tree-node-container ${isRoot ? 'is-root' : depth > 0 ? 'has-parent' : ''}`}>
+                        <div className={`tree-node-card bg-white rounded-2xl shadow-lg p-4 w-48 border-t-4 border-stone-800 relative group`}>
+                            <div className="text-lg font-black text-stone-900 mb-1">{node.name}</div>
+                            <div className="text-[11px] font-bold text-amber-700 uppercase tracking-wider mb-2">{node.role}</div>
+                            {node.desc && <div className="text-[10px] text-stone-500 leading-tight mb-2 opacity-0 group-hover:opacity-100 transition-opacity absolute top-full left-0 w-full bg-stone-900 text-white p-2 rounded-lg z-50 pointer-events-none mt-1 shadow-xl">{node.desc}</div>}
+                            
+                            {hasChildren && (
+                                <button 
+                                    onClick={() => toggleNode(node.name)}
+                                    className="absolute -bottom-3 left-1/2 -translate-x-1/2 w-6 h-6 bg-stone-800 text-white rounded-full flex items-center justify-center text-xs shadow-md hover:bg-stone-600 transition-colors z-10"
+                                >
+                                    {isExpanded ? '−' : '+'}
+                                </button>
+                            )}
+                        </div>
+
+                        {hasChildren && isExpanded && (
+                            <div className="tree-children">
+                                {node.children.map((child, idx) => (
+                                    <TreeNode key={idx} node={child} depth={depth + 1} />
+                                ))}
+                            </div>
+                        )}
+                    </div>
+                );
+            };
+
+            return (
+                <div className="fixed inset-0 z-[200] flex items-center justify-center p-4 bg-stone-900/80 backdrop-blur-md" onClick={onClose}>
+                    <div className="bg-white rounded-[2.5rem] shadow-2xl w-full h-[90vh] flex flex-col overflow-hidden animate-fade-in" onClick={e => e.stopPropagation()}>
+                        <div className="p-8 border-b border-stone-100 flex justify-between items-center bg-stone-50">
+                            <div>
+                                <h2 className="text-3xl font-black text-stone-900" style={{ fontFamily: 'Noto Serif TC, serif' }}>{data.title}</h2>
+                                <p className="text-stone-500 text-sm mt-1">互動式人物關係樹，可點擊 +/- 摺疊或展開分支。</p>
+                            </div>
+                            <button onClick={onClose} className="p-3 hover:bg-stone-200 rounded-full transition-colors text-stone-400 hover:text-stone-900">
+                                <svg className="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M6 18L18 6M6 6l12 12" />
+                                </svg>
+                            </button>
+                        </div>
+                        <div className="flex-grow overflow-auto p-12 bg-stone-100/50">
+                            <div className="min-w-max flex justify-center pt-8">
+                                <TreeNode node={data.root} isRoot={true} />
+                            </div>
+                        </div>
+                        <div className="p-6 bg-stone-50 text-center text-xs text-stone-400 font-bold uppercase tracking-widest">
+                            Visio Divina Relationship Map Overview
+                        </div>
+                    </div>
+                </div>
+            );
+        };
+
         const BibleStructurePage = ({ onNavigateToLocation }) => {
             const [selectedBook, setSelectedBook] = useState(null);
             const [activeTestament, setActiveTestament] = useState('all');
 
             const BibleBookModal = ({ book, sectionColor, onClose }) => {
                 if (!book) return null;
+                const [showRelationship, setShowRelationship] = useState(false);
                 useEffect(() => {
                     const handleEsc = (e) => { if (e.key === 'Escape') onClose(); };
                     window.addEventListener('keydown', handleEsc);
@@ -1856,7 +2044,18 @@
                                     </div>
                                 )}
 
-                                <div className="mt-8 flex justify-end">
+                                 <div className="mt-8 flex flex-wrap justify-between items-center gap-4">
+                                    <div>
+                                        {relationshipData[book.nameEn] && (
+                                            <button
+                                                onClick={() => setShowRelationship(true)}
+                                                className="bg-amber-100 text-amber-800 px-6 py-3 rounded-2xl font-black shadow-sm hover:shadow-md hover:bg-amber-200 transition-all active:scale-95 flex items-center gap-2 group"
+                                            >
+                                                <span className="text-xl group-hover:rotate-12 transition-transform">🌳</span>
+                                                <span>查看人物關係圖</span>
+                                            </button>
+                                        )}
+                                    </div>
                                     <button onClick={onClose}
                                         className="bg-stone-900 text-white px-8 py-3 rounded-2xl font-black shadow-lg hover:bg-black transition-all active:scale-95">
                                         關閉窗口
@@ -1864,6 +2063,7 @@
                                 </div>
                             </div>
                         </div>
+                        {showRelationship && <RelationshipMapModal bookName={book.nameEn} onClose={() => setShowRelationship(false)} />}
                     </div>
                 );
             };
