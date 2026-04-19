@@ -982,6 +982,8 @@
 
         const TimelinePage = () => {
             const [selectedDetail, setSelectedDetail] = useState(null);
+            const [showProphets, setShowProphets] = useState(false);
+            const [showEmpires, setShowEmpires] = useState(false);
             const START_YEAR = 931;
             const END_YEAR = 586;
             const YEAR_PX = 28;
@@ -1094,7 +1096,17 @@
             };
 
             const totalHeight = (START_YEAR - END_YEAR) * YEAR_PX + 400;
-            const gridCols = '2fr 1fr 0.9fr 0.9fr 1fr 2fr';
+            
+            // Dynamic grid calculation based on toggles
+            let cols = ['2fr']; // Judah is always shown
+            if (showProphets) cols.push('1fr'); // South Prophets
+            if (showEmpires) {
+                cols.push('0.9fr'); // Regional Empires
+                cols.push('0.9fr'); // Superpower Empires
+            }
+            if (showProphets) cols.push('1fr'); // North Prophets
+            cols.push('2fr'); // Israel is always shown
+            const gridCols = cols.join(' ');
 
             return (
                 <div className="page-enter">
@@ -1129,22 +1141,50 @@
                                 931 BC（王國分裂）→ 722 BC（北國亞述滅）→ 586 BC（南國巴比倫滅）
                             </p>
 
+                            {/* ── Display Toggles ── */}
+                            <div className="flex flex-wrap justify-center gap-6 mb-10 p-4 bg-stone-100/50 rounded-3xl border border-stone-200 w-fit mx-auto shadow-sm">
+                                <label className="flex items-center gap-3 cursor-pointer group">
+                                    <div className="relative">
+                                        <input type="checkbox" checked={showProphets} onChange={() => setShowProphets(!showProphets)} className="sr-only peer" />
+                                        <div className="w-11 h-6 bg-stone-300 rounded-full peer peer-checked:bg-violet-600 transition-all duration-300"></div>
+                                        <div className="absolute left-1 top-1 w-4 h-4 bg-white rounded-full transition-all duration-300 peer-checked:translate-x-5 shadow-sm"></div>
+                                    </div>
+                                    <span className="font-black text-stone-700 group-hover:text-violet-700 transition-colors text-sm md:text-base">顯示先知</span>
+                                </label>
+                                <label className="flex items-center gap-3 cursor-pointer group">
+                                    <div className="relative">
+                                        <input type="checkbox" checked={showEmpires} onChange={() => setShowEmpires(!showEmpires)} className="sr-only peer" />
+                                        <div className="w-11 h-6 bg-stone-300 rounded-full peer peer-checked:bg-orange-700 transition-all duration-300"></div>
+                                        <div className="absolute left-1 top-1 w-4 h-4 bg-white rounded-full transition-all duration-300 peer-checked:translate-x-5 shadow-sm"></div>
+                                    </div>
+                                    <span className="font-black text-stone-700 group-hover:text-orange-800 transition-colors text-sm md:text-base">顯示外邦強國</span>
+                                </label>
+                            </div>
+
                             <div className="grid gap-1 md:gap-2 mb-3 ml-18" style={{ gridTemplateColumns: gridCols }}>
                                 <div className="py-2 px-2 bg-sky-950 text-white text-center font-black rounded-xl shadow text-sm md:text-base">
                                     南國 猶大<br /><span className="text-[11px] opacity-60 font-normal">Judah · 20王</span>
                                 </div>
-                                <div className="py-2 px-1 bg-violet-800 text-white text-center font-black rounded-xl shadow text-[13px] md:text-sm">
-                                    先知（南）<br /><span className="text-[11px] opacity-60 font-normal">S. Prophets</span>
-                                </div>
-                                <div className="py-2 px-1 bg-yellow-700 text-white text-center font-black rounded-xl shadow text-[13px] md:text-sm">
-                                    亞蘭・埃及<br /><span className="text-[11px] opacity-60 font-normal">Regional</span>
-                                </div>
-                                <div className="py-2 px-1 bg-orange-800 text-white text-center font-black rounded-xl shadow text-[13px] md:text-sm">
-                                    亞述・巴比倫<br /><span className="text-[11px] opacity-60 font-normal">Superpower</span>
-                                </div>
-                                <div className="py-2 px-1 bg-emerald-800 text-white text-center font-black rounded-xl shadow text-[13px] md:text-sm">
-                                    先知（北）<br /><span className="text-[11px] opacity-60 font-normal">N. Prophets</span>
-                                </div>
+                                {showProphets && (
+                                    <div className="py-2 px-1 bg-violet-800 text-white text-center font-black rounded-xl shadow text-[13px] md:text-sm">
+                                        先知（南）<br /><span className="text-[11px] opacity-60 font-normal">S. Prophets</span>
+                                    </div>
+                                )}
+                                {showEmpires && (
+                                    <Fragment>
+                                        <div className="py-2 px-1 bg-yellow-700 text-white text-center font-black rounded-xl shadow text-[13px] md:text-sm">
+                                            亞蘭・埃及<br /><span className="text-[11px] opacity-60 font-normal">Regional</span>
+                                        </div>
+                                        <div className="py-2 px-1 bg-orange-800 text-white text-center font-black rounded-xl shadow text-[13px] md:text-sm">
+                                            亞述・巴比倫<br /><span className="text-[11px] opacity-60 font-normal">Superpower</span>
+                                        </div>
+                                    </Fragment>
+                                )}
+                                {showProphets && (
+                                    <div className="py-2 px-1 bg-emerald-800 text-white text-center font-black rounded-xl shadow text-[13px] md:text-sm">
+                                        先知（北）<br /><span className="text-[11px] opacity-60 font-normal">N. Prophets</span>
+                                    </div>
+                                )}
                                 <div className="py-2 px-2 bg-emerald-950 text-white text-center font-black rounded-xl shadow text-sm md:text-base">
                                     北國 以色列<br /><span className="text-[11px] opacity-60 font-normal">Israel · 19王</span>
                                 </div>
@@ -1157,22 +1197,30 @@
                                     <div className="relative"><div className="relative h-full">
                                         {data.south.map((k, i) => <KingCard key={i} item={k} onClick={setSelectedDetail} />)}
                                     </div></div>
-                                    <div className="relative"><div className="relative h-full">
-                                        {data.prophets_south.map((p, i) => (
-                                            <ProphetCard key={i} item={p} colorClass="bg-violet-50" borderClass="border-violet-600" onClick={setSelectedDetail} />
-                                        ))}
-                                    </div></div>
-                                    <div className="relative"><div className="relative h-full">
-                                        {data.empire_regional.map((e, i) => <EmpireCard key={i} item={e} onClick={setSelectedDetail} />)}
-                                    </div></div>
-                                    <div className="relative"><div className="relative h-full">
-                                        {data.empire_super.map((e, i) => <EmpireCard key={i} item={e} onClick={setSelectedDetail} />)}
-                                    </div></div>
-                                    <div className="relative"><div className="relative h-full">
-                                        {data.prophets_north.map((p, i) => (
-                                            <ProphetCard key={i} item={p} colorClass="bg-emerald-50" borderClass="border-emerald-600" onClick={setSelectedDetail} />
-                                        ))}
-                                    </div></div>
+                                    {showProphets && (
+                                        <div className="relative"><div className="relative h-full">
+                                            {data.prophets_south.map((p, i) => (
+                                                <ProphetCard key={i} item={p} colorClass="bg-violet-50" borderClass="border-violet-600" onClick={setSelectedDetail} />
+                                            ))}
+                                        </div></div>
+                                    )}
+                                    {showEmpires && (
+                                        <Fragment>
+                                            <div className="relative"><div className="relative h-full">
+                                                {data.empire_regional.map((e, i) => <EmpireCard key={i} item={e} onClick={setSelectedDetail} />)}
+                                            </div></div>
+                                            <div className="relative"><div className="relative h-full">
+                                                {data.empire_super.map((e, i) => <EmpireCard key={i} item={e} onClick={setSelectedDetail} />)}
+                                            </div></div>
+                                        </Fragment>
+                                    )}
+                                    {showProphets && (
+                                        <div className="relative"><div className="relative h-full">
+                                            {data.prophets_north.map((p, i) => (
+                                                <ProphetCard key={i} item={p} colorClass="bg-emerald-50" borderClass="border-emerald-600" onClick={setSelectedDetail} />
+                                            ))}
+                                        </div></div>
+                                    )}
                                     <div className="relative"><div className="relative h-full">
                                         {data.north.map((k, i) => <KingCard key={i} item={k} onClick={setSelectedDetail} />)}
                                     </div></div>
