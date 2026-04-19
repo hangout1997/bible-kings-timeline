@@ -2167,7 +2167,116 @@
                         { name: '參巴拉 & 多比雅', role: '攔阻者', desc: '不斷嘲諷與威脅重修工作的人。' }
                     ]
                 }
-            }
+            },
+            'Isaiah': {
+                title: '以賽亞書：救恩與彌賽亞異象',
+                root: {
+                    name: '以賽亞 (Isaiah)',
+                    role: '宮廷先知',
+                    desc: '事奉歷經四代君王，宣告審判與彌賽亞的盼望。',
+                    children: [
+                        { name: '希西家', role: '南國賢王', desc: '遭遇亞述大軍壓境時，得以賽亞指引與神拯救。' },
+                        { name: '施亞雅述', role: '長子 (象徵名)', desc: '意為「餘民必回歸」。' },
+                        { name: '瑪黑珥沙拉勒哈施罷斯', role: '次子 (象徵名)', desc: '意為「擄掠速臨，搶奪快到」。' }
+                    ]
+                }
+            },
+            'Jeremiah': {
+                title: '耶利米書：眼淚先知的宣告',
+                root: {
+                    name: '耶利米 (Jeremiah)',
+                    role: '眼淚先知',
+                    desc: '在猶大末期宣告被擄的審判，並引導新約的應許。',
+                    children: [
+                        { name: '巴錄', role: '書記/同工', desc: '忠心記錄耶利米的口諭並宣讀。' },
+                        { 
+                            name: '末代諸王', role: '事奉對象', 
+                            desc: '經歷了約西亞、約雅敬至西底家的動盪期。',
+                            children: [
+                                { name: '西底家', role: '亡國之君', desc: '不聽耶利米勸告，最終導致耶路撒冷陷落。' }
+                            ]
+                        }
+                    ]
+                }
+            },
+            'Lamentations': { title: '耶利米哀歌：廢墟中的哀悼', root: { name: '耶利米 (Jeremiah)', role: '哀弔者', desc: '親眼看見耶路撒冷荒涼而寫下的哀歌。', children: [{ name: '耶路撒冷的居民', role: '被擄者/受苦者' }] } },
+            'Ezekiel': {
+                title: '以西結書：榮耀之神的異象',
+                root: {
+                    name: '以西結 (Ezekiel)',
+                    role: '祭司/先知',
+                    desc: '在巴比倫迦巴魯河邊，向被擄的百姓傳遞異象與復興的盼望。',
+                    children: [
+                        { name: '被擄的長老', role: '聽眾', desc: '常聚集在以西結座前詢問神的話語。' }
+                    ]
+                }
+            },
+            'Daniel': {
+                title: '但以理書：帝國興衰與神國永恆',
+                root: {
+                    name: '但以理',
+                    role: '先知/權臣',
+                    desc: '被擄至巴比倫，立志潔淨，解夢並事奉四代君王。',
+                    children: [
+                        { 
+                            name: '三友', role: '信心同伴', 
+                            desc: '共同經歷火窯的洗禮。',
+                            children: [
+                                { name: '沙得拉, 米煞, 阿比尼歌', role: '希伯來名：漢拿尼雅、米沙利、亞撒利雅' }
+                            ]
+                        },
+                        { 
+                            name: '諸王系譜', role: '事奉對象', 
+                            desc: '見證了巴比倫至波斯的更迭。',
+                            children: [
+                                { name: '尼布甲尼撒', role: '巴比倫王', desc: '曾因驕傲如獸，後稱頌至高神。' },
+                                { name: '大利烏', role: '波斯/瑪代王', desc: '因愛護但以理，不得不下令將其投入獅子坑。' }
+                            ]
+                        }
+                    ]
+                }
+            },
+            'Hosea': {
+                title: '何西阿書：不離不棄的愛',
+                root: {
+                    name: '何西阿 (Hosea)',
+                    role: '先知',
+                    desc: '以自身的婚姻象徵神對以色列那破裂但忠貞的愛。',
+                    children: [
+                        { 
+                            name: '歌篾', role: '妻子', 
+                            desc: '淫亂的婦人，象徵背道受誘的以色列。',
+                            children: [
+                                { name: '耶斯列', role: '長子 (審判)', desc: '意為「神栽種/神審判」。' },
+                                { name: '羅路哈瑪', role: '長女 (不蒙憐憫)', desc: '意為「不再蒙憐憫」。' },
+                                { name: '羅阿米', role: '次子 (非我民)', desc: '意為「非我民」。' }
+                            ]
+                        }
+                    ]
+                }
+            },
+            'Joel': { title: '約珥書：主的日子', root: { name: '約珥 (Joel)', role: '先知', children: [{ name: '受蝗災的百姓', role: '警示對象' }] } },
+            'Amos': { title: '阿摩司書：公義如滔滔江河', root: { name: '阿摩司 (Amos)', role: '牧人先知', children: [{ name: '亞瑪謝', role: '伯特利的祭司', desc: '攔阻阿摩司說預言的對抗者。' }] } },
+            'Obadiah': { title: '俄巴底亞書：傲慢的代價', root: { name: '俄巴底亞', role: '先知', children: [{ name: '以東人', role: '審判對象', desc: '以掃的後裔，因幸災樂禍遭審判。' }] } },
+            'Jonah': {
+                title: '約拿書：恩典超越疆界',
+                root: {
+                    name: '約拿 (Jonah)',
+                    role: '逃跑的先知',
+                    desc: '經歷大魚腹中三日，最終向尼尼微宣傳悔改的消息。',
+                    children: [
+                        { name: '水手們', role: '外邦人', desc: '在海邊見證神威榮後轉向敬畏。' },
+                        { name: '尼尼微王', role: '悔改的象徵', desc: '帶領全城披麻蒙灰悔改。' }
+                    ]
+                }
+            },
+            'Micah': { title: '彌迦書：行公義好憐憫', root: { name: '彌迦 (Micah)', role: '鄉村先知', children: [{ name: '猶大諸王', role: '指教對象', desc: '與以賽亞同期，關懷社會窮苦百姓。' }] } },
+            'Nahum': { title: '那鴻書：尼尼微的傾覆', root: { name: '那鴻 (Nahum)', role: '先知', children: [{ name: '亞述帝國', role: '受審對象' }] } },
+            'Habakkuk': { title: '哈巴谷書：信心的提問', root: { name: '哈巴谷 (Habakkuk)', role: '提問的先知', children: [{ name: '神 (Jehovah)', role: '回答者', desc: '「惟義人因信得生」。' }] } },
+            'Zephaniah': { title: '西番雅書：耶和華心中的忿怒', root: { name: '西番雅', role: '先知', desc: '希西家王的玄孫。', children: [{ name: '約西亞王', role: '同期君王' }] } },
+            'Haggai': { title: '哈該書：看重聖殿', root: { name: '哈該 (Haggai)', role: '先知', children: [{ name: '所羅巴伯 & 約書亞', role: '重建領袖', desc: '激勵百姓在回歸後恢復聖殿工程。' }] } },
+            'Zechariah': { title: '撒迦利亞書：萬軍之耶和華', root: { name: '撒迦利亞', role: '祭司先知', desc: '回歸時期的先知，留下大量彌賽亞預言。', children: [{ name: '所羅巴伯', role: '大衛苗裔象徵' }] } },
+            'Malachi': { title: '瑪拉基書：主使者的呼喚', root: { name: '瑪拉基 (Malachi)', role: '最後一位先知', desc: '在舊約結束前呼籲百姓回轉心志。', children: [{ name: '利未人與百姓', role: '受責與呼籲者' }] } }
         };
 
         const RelationshipMapModal = ({ bookName, onClose }) => {
