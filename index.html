@@ -1888,6 +1888,135 @@
                         }
                     ]
                 }
+            },
+            'Exodus': {
+                title: '出埃及記：摩西領袖家族',
+                root: {
+                    name: '亞姆蘭 & 約基別',
+                    role: '利未支派家族',
+                    desc: '敬畏神的一家人，在法老殺嬰令中憑信心保下摩西。',
+                    children: [
+                        { name: '米利暗', role: '長女 (女先知)', desc: '在紅海邊帶領婦女擊鼓跳舞讚美神，後因毀謗摩西曾患大麻瘋。' },
+                        { 
+                            name: '亞倫', role: '長子 (首任大祭司)', 
+                            desc: '摩西的發言人，帶領以色列人獻祭。',
+                            children: [
+                                { name: '拿答 & 亞比戶', role: '長子與次子', desc: '因獻凡火被神擊斃。' },
+                                { name: '以利亞撒', role: '三子 (繼任大祭司)', desc: '承接大祭司聖職，輔助約書亞進入迦南。' },
+                                { name: '以他瑪', role: '幼子', desc: '管理利未人職任與會幕材料。' }
+                            ]
+                        },
+                        { 
+                            name: '摩西', role: '次子 (神人/領袖)', 
+                            desc: '蒙神在荊棘火中呼召，帶領以色列人出埃及、頒布律法。',
+                            children: [
+                                { name: '西坡拉', role: '妻子 (米甸之女)', desc: '米甸祭司葉忒羅的女兒。' },
+                                { name: '革舜 & 以利以謝', role: '摩西之子', desc: '摩西流亡米甸時期所生。' }
+                            ]
+                        }
+                    ]
+                }
+            },
+            'Ruth': {
+                title: '路得記：至親救贖與大衛譜系',
+                root: {
+                    name: '以利米勒 & 拿俄米',
+                    role: '伯利恆移民家庭',
+                    desc: '因饑荒逃往摩押，後男主人與兩子皆亡，僅存拿俄米。',
+                    children: [
+                        { name: '瑪倫 & 基連', role: '二子', desc: '在摩押娶妻，後皆病故。' },
+                        { 
+                            name: '路得 (與波阿斯)', role: '賢德的女子', 
+                            desc: '摩押女子，死守婆婆拿俄米，回歸伯利恆後蒙大財主波阿斯救贖。',
+                            children: [
+                                { 
+                                    name: '俄備得', role: '救贖之子', 
+                                    desc: '波阿斯與路得所生。',
+                                    children: [
+                                        { 
+                                            name: '耶西', role: '大衛之父',
+                                            children: [
+                                                { name: '大衛 (David)', role: '以色列君王', desc: '救贖應許的承接者。' }
+                                            ]
+                                        }
+                                    ]
+                                }
+                            ]
+                        }
+                    ]
+                }
+            },
+            '1 Samuel': {
+                title: '撒母耳記上：從士師到君王',
+                root: {
+                    name: '以色列的覺醒',
+                    role: '劃時代的三位焦點人物',
+                    children: [
+                        { 
+                            name: '撒母耳', role: '最後一位士師', 
+                            desc: '神垂聽哈拿的禱告所賜，童年在聖殿服事，後膏立掃羅與大衛。'
+                        },
+                        { 
+                            name: '掃羅 (Saul)', role: '首任君王', 
+                            desc: '因悖逆神被廢除王位。',
+                            children: [
+                                { name: '約拿單', role: '掃羅長子', desc: '大衛的至交好友，為保護大衛不惜違抗父命。' },
+                                { name: '米甲', role: '掃羅之女', desc: '大衛的首任妻子。' }
+                            ]
+                        },
+                        { 
+                            name: '大衛 (David)', role: '次任君王 (合神心意)', 
+                            desc: '伯利恆牧羊童，擊敗歌利亞，經歷掃羅追殺後登基。'
+                        }
+                    ]
+                }
+            },
+            'Esther': {
+                title: '以斯帖記：絕處逢生的民族拯救',
+                root: {
+                    name: '波斯帝國宮廷',
+                    role: '權力與生命的角力',
+                    children: [
+                        { 
+                            name: '末底改', role: '猶大籍官員', 
+                            desc: '以斯帖的堂兄與養父，揭發刺王陰謀。',
+                            children: [
+                                { 
+                                    name: '以斯帖 (Esther)', role: '波斯王后', 
+                                    desc: '隱藏猶大身分，在危急關頭憑信心與智慧拯救猶大民族。' 
+                                }
+                            ]
+                        },
+                        { name: '亞哈隨魯王', role: '波斯帝國統治者', desc: '統管127省的君王。' },
+                        { name: '哈曼', role: '朝廷總理 (惡人)', desc: '陰謀滅絕所有猶大人的權臣，後被處死。' }
+                    ]
+                }
+            },
+            'Matthew': { title: '馬太福音人物關係', root: { name: '耶穌基督與使徒', role: '天國福音的開啟', children: [{ name: '耶穌基督', role: '彌賽亞/神的兒子', desc: '核心救贖者。', children: [{ name: '馬利亞 & 約瑟', role: '肉身父母' }, { name: '施洗約翰', role: '開路先鋒' }, { name: '十二使徒', role: '核心見證人', children: [{ name: '彼得, 雅各, 約翰', role: '核心中的核心' }, { name: '其餘使徒', role: '見證與宣教' }] }] }] } },
+            'Mark': { title: '馬可福音：僕人與門徒', root: { name: '耶穌基督與使徒', role: '受苦僕人的榜樣', children: [{ name: '耶穌基督', role: '彌賽亞', desc: '服事人的主。', children: [{ name: '彼得', role: '重要口傳來源', desc: '馬可福音被視為彼得的回憶錄。' }, { name: '十二使徒', role: '跟隨者' }] }] } },
+            'Luke': { title: '路加福音：普世救主', root: { name: '耶穌基督與祂的時代', role: '降臨人世的真光', children: [{ name: '耶穌基督', role: '人子', desc: '醫治者與救主。', children: [{ name: '撒迦利亞 & 伊利莎白', role: '施洗約翰父母' }, { name: '路加', role: '作者/醫生', desc: '仔細考察後寫成此書。' }] }] } },
+            'John': { title: '約翰福音：神之道', root: { name: '道成肉身的道', role: '生命的供應者', children: [{ name: '耶穌基督', role: '神的兒子', desc: '太初與神同在。', children: [{ name: '愛的門徒約翰', role: '作者', desc: '耶穌最親近的三個門徒之一。' }, { name: '拉撒路一家', role: '馬大、馬利亞', desc: '耶穌使拉撒路復活。' }] }] } },
+            'Acts': {
+                title: '使徒行傳：福音傳遍地極',
+                root: {
+                    name: '聖靈的澆灌',
+                    role: '初期教會的擴散',
+                    children: [
+                        { 
+                            name: '彼得 (Peter)', role: '教會柱石', 
+                            desc: '在耶路撒冷放膽講道，開啟外邦宣教之門。'
+                        },
+                        { 
+                            name: '保羅 (Paul)', role: '外邦人的使徒', 
+                            desc: '從大馬色路上的悔改到三次宣教旅程，最終將福音帶往羅馬。',
+                            children: [
+                                { name: '巴拿巴', role: '安慰之子', desc: '保羅早期的同工。' },
+                                { name: '提摩太', role: '屬靈兒子', desc: '保羅最親密的接班人。' },
+                                { name: '路加', role: '忠心同工/醫生', desc: '本書作者，保羅宣教旅程的記錄者。' }
+                            ]
+                        }
+                    ]
+                }
             }
         };
 
@@ -2010,6 +2139,23 @@
                                     </p>
                                 </div>
 
+                                {/* Character Relationship Map Button */}
+                                {relationshipData[book.nameEn] && (
+                                    <div className="mt-6">
+                                        <button
+                                            onClick={() => setShowRelationship(true)}
+                                            className="w-full bg-amber-50 text-amber-900 border-2 border-amber-200 px-6 py-4 rounded-[1.5rem] font-black shadow-sm hover:shadow-md hover:bg-amber-100 hover:border-amber-300 transition-all active:scale-95 flex items-center justify-center gap-3 group"
+                                        >
+                                            <span className="text-2xl group-hover:rotate-12 transition-transform">🌳</span>
+                                            <div className="text-left">
+                                                <div className="text-sm md:text-base">查看人物關係圖</div>
+                                                <div className="text-[10px] md:text-[11px] font-bold opacity-60 uppercase tracking-wider">Visual Relationship Tree</div>
+                                            </div>
+                                            <span className="ml-2 text-amber-400 group-hover:translate-x-1 transition-transform">→</span>
+                                        </button>
+                                    </div>
+                                )}
+
                                 {/* Related Atlas Locations */}
                                 {relatedLocations.length > 0 && (
                                     <div className="mt-6 pt-5 border-t border-stone-100">
@@ -2049,18 +2195,7 @@
                                     </div>
                                 )}
 
-                                 <div className="mt-8 flex flex-wrap justify-between items-center gap-4">
-                                    <div>
-                                        {relationshipData[book.nameEn] && (
-                                            <button
-                                                onClick={() => setShowRelationship(true)}
-                                                className="bg-amber-100 text-amber-800 px-6 py-3 rounded-2xl font-black shadow-sm hover:shadow-md hover:bg-amber-200 transition-all active:scale-95 flex items-center gap-2 group"
-                                            >
-                                                <span className="text-xl group-hover:rotate-12 transition-transform">🌳</span>
-                                                <span>查看人物關係圖</span>
-                                            </button>
-                                        )}
-                                    </div>
+                                <div className="mt-8 flex justify-end">
                                     <button onClick={onClose}
                                         className="bg-stone-900 text-white px-8 py-3 rounded-2xl font-black shadow-lg hover:bg-black transition-all active:scale-95">
                                         關閉窗口
