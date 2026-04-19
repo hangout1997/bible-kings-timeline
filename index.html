@@ -87,9 +87,14 @@
             top: -0.75rem;
             left: 50%;
             transform: translateX(-50%);
-            width: calc(100% - 2rem);
+            width: calc(100% - 12rem); /* Connects first and last child centers (w-48 = 12rem) */
             height: 2px;
             background: #d6d3d1;
+        }
+
+        /* Hide horizontal line if only one child */
+        .tree-children:has(> .tree-node-container:only-child)::before {
+            display: none;
         }
 
         /* Vertical connectors */
