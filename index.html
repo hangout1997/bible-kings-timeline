@@ -1530,7 +1530,7 @@
                 if (isMulti && targetLocs.length > 1) {
                     // Multi-location: fitBounds + permanent pulsing highlights
                     const bounds = L.latLngBounds(targetLocs.map(l => [l.lat, l.lng]));
-                    map.flyToBounds(bounds.pad(0.4), { duration: 1.2, maxZoom: 8 });
+                    map.flyToBounds(bounds.pad(0.15), { duration: 1.2, maxZoom: 10 });
 
                     setTimeout(() => {
                         const highlightGroup = L.layerGroup();
@@ -1608,7 +1608,7 @@
 
                             {/* Focus Mode Indicator */}
                             {isFocusMode && (
-                                <div className="absolute top-4 left-1/2 -translate-x-1/2 z-[1000] flex items-center gap-4 bg-white/95 backdrop-blur-md px-6 py-3 rounded-2xl shadow-2xl border border-stone-200 animate-fade-in ring-1 ring-white/50">
+                                <div className="absolute top-4 left-4 z-[1000] flex items-center gap-4 bg-white/95 backdrop-blur-md px-6 py-3 rounded-2xl shadow-2xl border border-stone-200 animate-fade-in ring-1 ring-white/50">
                                     <div className="flex items-center gap-2">
                                         <span className="relative flex h-3 w-3">
                                             <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-cyan-400 opacity-75"></span>
@@ -2795,6 +2795,10 @@
                 window.addEventListener('hashchange', handleHash);
                 return () => window.removeEventListener('hashchange', handleHash);
             }, []);
+
+            useEffect(() => {
+                window.scrollTo({ top: 0, behavior: 'instant' });
+            }, [currentPage]);
 
             const navigate = (page) => {
                 window.location.hash = page;
