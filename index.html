@@ -2352,7 +2352,7 @@
                                 <div className="flex justify-between items-start mb-4">
                                     <div>
                                         <div className="flex items-center gap-3 mb-1 flex-wrap">
-                                            <h3 className="text-3xl md:text-4xl font-black text-stone-900">{book.name}</h3>
+                                            <h3 className="text-3xl md:text-4xl font-black text-stone-900 whitespace-nowrap">{book.name}</h3>
                                             {book.major && (
                                                 <span className="text-[11px] font-bold text-red-600 bg-red-50 px-2 py-1 rounded" style={{ fontFamily: 'Inter, sans-serif' }}>大先知書</span>
                                             )}
@@ -2455,7 +2455,7 @@
                     <div className="flex justify-between items-start gap-2">
                         <div className="flex-1 min-w-0">
                             <div className="flex items-center gap-2 flex-wrap">
-                                <span className="font-black text-stone-800 text-[15px] md:text-base">{book.name}</span>
+                                <span className="font-black text-stone-800 text-[15px] md:text-base whitespace-nowrap">{book.name}</span>
                                 {book.major && (
                                     <span className="text-[10px] font-bold text-red-600 bg-red-50 px-1.5 py-0.5 rounded" style={{ fontFamily: 'Inter, sans-serif' }}>大先知書</span>
                                 )}
@@ -2473,7 +2473,7 @@
                         <div style={{ position: 'absolute', left: 0, top: '50%', transform: 'translateY(-50%)', width: '4px', height: '70%', borderRadius: '4px', background: section.color }}></div>
                         <div className="flex items-center gap-3 flex-wrap">
                             <span className="text-2xl">{section.icon}</span>
-                            <h3 className="text-xl md:text-2xl font-black text-stone-800" style={{ fontFamily: 'Noto Serif TC, serif' }}>{section.name}</h3>
+                            <h3 className="text-xl md:text-2xl font-black text-stone-800 whitespace-nowrap" style={{ fontFamily: 'Noto Serif TC, serif' }}>{section.name}</h3>
                             <span className="text-[11px] font-bold px-2 py-0.5 rounded-full text-white" style={{ background: section.color, fontFamily: 'Inter, sans-serif' }}>
                                 {section.count} 卷
                             </span>
@@ -2491,9 +2491,9 @@
             const TestamentBlock = ({ data, gradient, borderColor }) => (
                 <div className="mb-8">
                     <div className="bible-testament-divider" style={{ color: borderColor }}>
-                        <div className="inline-flex items-center gap-3 bg-stone-50 px-6 py-2 relative z-10 rounded-full">
-                            <span className="text-3xl md:text-4xl font-black text-stone-800" style={{ fontFamily: 'Noto Serif TC, serif' }}>{data.title}</span>
-                            <span className="text-sm font-bold text-stone-400" style={{ fontFamily: 'Inter, sans-serif' }}>{data.titleEn}</span>
+                        <div className="inline-flex items-center justify-center gap-3 bg-stone-50 px-6 py-2 relative z-10 rounded-full flex-wrap md:flex-nowrap">
+                            <span className="text-3xl md:text-4xl font-black text-stone-800 whitespace-nowrap" style={{ fontFamily: 'Noto Serif TC, serif' }}>{data.title}</span>
+                            <span className="text-sm font-bold text-stone-400 whitespace-nowrap" style={{ fontFamily: 'Inter, sans-serif' }}>{data.titleEn}</span>
                             <span className="text-[11px] font-bold px-2.5 py-1 rounded-full text-white" style={{ background: borderColor, fontFamily: 'Inter, sans-serif' }}>
                                 {data.count} 卷
                             </span>
