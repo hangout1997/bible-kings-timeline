@@ -715,16 +715,16 @@
                      onClick={() => onClick(item)}
                      className={`king-card p-2 border-l-4 rounded-r-lg shadow-sm border cursor-pointer ${evalColors}`}>
                     <div className="flex justify-between items-start gap-1">
-                        <span className="font-black text-stone-800 text-[13px] md:text-[15px] flex items-center gap-1 flex-wrap leading-snug">
+                        <span className="font-black text-stone-800 text-[15px] md:text-[17px] flex items-center gap-1 flex-wrap leading-snug">
                             {item.name}
-                            <span className={`text-[10px] text-white px-1.5 py-0.5 rounded-sm ${badgeColor} whitespace-nowrap`}>{item.label}</span>
+                            <span className={`text-[12px] text-white px-1.5 py-0.5 rounded-sm ${badgeColor} whitespace-nowrap`}>{item.label}</span>
                         </span>
-                        <span className="text-[11px] font-mono text-stone-500 whitespace-nowrap shrink-0">
+                        <span className="text-[13px] font-mono text-stone-500 whitespace-nowrap shrink-0">
                             {duration <= 1 ? `${item.start}` : `${item.start}–${item.end}`}
                         </span>
                     </div>
                     {height >= 88 && (
-                        <p className="text-[11px] text-stone-600 leading-snug mt-1 italic line-clamp-3">{item.note}</p>
+                        <p className="text-[13px] text-stone-600 leading-snug mt-1 italic line-clamp-3">{item.note}</p>
                     )}
                 </div>
             );
@@ -739,10 +739,10 @@
                 <div style={{ position:'absolute', top:`${top}px`, height:`${height}px`, width:'100%' }}
                      onClick={() => onClick(item)}
                      className={`king-card p-2 border-l-4 rounded-r-lg shadow-sm border cursor-pointer ${colorClass} ${borderClass}`}>
-                    <span className="font-black text-[13px] md:text-[15px] text-stone-800 leading-snug block">{item.name}</span>
-                    <span className="text-[11px] font-mono text-stone-500">{item.start}–{item.end}</span>
+                    <span className="font-black text-[15px] md:text-[17px] text-stone-800 leading-snug block">{item.name}</span>
+                    <span className="text-[13px] font-mono text-stone-500">{item.start}–{item.end}</span>
                     {height >= 88 && (
-                        <p className="text-[11px] text-stone-600 leading-snug mt-1 italic line-clamp-3">{item.note}</p>
+                        <p className="text-[13px] text-stone-600 leading-snug mt-1 italic line-clamp-3">{item.note}</p>
                     )}
                 </div>
             );
@@ -758,12 +758,12 @@
                      onClick={() => onClick(item)}
                      className={`king-card p-1.5 border-l-[3px] rounded-r-md shadow-sm border cursor-pointer ${item.bg} ${item.border}`}>
                     <div className="flex items-start gap-1 flex-wrap">
-                        <span className={`text-[10px] text-white px-1.5 py-0.5 rounded-sm ${item.empireTag} whitespace-nowrap shrink-0`}>{item.empire}</span>
-                        <span className="font-black text-[12px] md:text-[13px] text-stone-800 leading-snug">{item.name}</span>
+                        <span className={`text-[12px] text-white px-1.5 py-0.5 rounded-sm ${item.empireTag} whitespace-nowrap shrink-0`}>{item.empire}</span>
+                        <span className="font-black text-[14px] md:text-[15px] text-stone-800 leading-snug">{item.name}</span>
                     </div>
-                    <span className="text-[10px] font-mono text-stone-400">{item.start}–{item.end}</span>
+                    <span className="text-[12px] font-mono text-stone-400">{item.start}–{item.end}</span>
                     {height >= 80 && (
-                        <p className="text-[10px] text-stone-600 leading-snug mt-0.5 italic line-clamp-2">{item.note}</p>
+                        <p className="text-[12px] text-stone-600 leading-snug mt-0.5 italic line-clamp-2">{item.note}</p>
                     )}
                 </div>
             );
@@ -781,13 +781,13 @@
                      onClick={() => onClick(item)}
                      style={{ minHeight:'88px' }}>
                     <div className="flex justify-between items-start mb-1">
-                        <span className="font-black text-stone-800 text-base md:text-lg flex items-center gap-1.5">
+                        <span className="font-black text-stone-800 text-lg md:text-xl flex items-center gap-1.5">
                             {item.name}
-                            <span className={`text-[11px] text-white px-1.5 py-0.5 rounded-sm ${badgeColor}`}>{item.label}</span>
+                            <span className={`text-[13px] text-white px-1.5 py-0.5 rounded-sm ${badgeColor}`}>{item.label}</span>
                         </span>
-                        <span className="text-[12px] font-mono text-stone-500 font-bold">{item.period}</span>
+                        <span className="text-[14px] font-mono text-stone-500 font-bold">{item.period}</span>
                     </div>
-                    <p className="text-[12px] md:text-[13px] text-stone-600 leading-snug mt-1 italic">{item.note}</p>
+                    <p className="text-[14px] md:text-[15px] text-stone-600 leading-snug mt-1 italic">{item.note}</p>
                 </div>
             );
         };
