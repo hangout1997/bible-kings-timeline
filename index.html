@@ -1067,16 +1067,16 @@
                         onClick={() => onClick(item)}
                         className={`king-card p-2 border-l-4 rounded-r-lg shadow-sm border cursor-pointer ${evalColors}`}>
                         <div className="flex justify-between items-start gap-1">
-                            <span className="font-black text-stone-800 text-[15px] md:text-[17px] flex items-center gap-1 flex-wrap leading-snug">
+                            <span className="font-black text-stone-800 text-[17px] md:text-[19px] flex items-center gap-1 flex-wrap leading-snug">
                                 {item.name}
-                                <span className={`text-[12px] text-white px-1.5 py-0.5 rounded-sm ${badgeColor} whitespace-nowrap`}>{item.label}</span>
+                                <span className={`text-[14px] text-white px-1.5 py-0.5 rounded-sm ${badgeColor} whitespace-nowrap`}>{item.label}</span>
                             </span>
-                            <span className="text-[13px] font-mono text-stone-500 whitespace-nowrap shrink-0">
+                            <span className="text-[15px] font-mono text-stone-500 whitespace-nowrap shrink-0">
                                 {duration <= 1 ? `${item.start}` : `${item.start}–${item.end}`}
                             </span>
                         </div>
                         {height >= 88 && (
-                            <p className="text-[13px] text-stone-600 leading-snug mt-1 italic line-clamp-3">{item.note}</p>
+                            <p className="text-[15px] text-stone-600 leading-snug mt-1 italic line-clamp-3">{item.note}</p>
                         )}
                     </div>
                 );
@@ -1091,10 +1091,10 @@
                     <div style={{ position: 'absolute', top: `${top}px`, height: `${height}px`, width: '100%' }}
                         onClick={() => onClick(item)}
                         className={`king-card p-2 border-l-4 rounded-r-lg shadow-sm border cursor-pointer ${colorClass} ${borderClass}`}>
-                        <span className="font-black text-[15px] md:text-[17px] text-stone-800 leading-snug block">{item.name}</span>
-                        <span className="text-[13px] font-mono text-stone-500">{item.start}–{item.end}</span>
+                        <span className="font-black text-[17px] md:text-[19px] text-stone-800 leading-snug block">{item.name}</span>
+                        <span className="text-[15px] font-mono text-stone-500">{item.start}–{item.end}</span>
                         {height >= 88 && (
-                            <p className="text-[13px] text-stone-600 leading-snug mt-1 italic line-clamp-3">{item.note}</p>
+                            <p className="text-[15px] text-stone-600 leading-snug mt-1 italic line-clamp-3">{item.note}</p>
                         )}
                     </div>
                 );
@@ -1110,12 +1110,12 @@
                         onClick={() => onClick(item)}
                         className={`king-card p-1.5 border-l-[3px] rounded-r-md shadow-sm border cursor-pointer ${item.bg} ${item.border}`}>
                         <div className="flex items-start gap-1 flex-wrap">
-                            <span className={`text-[12px] text-white px-1.5 py-0.5 rounded-sm ${item.empireTag} whitespace-nowrap shrink-0`}>{item.empire}</span>
-                            <span className="font-black text-[14px] md:text-[15px] text-stone-800 leading-snug">{item.name}</span>
+                            <span className={`text-[14px] text-white px-1.5 py-0.5 rounded-sm ${item.empireTag} whitespace-nowrap shrink-0`}>{item.empire}</span>
+                            <span className="font-black text-[16px] md:text-[17px] text-stone-800 leading-snug">{item.name}</span>
                         </div>
-                        <span className="text-[12px] font-mono text-stone-400">{item.start}–{item.end}</span>
+                        <span className="text-[14px] font-mono text-stone-400">{item.start}–{item.end}</span>
                         {height >= 80 && (
-                            <p className="text-[12px] text-stone-600 leading-snug mt-0.5 italic line-clamp-2">{item.note}</p>
+                            <p className="text-[14px] text-stone-600 leading-snug mt-0.5 italic line-clamp-2">{item.note}</p>
                         )}
                     </div>
                 );
@@ -1133,13 +1133,13 @@
                         onClick={() => onClick(item)}
                         style={{ minHeight: '88px' }}>
                         <div className="flex justify-between items-start mb-1">
-                            <span className="font-black text-stone-800 text-lg md:text-xl flex items-center gap-1.5">
+                            <span className="font-black text-stone-800 text-xl md:text-2xl flex items-center gap-1.5">
                                 {item.name}
-                                <span className={`text-[13px] text-white px-1.5 py-0.5 rounded-sm ${badgeColor}`}>{item.label}</span>
+                                <span className={`text-[15px] text-white px-1.5 py-0.5 rounded-sm ${badgeColor}`}>{item.label}</span>
                             </span>
-                            <span className="text-[14px] font-mono text-stone-500 font-bold">{item.period}</span>
+                            <span className="text-[16px] font-mono text-stone-500 font-bold">{item.period}</span>
                         </div>
-                        <p className="text-[14px] md:text-[15px] text-stone-600 leading-snug mt-1 italic">{item.note}</p>
+                        <p className="text-[16px] md:text-[17px] text-stone-600 leading-snug mt-1 italic">{item.note}</p>
                     </div>
                 );
             };
@@ -1149,7 +1149,7 @@
                 for (let y = START_YEAR; y >= END_YEAR; y -= 10) {
                     marks.push(
                         <div key={y} className="relative h-0" style={{ top: `${(START_YEAR - y) * YEAR_PX}px` }}>
-                            <span className="absolute right-2 -translate-y-1/2 text-[14px] text-stone-400 font-bold whitespace-nowrap">— {y}</span>
+                            <span className="absolute right-2 -translate-y-1/2 text-[16px] text-stone-400 font-bold whitespace-nowrap">— {y}</span>
                         </div>
                     );
                 }
@@ -1197,10 +1197,10 @@
 
                         {/* ── Section 2: Split-Kingdom Timeline ── */}
                         <div className="border-t-4 border-double border-stone-200 pt-12">
-                            <h2 className="text-center text-2xl md:text-3xl font-black mb-2 text-blue-900 tracking-tighter">
+                            <h2 className="text-center text-3xl md:text-5xl font-black mb-4 text-blue-900 tracking-tighter">
                                 分裂王國、先知與外邦強國對照（比例時間軸）
                             </h2>
-                            <p className="text-center text-stone-500 text-base mb-8">
+                            <p className="text-center text-stone-500 text-lg md:text-xl mb-12">
                                 931 BC（王國分裂）→ 722 BC（北國亞述滅）→ 586 BC（南國巴比倫滅）
                             </p>
 
@@ -1227,31 +1227,31 @@
                             <div className="flex gap-1 md:gap-2">
                                 <div className="hidden md:block w-16 shrink-0"></div> {/* Alignment placeholder for Ruler */}
                                 <div className="grid gap-1 md:gap-2 mb-3 flex-grow" style={{ gridTemplateColumns: gridCols }}>
-                                    <div className="py-2 px-2 bg-sky-950 text-white text-center font-black rounded-xl shadow text-sm md:text-base">
-                                        南國 猶大<br /><span className="text-[11px] opacity-60 font-normal">Judah · 20王</span>
+                                    <div className="py-2 px-2 bg-sky-950 text-white text-center font-black rounded-xl shadow text-lg md:text-xl">
+                                        南國 猶大<br /><span className="text-sm opacity-60 font-normal">Judah · 20王</span>
                                     </div>
                                     {showProphets && (
-                                        <div className="py-2 px-1 bg-violet-800 text-white text-center font-black rounded-xl shadow text-[13px] md:text-sm">
-                                            先知（南）<br /><span className="text-[11px] opacity-60 font-normal">S. Prophets</span>
+                                        <div className="py-2 px-1 bg-violet-800 text-white text-center font-black rounded-xl shadow text-[15px] md:text-base">
+                                            先知（南）<br /><span className="text-sm opacity-60 font-normal">S. Prophets</span>
                                         </div>
                                     )}
                                     {showEmpires && (
                                         <Fragment>
-                                            <div className="py-2 px-1 bg-yellow-700 text-white text-center font-black rounded-xl shadow text-[13px] md:text-sm">
-                                                亞蘭・埃及<br /><span className="text-[11px] opacity-60 font-normal">Regional</span>
+                                            <div className="py-2 px-1 bg-yellow-700 text-white text-center font-black rounded-xl shadow text-[15px] md:text-base">
+                                                亞蘭・埃及<br /><span className="text-sm opacity-60 font-normal">Regional</span>
                                             </div>
-                                            <div className="py-2 px-1 bg-orange-800 text-white text-center font-black rounded-xl shadow text-[13px] md:text-sm">
-                                                亞述・巴比倫<br /><span className="text-[11px] opacity-60 font-normal">Superpower</span>
+                                            <div className="py-2 px-1 bg-orange-800 text-white text-center font-black rounded-xl shadow text-[15px] md:text-base">
+                                                亞述・巴比倫<br /><span className="text-sm opacity-60 font-normal">Superpower</span>
                                             </div>
                                         </Fragment>
                                     )}
                                     {showProphets && (
-                                        <div className="py-2 px-1 bg-emerald-800 text-white text-center font-black rounded-xl shadow text-[13px] md:text-sm">
-                                            先知（北）<br /><span className="text-[11px] opacity-60 font-normal">N. Prophets</span>
+                                        <div className="py-2 px-1 bg-emerald-800 text-white text-center font-black rounded-xl shadow text-[15px] md:text-base">
+                                            先知（北）<br /><span className="text-sm opacity-60 font-normal">N. Prophets</span>
                                         </div>
                                     )}
-                                    <div className="py-2 px-2 bg-emerald-950 text-white text-center font-black rounded-xl shadow text-sm md:text-base">
-                                        北國 以色列<br /><span className="text-[11px] opacity-60 font-normal">Israel · 19王</span>
+                                    <div className="py-2 px-2 bg-emerald-950 text-white text-center font-black rounded-xl shadow text-lg md:text-xl">
+                                        北國 以色列<br /><span className="text-sm opacity-60 font-normal">Israel · 19王</span>
                                     </div>
                                 </div>
                             </div>
@@ -1606,32 +1606,8 @@
                         <div className="rounded-[1.5rem] overflow-hidden shadow-2xl border-2 border-stone-300 relative" style={{ height: 'calc(100vh - 100px)', minHeight: '500px' }}>
                             <div ref={mapRef} style={{ width: '100%', height: '100%' }}></div>
 
-                            {/* Focus Mode Indicator */}
-                            {isFocusMode && (
-                                <div className="absolute top-4 left-4 z-[1000] flex items-center gap-4 bg-white/95 backdrop-blur-md px-6 py-3 rounded-2xl shadow-2xl border border-stone-200 animate-fade-in ring-1 ring-white/50">
-                                    <div className="flex items-center gap-2">
-                                        <span className="relative flex h-3 w-3">
-                                            <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-cyan-400 opacity-75"></span>
-                                            <span className="relative inline-flex rounded-full h-3 w-3 bg-cyan-500"></span>
-                                        </span>
-                                        <span className="font-black text-stone-800 tracking-tight" style={{ fontFamily: 'Noto Serif TC, serif' }}>
-                                            {focusedBook ? `${focusedBook}相關地點` : '書卷相關地點'}
-                                        </span>
-                                    </div>
-                                    <div className="h-4 w-px bg-stone-200 mx-1"></div>
-                                    <button
-                                        onClick={() => {
-                                            if (onClearFocus) onClearFocus();
-                                            clearFocus();
-                                            window.location.hash = 'structure';
-                                        }}
-                                        className="bg-stone-900 text-white px-5 py-1.5 rounded-xl text-xs font-bold hover:bg-black transition-all active:scale-95 shadow-lg flex items-center gap-2 group"
-                                    >
-                                        <span>返回聖經架構</span>
-                                        <span className="transition-transform group-hover:-translate-x-0.5">↩</span>
-                                    </button>
-                                </div>
-                            )}
+                            {/* Focus Mode Indicator - Moved to Header */}
+
                         </div>
 
                         {/* Stats bar */}
@@ -2837,25 +2813,51 @@
                             </div>
                         </div>
 
-                        {/* ── Secondary Sub-menu (Era Filter) ── */}
+                        {/* ── Secondary Sub-menu (Era Filter & Focus Mode Indicator) ── */}
                         {currentPage === 'atlas' && (
-                            <div className="mt-3 pt-3 border-t border-stone-100 flex flex-nowrap md:flex-wrap gap-2 overflow-x-auto items-center pb-1">
-                                <span className="text-stone-400 font-bold text-[11px] mr-1 uppercase tracking-wider shrink-0" style={{ fontFamily: 'Inter, sans-serif' }}>
-                                    時代篩選
-                                </span>
-                                {atlasData.eras.map(era => (
-                                    <button key={era.id}
-                                        className={`era-chip shrink-0 ${activeEra === era.id ? 'active' : ''}`}
-                                        style={{
-                                            background: activeEra === era.id ? era.color : '#f5f5f4',
-                                            color: activeEra === era.id ? 'white' : '#78716c',
-                                            padding: '0.25rem 0.75rem',
-                                            fontSize: '0.75rem'
-                                        }}
-                                        onClick={() => setActiveEra(era.id)}>
-                                        {era.name}
-                                    </button>
-                                ))}
+                            <div className="mt-3 pt-3 border-t border-stone-100 flex flex-col gap-3">
+                                {focusedBook && (
+                                    <div className="flex items-center justify-between bg-stone-800 p-2 px-3 rounded-xl shadow-inner animate-fade-in mb-1">
+                                        <div className="flex items-center gap-3">
+                                            <span className="relative flex h-2.5 w-2.5">
+                                                <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-cyan-400 opacity-75"></span>
+                                                <span className="relative inline-flex rounded-full h-2.5 w-2.5 bg-cyan-400"></span>
+                                            </span>
+                                            <span className="font-bold text-white text-xs md:text-sm tracking-wide" style={{ fontFamily: 'Noto Serif TC, serif' }}>
+                                                {focusedBook} 相關地點
+                                            </span>
+                                        </div>
+                                        <button
+                                            onClick={() => {
+                                                setFocusLocation(null);
+                                                setFocusedBook(null);
+                                                window.location.hash = 'structure';
+                                            }}
+                                            className="bg-white/10 hover:bg-white/20 text-white px-3 py-1 rounded-lg text-[10px] font-bold transition-all flex items-center gap-1.5 border border-white/10"
+                                        >
+                                            <span>返回聖經架構</span>
+                                            <span className="text-[12px]">↩</span>
+                                        </button>
+                                    </div>
+                                )}
+                                <div className="flex flex-nowrap gap-2 overflow-x-auto items-center pb-1 no-scrollbar shrink-0">
+                                    <span className="text-stone-400 font-bold text-[11px] mr-1 uppercase tracking-wider shrink-0 whitespace-nowrap" style={{ fontFamily: 'Inter, sans-serif' }}>
+                                        時代篩選
+                                    </span>
+                                    {atlasData.eras.map(era => (
+                                        <button key={era.id}
+                                            className={`era-chip shrink-0 ${activeEra === era.id ? 'active' : ''}`}
+                                            style={{
+                                                background: activeEra === era.id ? era.color : '#f5f5f4',
+                                                color: activeEra === era.id ? 'white' : '#78716c',
+                                                padding: '0.25rem 0.75rem',
+                                                fontSize: '0.75rem'
+                                            }}
+                                            onClick={() => setActiveEra(era.id)}>
+                                            {era.name}
+                                        </button>
+                                    ))}
+                                </div>
                             </div>
                         )}
                     </div>
