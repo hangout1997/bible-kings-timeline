@@ -2532,10 +2532,9 @@
             { label: '約 90 - 95 AD (約翰晚年)', books: [{ id: '1 John', span: '90 AD' }, { id: '2 John', span: '90 AD' }, { id: '3 John', span: '90 AD' }, { id: 'Revelation', span: '95 AD' }] }
         ];
 
-        const BibleStructurePage = ({ onNavigateToLocation }) => {
+        const BibleStructurePage = ({ onNavigateToLocation, activeTab, setActiveTab }) => {
             const [selectedBook, setSelectedBook] = useState(null);
             const [activeTestament, setActiveTestament] = useState('all');
-            const [activeTab, setActiveTab] = useState('structure');
 
             const BibleBookModal = ({ book, sectionColor, onClose }) => {
                 if (!book) return null;
@@ -3008,6 +3007,7 @@
             const [activeEra, setActiveEra] = useState('patriarch');
             const [focusLocation, setFocusLocation] = useState(null);
             const [focusedBook, setFocusedBook] = useState(null);
+            const [activeOverviewTab, setActiveOverviewTab] = useState('structure');
 
             const handleNavigateToLocation = (locationName, bookName) => {
                 setFocusLocation(locationName);
@@ -3112,7 +3112,7 @@
 
                      
                     <main className="w-full max-w-none w-full flex-grow flex flex-col mx-auto">
-                        {currentPage === 'structure' && <div className="px-4"><BibleStructurePage onNavigateToLocation={handleNavigateToLocation} /></div>}
+                        {currentPage === 'structure' && <div className="px-4"><BibleStructurePage onNavigateToLocation={handleNavigateToLocation} activeTab={activeOverviewTab} setActiveTab={setActiveOverviewTab} /></div>}
                         {currentPage === 'timeline' && <div className="px-4"><TimelinePage /></div>}
                         {currentPage === 'atlas' && (
                             <AtlasPage
