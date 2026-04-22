@@ -301,6 +301,35 @@
             pointer-events: none;
             border: 2px solid white;
         }
+
+        /* ── Landscape Optimization ── */
+        @media (max-height: 500px) and (orientation: landscape) {
+            .app-container {
+                padding-top: 0 !important;
+                padding-bottom: 0 !important;
+            }
+            .sticky-header {
+                width: 100vw !important;
+                border-radius: 0 !important;
+                margin-bottom: 0 !important;
+                padding: 0.25rem 1rem !important;
+                top: 0 !important;
+                border-left: none !important;
+                border-right: none !important;
+                border-top: none !important;
+            }
+            .map-container {
+                height: calc(100vh - 55px) !important;
+                min-height: unset !important;
+                border-radius: 0 !important;
+                border-left: none !important;
+                border-right: none !important;
+                border-bottom: none !important;
+            }
+            .landscape-hide {
+                display: none !important;
+            }
+        }
     </style>
 </head>
 <body class="bg-stone-200 text-stone-900">
@@ -1199,7 +1228,7 @@
             <div className="page-enter">
                 <div className="w-full max-w-7xl mx-auto">
                      
-                    <div className="rounded-[1.5rem] overflow-hidden shadow-2xl border-2 border-stone-300 relative" style={{ height: 'calc(100vh - 165px)', minHeight: '500px' }}>
+                    <div className="map-container rounded-[1.5rem] overflow-hidden shadow-2xl border-2 border-stone-300 relative" style={{ height: 'calc(100vh - 165px)', minHeight: '500px' }}>
                         <div ref={mapRef} style={{ width: '100%', height: '100%' }}></div>
                         
                          
@@ -1860,10 +1889,10 @@
         }
 
         return (
-            <div className="bg-stone-200 min-h-screen pt-1 pb-4 md:pt-2 md:pb-8 px-2 md:px-4 flex flex-col items-center">
+            <div className="app-container bg-stone-200 min-h-screen pt-1 pb-4 md:pt-2 md:pb-8 px-2 md:px-4 flex flex-col items-center">
                 
                  
-                <div className="sticky top-1 md:top-2 z-[1000] max-w-7xl w-full bg-white/95 backdrop-blur rounded-2xl p-3 px-4 md:px-6 mb-4 shadow-lg border border-white">
+                <div className="sticky-header sticky top-1 md:top-2 z-[1000] max-w-7xl w-full bg-white/95 backdrop-blur rounded-2xl p-3 px-4 md:px-6 mb-4 shadow-lg border border-white">
                     <div className="flex justify-between items-center gap-3">
                         <h1 className="cursor-pointer hover:opacity-75 transition-opacity" 
                             onClick={() => navigate('home')}>
