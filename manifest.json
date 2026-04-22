@@ -1,0 +1,16 @@
+{
+  "name": "看見聖經 Visio Divina",
+  "short_name": "看見聖經",
+  "description": "透過互動式年表與地圖，視覺化聖經的歷史脈絡。",
+  "start_url": "/index.html",
+  "display": "standalone",
+  "background_color": "#e7e5e4",
+  "theme_color": "#292524",
+  "icons": [
+    {
+      "src": "favicon.jpg",
+      "sizes": "512x512",
+      "type": "image/jpeg"
+    }
+  ]
+}
