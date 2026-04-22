@@ -94,7 +94,7 @@
             top: -0.75rem;
             left: 50%;
             transform: translateX(-50%);
-            width: calc(100% - 12rem); /* Connects first and last child centers (w-48 = 12rem) */
+            width: calc(100% - 16rem); /* Connects first and last child centers (w-64 = 16rem) */
             height: 2px;
             background: #d6d3d1;
         }
@@ -1714,18 +1714,18 @@
 
                 return (
                     <div className={`tree-node-container ${isRoot ? 'is-root' : ''} ${isBlood ? 'has-parent' : 'non-blood'}`}>
-                        <div className={`tree-node-card bg-white rounded-2xl shadow-lg p-4 w-52 border-t-4 border-stone-800 relative group transition-all hover:scale-105`}>
-                            <div className="flex items-baseline gap-2 mb-1 flex-wrap">
-                                <div className="text-lg font-black text-stone-900 leading-tight">{node.name}</div>
-                                {node.nameEn && <div className="text-[10px] font-bold text-stone-400 tracking-wider uppercase font-sans" style={{ opacity: 0.8 }}>{node.nameEn}</div>}
+                        <div className={`tree-node-card bg-white rounded-2xl shadow-lg p-5 w-64 border-t-4 border-stone-800 relative group transition-all hover:scale-105`}>
+                            <div className="flex items-baseline gap-2 mb-1.5 flex-wrap">
+                                <div className="text-2xl font-black text-stone-900 leading-tight">{node.name}</div>
+                                {node.nameEn && <div className="text-[14px] font-bold text-stone-400 tracking-wider uppercase font-sans" style={{ opacity: 0.8 }}>{node.nameEn}</div>}
                             </div>
-                            <div className="text-[11px] font-bold text-amber-700 uppercase tracking-wider mb-2">{node.role}</div>
-                            {node.desc && <div className="text-[10px] text-stone-500 leading-tight mb-2 opacity-0 group-hover:opacity-100 transition-opacity absolute top-full left-0 w-full bg-stone-900 text-white p-2 rounded-lg z-50 pointer-events-none mt-1 shadow-xl">{node.desc}</div>}
+                            <div className="text-[15px] font-bold text-amber-700 uppercase tracking-wider mb-3">{node.role}</div>
+                            {node.desc && <div className="text-[14px] text-stone-500 leading-snug mb-2 opacity-0 group-hover:opacity-100 transition-opacity absolute top-full left-0 w-full bg-stone-900 text-white p-3 rounded-xl z-50 pointer-events-none mt-2 shadow-2xl">{node.desc}</div>}
                             
                             {hasChildren && (
                                 <button 
                                     onClick={() => toggleNode(node.name)}
-                                    className="absolute -bottom-3 left-1/2 -translate-x-1/2 w-6 h-6 bg-stone-800 text-white rounded-full flex items-center justify-center text-xs shadow-md hover:bg-stone-600 transition-colors z-10"
+                                    className="absolute -bottom-4 left-1/2 -translate-x-1/2 w-8 h-8 bg-stone-800 text-white rounded-full flex items-center justify-center text-sm shadow-md hover:bg-stone-600 transition-colors z-10"
                                 >
                                     {isExpanded ? '−' : '+'}
                                 </button>
@@ -1736,7 +1736,7 @@
                             <div className="flex flex-col items-center">
                                 {/* Only show vertical line if there are blood children */}
                                 {node.children.some(c => c.isBlood !== false) && (
-                                    <div className="w-0.5 h-6 bg-stone-200"></div>
+                                    <div className="w-0.5 h-8 bg-stone-200"></div>
                                 )}
                                 
                                 {/* Blood children with tree lines */}
@@ -1750,10 +1750,10 @@
 
                                 {/* Independent associates - No lines */}
                                 {node.children.some(c => c.isBlood === false) && (
-                                    <div className="mt-16 flex flex-wrap justify-center gap-12">
+                                    <div className="mt-20 flex flex-wrap justify-center gap-16">
                                         {node.children.filter(c => c.isBlood === false).map((child, idx) => (
                                             <div key={idx} className="flex flex-col items-center">
-                                                <div className="text-[9px] font-black text-stone-400 uppercase tracking-[0.2em] mb-4 py-1 px-3 border border-stone-200 rounded-full bg-stone-50">當代相關 / Contemporaries</div>
+                                                <div className="text-[13px] font-black text-stone-400 uppercase tracking-[0.2em] mb-5 py-1.5 px-4 border border-stone-200 rounded-full bg-stone-50">當代相關 / Contemporaries</div>
                                                 <TreeNode node={child} depth={depth + 1} />
                                             </div>
                                         ))}
