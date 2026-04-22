@@ -130,6 +130,17 @@
             background: #d6d3d1;
         }
 
+        /* Non-blood relationship styling */
+        .tree-node-container.non-blood::before,
+        .tree-node-container.non-blood::after {
+            display: none !important;
+        }
+        .tree-node-container.non-blood .tree-node-card {
+            border-style: dashed;
+            border-color: #d6d3d1;
+            background-color: #fcfaf8;
+        }
+
         .tree-node-card {
             transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
         }
@@ -1358,6 +1369,7 @@
                         { 
                             name: '掃羅 (Saul)', role: '首任君王', 
                             desc: '因悖逆神被廢除王位。',
+                            isBlood: false,
                             children: [
                                 { name: '約拿單', role: '掃羅長子', desc: '大衛的至交好友，為保護大衛不惜違抗父命。' },
                                 { name: '米甲', role: '掃羅之女', desc: '大衛的首任妻子。' }
@@ -1365,7 +1377,8 @@
                         },
                         { 
                             name: '大衛 (David)', role: '次任君王 (合神心意)', 
-                            desc: '伯利恆牧羊童，擊敗歌利亞，經歷掃羅追殺後登基。'
+                            desc: '伯利恆牧羊童，擊敗歌利亞，經歷掃羅追殺後登基。',
+                            isBlood: false
                         }
                     ]
                 }
@@ -1386,8 +1399,8 @@
                                 }
                             ]
                         },
-                        { name: '亞哈隨魯王', role: '波斯帝國統治者', desc: '統管127省的君王。' },
-                        { name: '哈曼', role: '朝廷總理 (惡人)', desc: '陰謀滅絕所有猶大人的權臣，後被處死。' }
+                        { name: '亞哈隨魯王', role: '波斯帝國統治者', desc: '統管127省的君王。', isBlood: false },
+                        { name: '哈曼', role: '朝廷總理 (惡人)', desc: '陰謀滅絕所有猶大人的權臣，後被處死。', isBlood: false }
                     ]
                 }
             },
@@ -1403,15 +1416,17 @@
                     children: [
                         { 
                             name: '彼得 (Peter)', role: '教會柱石', 
-                            desc: '在耶路撒冷放膽講道，開啟外邦宣教之門。'
+                            desc: '在耶路撒冷放膽講道，開啟外邦宣教之門。',
+                            isBlood: false
                         },
                         { 
                             name: '保羅 (Paul)', role: '外邦人的使徒', 
                             desc: '從大馬色路上的悔改到三次宣教旅程，最終將福音帶往羅馬。',
+                            isBlood: false,
                             children: [
-                                { name: '巴拿巴', role: '安慰之子', desc: '保羅早期的同工。' },
-                                { name: '提摩太', role: '屬靈兒子', desc: '保羅最親密的接班人。' },
-                                { name: '路加', role: '忠心同工/醫生', desc: '本書作者，保羅宣教旅程的記錄者。' }
+                                { name: '巴拿巴', role: '安慰之子', desc: '保羅早期的同工。', isBlood: false },
+                                { name: '提摩太', role: '屬靈兒子', desc: '保羅最親密的接班人。', isBlood: false },
+                                { name: '路加', role: '忠心同工/醫生', desc: '本書作者，保羅宣教旅程的記錄者。', isBlood: false }
                             ]
                         }
                     ]
@@ -1529,13 +1544,15 @@
                         },
                         { 
                             name: '耶羅波安', role: '以色列王 (北國)', 
-                            desc: '带領十個支派分裂出去。'
+                            desc: '带領十個支派分裂出去。',
+                            isBlood: false
                         },
                         { 
                             name: '以利亞', role: '烈火先知', 
                             desc: '與亞哈王時代的巴力先知對決，乘旋風昇天。',
+                            isBlood: false,
                             children: [
-                                { name: '以利沙', role: '繼承者', desc: '行了加倍的靈力神蹟。' }
+                                { name: '以利沙', role: '繼承者', desc: '行了加倍的靈力神蹟。', isBlood: false }
                             ]
                         }
                     ]
@@ -1543,7 +1560,7 @@
             },
             '2 Kings': { title: '列王紀下：衰亡與被擄', root: { name: '諸王與先知', role: '興衰交替', children: [{ name: '希西家 & 約西亞', role: '南國賢王', desc: '進行宗教改革。' }, { name: '以利沙', role: '神蹟先知', desc: '醫治乃縵，使斧頭漂浮。' }, { name: '末代君王', role: '被擄至巴比倫/亞述' }] } },
             '1 Chronicles': { title: '歷代志上：大衛的預備', root: { name: '大衛的王朝與祭司', role: '以聖殿為中心', children: [{ name: '大衛', role: '建殿的籌備者', children: [{ name: '所羅門', role: '承接者' }, { name: '祭司與歌唱者', role: '利未體系' }] }] } },
-            '2 Chronicles': { title: '歷代志下：聖殿的興衰', root: { name: '猶大君王史', role: '宗教視角的歷史', children: [{ name: '所羅門', role: '建殿者' }, { name: '希西家/約西亞', role: '復興聖殿者' }, { name: '古列', role: '波斯王', desc: '下令重修聖殿。' }] } },
+            '2 Chronicles': { title: '歷代志下：聖殿的興衰', root: { name: '猶大君王史', role: '宗教視角的歷史', children: [{ name: '所羅門', role: '建殿者' }, { name: '希西家/約西亞', role: '復興聖殿者' }, { name: '古列', role: '波斯王', desc: '下令重修聖殿。', isBlood: false }] } },
             'Ezra': {
                 title: '以斯拉記：回歸與重修',
                 root: {
@@ -1574,10 +1591,10 @@
                     role: '宮廷先知',
                     desc: '事奉歷經四代君王，宣告審判與彌賽亞的盼望。',
                     children: [
-                        { name: '希西家', role: '南國賢王', desc: '遭遇亞述大軍壓境時，得以賽亞指引與神拯救。' },
+                        { name: '希西家', role: '南國賢王', desc: '遭遇亞述大軍壓境時，得以賽亞指引與神拯救。', isBlood: false },
                         { name: '施亞雅述', role: '長子 (象徵名)', desc: '意為「餘民必回歸」。' },
                         { name: '瑪黑珥沙拉勒哈施罷斯', role: '次子 (象徵名)', desc: '意為「擄掠速臨，搶奪快到」。' },
-                        { name: '居魯士 (Cyrus)', role: '波斯王/受膏者', desc: '在預言中被指名為釋放選民回歸、重修聖殿的執行者（賽44:28, 45:1）。' }
+                        { name: '居魯士 (Cyrus)', role: '波斯王/受膏者', desc: '在預言中被指名為釋放選民回歸、重修聖殿的執行者（賽44:28, 45:1）。', isBlood: false }
                     ]
                 }
             },
@@ -1692,9 +1709,10 @@
             const TreeNode = ({ node, isRoot = false, depth = 0 }) => {
                 const isExpanded = expandedNodes[node.name] !== false; // Default expanded
                 const hasChildren = node.children && node.children.length > 0;
+                const isBlood = node.isBlood !== false;
 
                 return (
-                    <div className={`tree-node-container ${isRoot ? 'is-root' : depth > 0 ? 'has-parent' : ''}`}>
+                    <div className={`tree-node-container ${isRoot ? 'is-root' : ''} ${isBlood ? 'has-parent' : 'non-blood'}`}>
                         <div className={`tree-node-card bg-white rounded-2xl shadow-lg p-4 w-48 border-t-4 border-stone-800 relative group`}>
                             <div className="text-lg font-black text-stone-900 mb-1">{node.name}</div>
                             <div className="text-[11px] font-bold text-amber-700 uppercase tracking-wider mb-2">{node.role}</div>
