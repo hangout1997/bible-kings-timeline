@@ -1184,7 +1184,7 @@
                             </p>
                         </div>
 
-                        {/* ── Section 1: Pre-Kingdom Lineage ── */}
+                         
                         <div className="flex flex-col items-center mb-16">
                             <h2 className="text-lg font-black mb-8 text-stone-400 uppercase tracking-widest border-b-2 border-stone-300 pb-2 w-full max-w-2xl text-center">
                                 創世至統一王國（垂直傳承）
@@ -1197,7 +1197,7 @@
                             ))}
                         </div>
 
-                        {/* ── Section 2: Split-Kingdom Timeline ── */}
+                         
                         <div className="border-t-4 border-double border-stone-200 pt-12">
                             <h2 className="text-center text-3xl md:text-5xl font-black mb-4 text-blue-900 tracking-tighter">
                                 分裂王國、先知與外邦強國對照（比例時間軸）
@@ -1206,7 +1206,7 @@
                                 931 BC（王國分裂）→ 722 BC（北國亞述滅）→ 586 BC（南國巴比倫滅）
                             </p>
 
-                            {/* ── Display Toggles ── */}
+                             
                             <div className="flex flex-wrap justify-center gap-6 mb-10 p-4 bg-stone-100/50 rounded-3xl border border-stone-200 w-fit mx-auto shadow-sm">
                                 <label className="flex items-center gap-3 cursor-pointer group">
                                     <div className="relative">
@@ -1227,7 +1227,7 @@
                             </div>
 
                             <div className="flex gap-1 md:gap-2">
-                                <div className="hidden md:block w-16 shrink-0"></div> {/* Alignment placeholder for Ruler */}
+                                <div className="hidden md:block w-16 shrink-0"></div>  
                                 <div className="grid gap-1 md:gap-2 mb-3 flex-grow" style={{ gridTemplateColumns: gridCols }}>
                                     <div className="py-2 px-2 bg-sky-950 text-white text-center font-black rounded-xl shadow text-lg md:text-xl">
                                         南國 猶大<br /><span className="text-sm opacity-60 font-normal">Judah · 20王</span>
@@ -1298,7 +1298,7 @@
                             {selectedDetail && <DetailModal item={selectedDetail} onClose={() => setSelectedDetail(null)} />}
                         </div>
 
-                        {/* ── Legend ── */}
+                         
                         <div className="mt-16 pt-8 border-t border-stone-200">
                             <h3 className="text-center font-black text-stone-400 mb-5 text-sm uppercase tracking-widest">圖例</h3>
                             <div className="flex flex-wrap justify-center gap-5 text-[13px] font-bold text-stone-600 mb-6">
@@ -1609,11 +1609,11 @@
             return (
                 <div className="page-enter w-full">
                     <div className="w-full px-0">
-                        {/* Map container */}
+                         
                         <div className="rounded-[1.5rem] overflow-hidden shadow-2xl border-2 border-stone-300 relative" style={{ height: 'calc(100vh - 100px)', minHeight: '500px' }}>
                             <div ref={mapRef} style={{ width: '100%', height: '100%' }}></div>
 
-                            {/* 相關地點膠囊 - 疊加在地圖上 */}
+                             
                             {focusedBook && (
                                 <div className="absolute top-3 left-3 z-[1000] flex items-center gap-3 bg-stone-900/90 backdrop-blur px-3 py-1.5 rounded-full shadow-2xl animate-fade-in w-fit border border-white/20 ring-1 ring-white/10">
                                     <div className="flex items-center gap-2 pr-3 border-r border-white/20">
@@ -1637,7 +1637,7 @@
 
                         </div>
 
-                        {/* Stats bar - Hide when focused to save space */}
+                         
                         {!focusedBook && (
                             <div className="mt-3 bg-white/95 backdrop-blur rounded-[1rem] p-3 shadow-sm border border-stone-200 mx-4">
                                 <div className="flex flex-wrap justify-center gap-4 md:gap-6 text-xs md:text-sm font-bold text-stone-500" style={{ fontFamily: 'Inter, sans-serif' }}>
@@ -2403,7 +2403,7 @@
                                     </p>
                                 </div>
 
-                                {/* Character Relationship Map Button */}
+                                 
                                 {relationshipData[book.nameEn] && (
                                     <div className="mt-6">
                                         <button
@@ -2420,7 +2420,7 @@
                                     </div>
                                 )}
 
-                                {/* Related Atlas Locations */}
+                                 
                                 {relatedLocations.length > 0 && (
                                     <div className="mt-6 pt-5 border-t border-stone-100">
                                         <div className="flex items-center gap-2 mb-3">
@@ -2543,7 +2543,7 @@
             return (
                 <div className="page-enter">
                     <div className="bg-stone-50 w-full max-w-none w-[98vw] mx-auto shadow-2xl rounded-[3rem] p-6 md:p-12 border border-stone-300">
-                        {/* Header */}
+                         
                         <div className="text-center mb-8">
                             <h2 className="text-3xl md:text-4xl font-black text-stone-800 mb-3" style={{ fontFamily: 'Noto Serif TC, serif' }}>聖經架構總覽</h2>
                             <p className="text-stone-500 text-sm md:text-base max-w-2xl mx-auto leading-relaxed">
@@ -2552,7 +2552,7 @@
                             </p>
                         </div>
 
-                        {/* Stats bar */}
+                         
                         <div className="flex flex-wrap justify-center gap-3 mb-8">
                             <button
                                 className={`px-4 py-2 rounded-xl text-sm font-bold transition-all ${activeTestament === 'all' ? 'bg-stone-800 text-white shadow-lg' : 'bg-stone-100 text-stone-500 hover:bg-stone-200'
@@ -2577,7 +2577,7 @@
                             </button>
                         </div>
 
-                        {/* Content */}
+                         
                         {(activeTestament === 'all' || activeTestament === 'old') && (
                             <TestamentBlock data={otData} gradient="from-amber-600 to-orange-600" borderColor="#b45309" />
                         )}
@@ -2585,10 +2585,10 @@
                             <TestamentBlock data={ntData} gradient="from-teal-600 to-emerald-600" borderColor="#0d9488" />
                         )}
 
-                        {/* Book Detail Modal */}
+                         
                         {selectedBook && <BibleBookModal book={selectedBook.book} sectionColor={selectedBook.sectionColor} onClose={() => setSelectedBook(null)} />}
 
-                        {/* Footer note */}
+                         
                         <div className="mt-12 pt-8 border-t border-stone-200">
                             <div className="bg-stone-100 rounded-2xl p-5 max-w-4xl mx-auto">
                                 <p className="text-[13px] text-stone-500 leading-relaxed">
@@ -2655,7 +2655,7 @@
         const LandingPage = ({ onNavigate }) => {
             return (
                 <div className="min-h-screen bg-stone-200 flex flex-col items-center justify-center px-4 py-12 relative overflow-hidden">
-                    {/* Subtle decorative background */}
+                     
                     <div className="absolute inset-0 pointer-events-none" style={{ opacity: 0.04 }}>
                         <div style={{ position: 'absolute', top: '10%', left: '5%', fontSize: '8rem' }}>✝</div>
                         <div style={{ position: 'absolute', bottom: '15%', right: '8%', fontSize: '6rem' }}>🕊</div>
@@ -2663,14 +2663,14 @@
                         <div style={{ position: 'absolute', bottom: '30%', left: '12%', fontSize: '4rem' }}>🗺</div>
                     </div>
 
-                    {/* Main hero content */}
+                     
                     <div className="relative z-10 text-center max-w-3xl landing-fadeup">
-                        {/* English brand - subtle */}
+                         
                         <p className="text-stone-400 font-bold text-sm tracking-[0.3em] uppercase mb-4 landing-shimmer" style={{ fontFamily: 'Inter, sans-serif' }}>
                             Visio Divina
                         </p>
 
-                        {/* Chinese brand name - hero */}
+                         
                         <h1 className="text-6xl md:text-8xl font-black text-stone-800 mb-6 landing-float flex justify-center items-center gap-4 md:gap-8" style={{ fontFamily: 'Noto Serif TC, serif', lineHeight: 1.1 }}>
                             <span>看</span>
                             <span>見</span>
@@ -2679,14 +2679,14 @@
                             <span>經</span>
                         </h1>
 
-                        {/* Slogan */}
+                         
                         <p className="text-lg md:text-2xl text-stone-500 font-bold mb-2 landing-fadeup landing-fadeup-delay1" style={{ fontFamily: 'Noto Serif TC, serif', letterSpacing: '0.15em' }}>
                             從不同角度，感受聖經的世界
                         </p>
 
 
 
-                        {/* Decorative divider */}
+                         
                         <div className="flex items-center justify-center gap-3 my-10 landing-fadeup landing-fadeup-delay2">
                             <div className="w-16 h-px bg-stone-300"></div>
                             <div className="w-2 h-2 rounded-full bg-stone-400"></div>
@@ -2694,9 +2694,9 @@
                         </div>
                     </div>
 
-                    {/* Feature cards */}
+                     
                     <div className="relative z-10 grid grid-cols-1 md:grid-cols-3 gap-6 md:gap-8 w-full max-w-5xl landing-fadeup landing-fadeup-delay3">
-                        {/* Bible Structure Card */}
+                         
                         <div className="feature-card bg-gradient-to-br from-indigo-50 to-violet-50"
                             onClick={() => onNavigate('structure')}>
                             <div className="text-5xl mb-4 landing-float" style={{ animationDelay: '0.3s' }}>📖</div>
@@ -2712,7 +2712,7 @@
                             </div>
                         </div>
 
-                        {/* Timeline Card */}
+                         
                         <div className="feature-card bg-gradient-to-br from-amber-50 to-orange-50"
                             onClick={() => onNavigate('timeline')}>
                             <div className="text-5xl mb-4 landing-float" style={{ animationDelay: '0.5s' }}>📜</div>
@@ -2728,7 +2728,7 @@
                             </div>
                         </div>
 
-                        {/* Atlas Card */}
+                         
                         <div className="feature-card bg-gradient-to-br from-teal-50 to-emerald-50"
                             onClick={() => onNavigate('atlas')}>
                             <div className="text-5xl mb-4 landing-float" style={{ animationDelay: '1s' }}>🗺️</div>
@@ -2745,7 +2745,7 @@
                         </div>
                     </div>
 
-                    {/* Footer on landing */}
+                     
                     <div className="relative z-10 mt-16 text-center" style={{ fontFamily: 'Inter, sans-serif' }}>
                         <p className="text-stone-400 text-xs font-bold">
                             © 2026 Visio Divina · 看見聖經
@@ -2815,7 +2815,7 @@
             return (
                 <div className="bg-stone-200 min-h-screen pt-0.5 pb-4 md:pt-1 md:pb-8 flex flex-col items-center">
 
-                    {/* ── Unified Header & Tabs ── */}
+                     
                     <div className="sticky top-1 md:top-2 z-[1000] max-w-none w-[98vw] bg-white/95 backdrop-blur rounded-2xl p-2 md:p-3 px-3 md:px-6 mb-2 shadow-lg border border-white mx-auto">
                         <div className="flex justify-between items-center gap-2">
                             <h1 className="cursor-pointer hover:opacity-75 transition-opacity shrink-0"
@@ -2840,7 +2840,7 @@
                             </div>
                         </div>
 
-                        {/* ── Secondary Sub-menu ── */}
+                         
                         {currentPage === 'atlas' && !focusedBook && (
                             <div className="mt-2 pt-2 border-t border-stone-100 flex flex-col gap-2">
                                 <div className="flex flex-nowrap gap-2 overflow-x-auto items-center pb-1 no-scrollbar shrink-0">
@@ -2865,7 +2865,7 @@
                         )}
                     </div>
 
-                    {/* ── Page Content ── */}
+                     
                     <main className="w-full max-w-none w-full flex-grow flex flex-col mx-auto">
                         {currentPage === 'structure' && <div className="px-4"><BibleStructurePage onNavigateToLocation={handleNavigateToLocation} /></div>}
                         {currentPage === 'timeline' && <div className="px-4"><TimelinePage /></div>}
@@ -2883,7 +2883,7 @@
                         {currentPage === 'privacy' && <PrivacyPage />}
                     </main>
 
-                    {/* ── Footer ── */}
+                     
                     <footer className="text-center py-8" style={{ fontFamily: 'Inter, sans-serif' }}>
                         <p className="text-stone-400 text-xs font-bold">
                             © 2026 Visio Divina · 看見聖經
