@@ -1595,7 +1595,7 @@
                         { name: '希西家', nameEn: 'Hezekiah', role: '南國賢王', desc: '遭遇亞述大軍壓境時，得以賽亞指引與神拯救。', isBlood: false },
                         { name: '施亞雅述', nameEn: 'Shear-jashub', role: '長子 (象徵名)', desc: '意為「餘民必回歸」。' },
                         { name: '瑪黑珥沙拉勒哈施罷斯', nameEn: 'Maher-shalal-hash-baz', role: '次子 (象徵名)', desc: '意為「擄掠速臨，搶奪快到」。' },
-                        { name: '居魯士 (Cyrus)', role: '波斯王/受膏者', desc: '在預言中被指名為釋放選民回歸、重修聖殿的執行者（賽44:28, 45:1）。', isBlood: false }
+                        { name: '居魯士', nameEn: 'Cyrus', role: '波斯王/受膏者', desc: '在預言中被指名為釋放選民回歸、重修聖殿的執行者（賽44:28, 45:1）。', isBlood: false }
                     ]
                 }
             },
@@ -1714,8 +1714,11 @@
 
                 return (
                     <div className={`tree-node-container ${isRoot ? 'is-root' : ''} ${isBlood ? 'has-parent' : 'non-blood'}`}>
-                        <div className={`tree-node-card bg-white rounded-2xl shadow-lg p-4 w-48 border-t-4 border-stone-800 relative group`}>
-                            <div className="text-lg font-black text-stone-900 mb-1">{node.name}</div>
+                        <div className={`tree-node-card bg-white rounded-2xl shadow-lg p-4 w-52 border-t-4 border-stone-800 relative group transition-all hover:scale-105`}>
+                            <div className="flex items-baseline gap-2 mb-1 flex-wrap">
+                                <div className="text-lg font-black text-stone-900 leading-tight">{node.name}</div>
+                                {node.nameEn && <div className="text-[10px] font-bold text-stone-400 tracking-wider uppercase font-sans" style={{ opacity: 0.8 }}>{node.nameEn}</div>}
+                            </div>
                             <div className="text-[11px] font-bold text-amber-700 uppercase tracking-wider mb-2">{node.role}</div>
                             {node.desc && <div className="text-[10px] text-stone-500 leading-tight mb-2 opacity-0 group-hover:opacity-100 transition-opacity absolute top-full left-0 w-full bg-stone-900 text-white p-2 rounded-lg z-50 pointer-events-none mt-1 shadow-xl">{node.desc}</div>}
                             
@@ -1730,10 +1733,32 @@
                         </div>
 
                         {hasChildren && isExpanded && (
-                            <div className="tree-children">
-                                {node.children.map((child, idx) => (
-                                    <TreeNode key={idx} node={child} depth={depth + 1} />
-                                ))}
+                            <div className="flex flex-col items-center">
+                                {/* Only show vertical line if there are blood children */}
+                                {node.children.some(c => c.isBlood !== false) && (
+                                    <div className="w-0.5 h-6 bg-stone-200"></div>
+                                )}
+                                
+                                {/* Blood children with tree lines */}
+                                {node.children.some(c => c.isBlood !== false) && (
+                                    <div className="tree-children">
+                                        {node.children.filter(c => c.isBlood !== false).map((child, idx) => (
+                                            <TreeNode key={idx} node={child} depth={depth + 1} />
+                                        ))}
+                                    </div>
+                                )}
+
+                                {/* Independent associates - No lines */}
+                                {node.children.some(c => c.isBlood === false) && (
+                                    <div className="mt-16 flex flex-wrap justify-center gap-12">
+                                        {node.children.filter(c => c.isBlood === false).map((child, idx) => (
+                                            <div key={idx} className="flex flex-col items-center">
+                                                <div className="text-[9px] font-black text-stone-400 uppercase tracking-[0.2em] mb-4 py-1 px-3 border border-stone-200 rounded-full bg-stone-50">當代相關 / Contemporaries</div>
+                                                <TreeNode node={child} depth={depth + 1} />
+                                            </div>
+                                        ))}
+                                    </div>
+                                )}
                             </div>
                         )}
                     </div>
