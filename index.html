@@ -2378,8 +2378,16 @@
                 if (isMulti || relevantRegions.length > 0) {
                     // Multi-location or regions: fitBounds + permanent pulsing highlights
                     const bounds = L.latLngBounds(targetLocs.map(l => [l.lat, l.lng]));
-                    relevantRegions.forEach(poly => bounds.extend(poly.getBounds()));
-                    map.flyToBounds(bounds.pad(0.2), { duration: 1.2, maxZoom: 8 });
+                    relevantRegions.forEach(poly => {
+                        // Leaflet circles need to be on the map to calculate bounds
+                        if (poly instanceof L.Circle && !map.hasLayer(poly)) {
+                            poly.addTo(map);
+                        }
+                        bounds.extend(poly.getBounds());
+                    });
+                    if (bounds.isValid()) {
+                        map.flyToBounds(bounds.pad(0.2), { duration: 1.2, maxZoom: 8 });
+                    }
 
                     setTimeout(() => {
                         const highlightGroup = L.layerGroup();
