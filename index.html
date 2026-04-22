@@ -2542,8 +2542,18 @@
                 useEffect(() => {
                     const handleEsc = (e) => { if (e.key === 'Escape') onClose(); };
                     window.addEventListener('keydown', handleEsc);
+                    
+                    // Track Book View
+                    if (typeof gtag === 'function') {
+                        gtag('event', 'view_book', {
+                            book_id: book.id,
+                            book_name: book.name,
+                            testament: book.testament
+                        });
+                    }
+                    
                     return () => window.removeEventListener('keydown', handleEsc);
-                }, [onClose]);
+                }, [onClose, book]);
 
                 // Dynamically find related atlas locations
                 const relatedLocations = atlasData.locations.filter(loc => loc.books && loc.books.includes(book.nameEn));
@@ -2586,7 +2596,12 @@
                                 {relationshipData[book.nameEn] && (
                                     <div className="mt-6">
                                         <button
-                                            onClick={() => setShowRelationship(true)}
+                                            onClick={() => {
+                                                setShowRelationship(true);
+                                                if (typeof gtag === 'function') {
+                                                    gtag('event', 'view_relationship', { book_name: book.name });
+                                                }
+                                            }}
                                             className="w-full bg-amber-50 text-amber-900 border-2 border-amber-200 px-6 py-4 rounded-[1.5rem] font-black shadow-sm hover:shadow-md hover:bg-amber-100 hover:border-amber-300 transition-all active:scale-95 flex items-center justify-center gap-3 group"
                                         >
                                             <span className="text-2xl group-hover:rotate-12 transition-transform">🌳</span>
@@ -2605,6 +2620,9 @@
                                         <button
                                             onClick={() => {
                                                 onClose();
+                                                if (typeof gtag === 'function') {
+                                                    gtag('event', 'navigate_to_map', { book_name: book.name });
+                                                }
                                                 if (onNavigateToLocation) onNavigateToLocation(relatedLocations.map(l => l.name), book.nameEn);
                                             }}
                                             className="w-full bg-cyan-50 text-cyan-800 border-2 border-cyan-100 px-6 py-4 rounded-[1.5rem] font-black shadow-sm hover:shadow-md hover:bg-cyan-100 hover:border-cyan-200 transition-all active:scale-95 flex items-center justify-center gap-3 group"
@@ -3035,13 +3053,29 @@
                 
                 // SPA Page View Tracking
                 if (typeof gtag === 'function') {
+                    const titleMap = {
+                        'home': '首頁',
+                        'atlas': '聖經地理',
+                        'timeline': '舊約年代表',
+                        'structure': '聖經總覽',
+                        'privacy': '隱私權政策'
+                    };
+                    
                     gtag('event', 'page_view', {
-                        page_title: document.title + (focusedBook ? ` - ${focusedBook}` : (currentPage !== 'home' ? ` - ${currentPage}` : '')),
+                        page_title: document.title + (focusedBook ? ` - ${focusedBook}` : (currentPage !== 'home' ? ` - ${titleMap[currentPage] || currentPage}` : '')),
                         page_location: window.location.href,
-                        page_path: window.location.hash || '/'
+                        page_path: window.location.hash || '/',
+                        overview_tab: currentPage === 'structure' ? activeOverviewTab : undefined
                     });
                 }
-            }, [currentPage, focusedBook]);
+            }, [currentPage, focusedBook, activeOverviewTab]);
+
+            // Track Era Filter changes
+            useEffect(() => {
+                if (currentPage === 'atlas' && typeof gtag === 'function') {
+                    gtag('event', 'filter_era', { era_id: activeEra });
+                }
+            }, [activeEra, currentPage]);
 
             const navigate = (page) => {
                 window.location.hash = page;
