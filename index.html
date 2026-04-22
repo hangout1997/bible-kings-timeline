@@ -2505,9 +2505,37 @@
             );
         };
 
+        
+        const bookTimelineData = [
+            { label: '約 2000 BC (族長時期)', books: [{ id: 'Genesis', span: '創造 ~ 約 1800 BC' }, { id: 'Job', span: '約 2000 BC' }] },
+            { label: '約 1446 BC (出埃及與曠野)', books: [{ id: 'Exodus', span: '1800 - 1446 BC' }, { id: 'Leviticus', span: '1446 BC' }, { id: 'Numbers', span: '1446 - 1406 BC' }, { id: 'Deuteronomy', span: '1406 BC' }] },
+            { label: '約 1406 BC (進迦南)', books: [{ id: 'Joshua', span: '1406 - 1375 BC' }] },
+            { label: '約 1375 BC (士師時期)', books: [{ id: 'Judges', span: '1375 - 1050 BC' }, { id: 'Ruth', span: '約 1100 BC' }] },
+            { label: '約 1050 BC (統一王國開始)', books: [{ id: '1 Samuel', span: '1100 - 1010 BC' }] },
+            { label: '約 1010 BC (大衛王)', books: [{ id: '2 Samuel', span: '1010 - 970 BC' }, { id: '1 Chronicles', span: '1010 - 970 BC' }, { id: 'Psalms', span: '大衛時期為主' }] },
+            { label: '約 970 BC (所羅門王)', books: [{ id: '1 Kings', span: '970 - 853 BC (含分裂)', color: '#0891b2' }, { id: '2 Chronicles', span: '970 - 586 BC', color: '#0891b2' }, { id: 'Proverbs', span: '所羅門' }, { id: 'Ecclesiastes', span: '所羅門' }, { id: 'Song of Solomon', span: '所羅門' }] },
+            { label: '約 840 BC (分裂王國時期)', books: [{ id: 'Obadiah', span: '約 840 BC' }, { id: 'Joel', span: '約 830 BC' }] },
+            { label: '約 760 BC (北國先知)', books: [{ id: 'Jonah', span: '約 760 BC' }, { id: 'Amos', span: '約 760 BC' }, { id: 'Hosea', span: '約 750 - 715 BC' }] },
+            { label: '約 740 BC (南國先知)', books: [{ id: 'Isaiah', span: '約 740 - 680 BC' }, { id: 'Micah', span: '約 735 - 700 BC' }] },
+            { label: '約 660 BC (亞述衰落)', books: [{ id: 'Nahum', span: '約 660 BC' }, { id: 'Zephaniah', span: '約 630 BC' }] },
+            { label: '約 627 BC (猶大末年)', books: [{ id: '2 Kings', span: '853 - 586 BC', color: '#0284c7' }, { id: 'Jeremiah', span: '627 - 586 BC' }, { id: 'Habakkuk', span: '約 605 BC' }, { id: 'Lamentations', span: '586 BC' }] },
+            { label: '約 593 BC (被擄時期)', books: [{ id: 'Ezekiel', span: '593 - 571 BC' }, { id: 'Daniel', span: '605 - 536 BC' }] },
+            { label: '約 538 BC (第一次歸回)', books: [{ id: 'Ezra', span: '538 - 458 BC' }, { id: 'Haggai', span: '520 BC' }, { id: 'Zechariah', span: '520 - 480 BC' }] },
+            { label: '約 483 BC (波斯時期)', books: [{ id: 'Esther', span: '483 - 473 BC' }] },
+            { label: '約 445 BC (第二次歸回)', books: [{ id: 'Nehemiah', span: '445 - 432 BC' }, { id: 'Malachi', span: '約 430 BC' }] },
+            { label: '約 4 BC (基督降生)', books: [{ id: 'Matthew', span: '福音書' }, { id: 'Mark', span: '福音書' }, { id: 'Luke', span: '福音書' }, { id: 'John', span: '福音書' }] },
+            { label: '約 33 AD (教會建立)', books: [{ id: 'Acts', span: '33 - 62 AD' }] },
+            { label: '約 45 - 50 AD (初期書信)', books: [{ id: 'James', span: '約 45 AD' }, { id: 'Galatians', span: '約 48 AD' }] },
+            { label: '約 50 - 60 AD (保羅宣教時期)', books: [{ id: '1 Thessalonians', span: '51 AD' }, { id: '2 Thessalonians', span: '51 AD' }, { id: '1 Corinthians', span: '55 AD' }, { id: '2 Corinthians', span: '56 AD' }, { id: 'Romans', span: '57 AD' }] },
+            { label: '約 60 - 62 AD (監獄書信)', books: [{ id: 'Ephesians', span: '62 AD' }, { id: 'Colossians', span: '62 AD' }, { id: 'Philemon', span: '62 AD' }, { id: 'Philippians', span: '62 AD' }] },
+            { label: '約 62 - 68 AD (使徒晚期)', books: [{ id: '1 Timothy', span: '63 AD' }, { id: 'Titus', span: '63 AD' }, { id: '1 Peter', span: '64 AD' }, { id: '2 Timothy', span: '67 AD' }, { id: '2 Peter', span: '67 AD' }, { id: 'Hebrews', span: '68 AD' }, { id: 'Jude', span: '68 AD' }] },
+            { label: '約 90 - 95 AD (約翰晚年)', books: [{ id: '1 John', span: '90 AD' }, { id: '2 John', span: '90 AD' }, { id: '3 John', span: '90 AD' }, { id: 'Revelation', span: '95 AD' }] }
+        ];
+
         const BibleStructurePage = ({ onNavigateToLocation }) => {
             const [selectedBook, setSelectedBook] = useState(null);
             const [activeTestament, setActiveTestament] = useState('all');
+            const [activeTab, setActiveTab] = useState('structure');
 
             const BibleBookModal = ({ book, sectionColor, onClose }) => {
                 if (!book) return null;
@@ -2679,45 +2707,112 @@
                 <div className="page-enter">
                     <div className="bg-stone-50 w-full max-w-none w-[98vw] mx-auto shadow-2xl rounded-[3rem] p-6 md:p-12 border border-stone-300">
                          
-                        <div className="text-center mb-8">
-                            <h2 className="text-3xl md:text-4xl font-black text-stone-800 mb-3" style={{ fontFamily: 'Noto Serif TC, serif' }}>聖經架構總覽</h2>
+                        <div className="text-center mb-6">
+                            <h2 className="text-3xl md:text-4xl font-black text-stone-800 mb-3" style={{ fontFamily: 'Noto Serif TC, serif' }}>聖經總覽</h2>
                             <p className="text-stone-500 text-sm md:text-base max-w-2xl mx-auto leading-relaxed">
                                 聖經共66卷，舊約39卷、新約27卷，共計1,189章，橫跨約1,500年寫成。<br />
-                                下方以書卷分類方式呈現其完整結構。
+                                透過架構分類與年代順序，全方位認識聖經各卷。
                             </p>
                         </div>
 
-                         
-                        <div className="flex flex-wrap justify-center gap-3 mb-8">
+                        {/* Top-level Tabs */}
+                        <div className="flex justify-center mb-8 border-b border-stone-200">
                             <button
-                                className={`px-4 py-2 rounded-xl text-sm font-bold transition-all ${activeTestament === 'all' ? 'bg-stone-800 text-white shadow-lg' : 'bg-stone-100 text-stone-500 hover:bg-stone-200'
-                                    }`}
-                                onClick={() => setActiveTestament('all')}
+                                className={`px-6 py-3 font-bold text-lg transition-colors border-b-4 ${activeTab === 'structure' ? 'border-stone-800 text-stone-900' : 'border-transparent text-stone-400 hover:text-stone-600'}`}
+                                onClick={() => setActiveTab('structure')}
+                                style={{ fontFamily: 'Noto Serif TC, serif' }}
                             >
-                                📖 全部 66 卷
+                                📚 聖經架構
                             </button>
                             <button
-                                className={`px-4 py-2 rounded-xl text-sm font-bold transition-all ${activeTestament === 'old' ? 'bg-amber-700 text-white shadow-lg' : 'bg-stone-100 text-stone-500 hover:bg-stone-200'
-                                    }`}
-                                onClick={() => setActiveTestament('old')}
+                                className={`px-6 py-3 font-bold text-lg transition-colors border-b-4 ${activeTab === 'timeline' ? 'border-stone-800 text-stone-900' : 'border-transparent text-stone-400 hover:text-stone-600'}`}
+                                onClick={() => setActiveTab('timeline')}
+                                style={{ fontFamily: 'Noto Serif TC, serif' }}
                             >
-                                📜 舊約 39 卷
-                            </button>
-                            <button
-                                className={`px-4 py-2 rounded-xl text-sm font-bold transition-all ${activeTestament === 'new' ? 'bg-teal-700 text-white shadow-lg' : 'bg-stone-100 text-stone-500 hover:bg-stone-200'
-                                    }`}
-                                onClick={() => setActiveTestament('new')}
-                            >
-                                ✝️ 新約 27 卷
+                                ⏳ 書卷年代表
                             </button>
                         </div>
 
-                         
-                        {(activeTestament === 'all' || activeTestament === 'old') && (
-                            <TestamentBlock data={otData} gradient="from-amber-600 to-orange-600" borderColor="#b45309" />
+                        {activeTab === 'structure' && (
+                            <div className="animate-fade-in">
+                                <div className="flex flex-wrap justify-center gap-3 mb-8">
+                                    <button
+                                        className={`px-4 py-2 rounded-xl text-sm font-bold transition-all ${activeTestament === 'all' ? 'bg-stone-800 text-white shadow-lg' : 'bg-stone-100 text-stone-500 hover:bg-stone-200'}`}
+                                        onClick={() => setActiveTestament('all')}
+                                    >
+                                        📖 全部 66 卷
+                                    </button>
+                                    <button
+                                        className={`px-4 py-2 rounded-xl text-sm font-bold transition-all ${activeTestament === 'old' ? 'bg-amber-700 text-white shadow-lg' : 'bg-stone-100 text-stone-500 hover:bg-stone-200'}`}
+                                        onClick={() => setActiveTestament('old')}
+                                    >
+                                        📜 舊約 39 卷
+                                    </button>
+                                    <button
+                                        className={`px-4 py-2 rounded-xl text-sm font-bold transition-all ${activeTestament === 'new' ? 'bg-teal-700 text-white shadow-lg' : 'bg-stone-100 text-stone-500 hover:bg-stone-200'}`}
+                                        onClick={() => setActiveTestament('new')}
+                                    >
+                                        ✝️ 新約 27 卷
+                                    </button>
+                                </div>
+
+                                {(activeTestament === 'all' || activeTestament === 'old') && (
+                                    <TestamentBlock data={otData} gradient="from-amber-600 to-orange-600" borderColor="#b45309" />
+                                )}
+                                {(activeTestament === 'all' || activeTestament === 'new') && (
+                                    <TestamentBlock data={ntData} gradient="from-teal-600 to-emerald-600" borderColor="#0d9488" />
+                                )}
+                            </div>
                         )}
-                        {(activeTestament === 'all' || activeTestament === 'new') && (
-                            <TestamentBlock data={ntData} gradient="from-teal-600 to-emerald-600" borderColor="#0d9488" />
+
+                        {activeTab === 'timeline' && (
+                            <div className="animate-fade-in max-w-5xl mx-auto pb-20 px-4">
+                                <div className="text-center mb-12">
+                                    <div className="inline-block px-4 py-1.5 rounded-full bg-stone-100 text-stone-500 text-xs font-bold tracking-widest uppercase mb-4">
+                                        Chronological Order
+                                    </div>
+                                    <h3 className="text-3xl font-black text-stone-800" style={{ fontFamily: 'Noto Serif TC, serif' }}>書卷歷史年代表</h3>
+                                </div>
+
+                                <div className="relative">
+                                    <div className="absolute left-0 md:left-1/2 top-0 bottom-0 w-1 bg-stone-200 transform md:-translate-x-1/2 z-0"></div>
+                                    {bookTimelineData.map((node, i) => (
+                                        <div key={i} className="relative z-10 mb-12 md:mb-16">
+                                            <div className="flex justify-start md:justify-center mb-6">
+                                                <div className="bg-white border-2 border-stone-800 text-stone-800 px-6 py-2 rounded-full font-black text-sm md:text-base shadow-md z-20">
+                                                    {node.label}
+                                                </div>
+                                            </div>
+                                            <div className="flex flex-wrap justify-start md:justify-center gap-4 pl-8 md:pl-0">
+                                                {node.books.map((bInfo, j) => {
+                                                    const book = bookMap[bInfo.id];
+                                                    if (!book) return null;
+                                                    const cardColor = bInfo.color || '#444';
+                                                    return (
+                                                        <div key={j}
+                                                            onClick={() => setSelectedBook({ book, sectionColor: cardColor })}
+                                                            className="bg-white p-4 rounded-2xl shadow-sm hover:shadow-xl transition-all cursor-pointer border border-stone-200 hover:border-stone-800 group relative w-full sm:w-[260px] flex flex-col hover:-translate-y-1"
+                                                        >
+                                                            <div className="absolute top-0 left-0 w-full h-1 rounded-t-2xl" style={{ backgroundColor: cardColor }}></div>
+                                                            <div className="flex justify-between items-start mb-2">
+                                                                <h4 className="font-bold text-stone-800 text-lg group-hover:text-black">{book.name}</h4>
+                                                                <span className="text-[10px] font-bold text-stone-400 bg-stone-50 px-2 py-1 rounded-md">{book.chapters}章</span>
+                                                            </div>
+                                                            <div className="text-[11px] text-stone-400 font-bold mb-4 tracking-wider uppercase">{book.nameEn}</div>
+                                                            <div className="mt-auto pt-3 border-t border-stone-50">
+                                                                <div className="text-[12px] font-bold text-stone-600 flex items-center gap-2">
+                                                                    <span className="w-2 h-2 rounded-full" style={{ backgroundColor: cardColor }}></span>
+                                                                    {bInfo.span}
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    );
+                                                })}
+                                            </div>
+                                        </div>
+                                    ))}
+                                </div>
+                            </div>
                         )}
 
                          
