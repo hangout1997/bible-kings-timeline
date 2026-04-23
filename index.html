@@ -1668,6 +1668,7 @@
                     name: '耶利米 (Jeremiah)',
                     role: '眼淚先知',
                     desc: '在猶大末期宣告被擄的審判，並引導新約的應許。',
+                    ref: '耶1:1–19, 20, 26',
                     above: [
                         { 
                             name: '末代諸王', role: '事奉對象', 
@@ -1675,7 +1676,7 @@
                             isBlood: false,
                             relLabel: '事奉關係',
                             children: [
-                                { name: '西底家', nameEn: 'Zedekiah', role: '亡國之君', desc: '不聽耶利米勸告，最終導致耶路撒冷陷落。', isBlood: false }
+                                { name: '西底家', nameEn: 'Zedekiah', role: '亡國之君', desc: '不聽耶利米勸告，最終導致耶路撒冷陷落。', ref: '耶21, 37, 38, 52', isBlood: false }
                             ]
                         }
                     ],
@@ -1683,28 +1684,29 @@
                         { 
                             name: '巴錄', nameEn: 'Baruch', role: '書記/同工', 
                             desc: '忠心記錄耶利米的口諭並宣讀。', 
+                            ref: '耶36:4–32, 45:1',
                             isBlood: false,
                             relLabel: '工作關係' 
                         }
                     ],
                     others: [
                         {
-                            name: '音麥', nameEn: 'Immer', role: '祭司', desc: '祭司家族首領。',
+                            name: '音麥', nameEn: 'Immer', role: '祭司', desc: '祭司家族首領。', ref: '耶20:1',
                             children: [
-                                { name: '巴施戶珥', nameEn: 'Pashhur', role: '聖殿總管/反對者', desc: '（音麥之子）曾毆打耶利米並將其枷鎖，被耶利米改名為「瑪歌珥‧米撒比比」。', isBlood: true }
+                                { name: '巴施戶珥', nameEn: 'Pashhur', role: '聖殿總管/反對者', desc: '（音麥之子）曾毆打耶利米並將其枷鎖，被耶利米改名為「瑪歌珥‧米撒比比」。', ref: '耶20:1–6', isBlood: true }
                             ]
                         },
                         {
-                            name: '巴施戶珥', nameEn: 'Pashhur', role: '首領', desc: '（瑪基雅之子）西底家派往求問耶利米的使者之一，後建議處死耶利米。', isBlood: false
+                            name: '巴施戶珥', nameEn: 'Pashhur', role: '首領', desc: '（瑪基雅之子）西底家派往求問耶利米的使者之一，後建議處死耶利米。', ref: '耶21:1, 38:1–6', isBlood: false
                         },
                         {
-                            name: '西番雅', nameEn: 'Zephaniah', role: '副祭司', desc: '（瑪西雅之子）曾多次為西底家傳話給耶利米，對其態度較為友善。', isBlood: false
+                            name: '西番雅', nameEn: 'Zephaniah', role: '副祭司', desc: '（瑪西雅之子）曾多次為西底家傳話給耶利米，對其態度較為友善。', ref: '耶21:1, 29:25–29', isBlood: false
                         },
                         {
-                            name: '尼布甲尼撒', nameEn: 'Nebuchadnezzar II', role: '巴比倫王', desc: '神所使用的「僕人」，摧毀耶路撒冷與聖殿，將百姓擄往巴比倫。', isBlood: false
+                            name: '尼布甲尼撒', nameEn: 'Nebuchadnezzar II', role: '巴比倫王', desc: '神所使用的「僕人」，摧毀耶路撒冷與聖殿，將百姓擄往巴比倫。', ref: '耶25:9, 39, 52', isBlood: false
                         },
                         {
-                            name: '哈拿尼雅', nameEn: 'Hananiah', role: '假先知', desc: '（押朔之子）曾與耶利米對抗並折斷其木軛，預言兩年內被擄者必歸回，後遭神審判同年死亡。', isBlood: false
+                            name: '哈拿尼雅', nameEn: 'Hananiah', role: '假先知', desc: '（押朔之子）曾與耶利米對抗並折斷其木軛，預言兩年內被擄者必歸回，後遭神審判同年死亡。', ref: '耶28:1–17', isBlood: false
                         }
                     ]
                 }
@@ -1815,7 +1817,17 @@
                                 {node.nameEn && <div className="text-[14px] font-bold text-stone-400 tracking-wider uppercase font-sans" style={{ opacity: 0.8 }}>{node.nameEn}</div>}
                             </div>
                             <div className="text-[15px] font-bold text-amber-700 uppercase tracking-wider mb-3">{node.role}</div>
-                            {node.desc && <div className="text-[14px] text-stone-500 leading-snug mb-2 opacity-0 group-hover:opacity-100 transition-opacity absolute top-full left-0 w-full bg-stone-900 text-white p-3 rounded-xl z-50 pointer-events-none mt-2 shadow-2xl">{node.desc}</div>}
+                            {node.desc && (
+                                <div className="text-[14px] text-stone-200 leading-snug opacity-0 group-hover:opacity-100 transition-opacity absolute top-full left-0 w-full bg-stone-900 text-white p-4 rounded-2xl z-50 pointer-events-none mt-2 shadow-2xl border border-white/10">
+                                    <div className="mb-2">{node.desc}</div>
+                                    {node.ref && (
+                                        <div className="mt-2 pt-2 border-t border-white/20 flex items-center gap-2">
+                                            <span className="bg-amber-500/20 text-amber-400 text-[9px] px-1.5 py-0.5 rounded font-black uppercase tracking-tighter">Ref</span>
+                                            <span className="text-amber-400/80 text-[11px] font-bold tracking-wider">{node.ref}</span>
+                                        </div>
+                                    )}
+                                </div>
+                            )}
                             
                             {hasChildren && (
                                 <button 
