@@ -1686,6 +1686,14 @@
                             isBlood: false,
                             relLabel: '工作關係' 
                         }
+                    ],
+                    others: [
+                        {
+                            name: '音麥', nameEn: 'Immer', role: '祭司', desc: '祭司家族首領。',
+                            children: [
+                                { name: '巴施戶珥', nameEn: 'Pashhur', role: '聖殿總管/反對者', desc: '曾毆打耶利米並將其枷鎖，被耶利米改名為「瑪歌珥‧米撒比比」（恐怖在四圍）。', isBlood: true }
+                            ]
+                        }
                     ]
                 }
             },
@@ -1886,6 +1894,18 @@
                                                 <TreeNode node={node} />
                                             </div>
                                         ))}
+                                    </div>
+                                )}
+
+                                {/* Others Group (Independent) */}
+                                {data.root.others && (
+                                    <div className="mt-24 border-t border-stone-200 pt-16 w-full flex flex-col items-center">
+                                        <div className="text-stone-400 font-bold tracking-[0.2em] uppercase text-xs mb-12">其他相關人物 (獨立呈現)</div>
+                                        <div className="flex gap-24 flex-wrap justify-center">
+                                            {data.root.others.map((node, idx) => (
+                                                <TreeNode key={idx} node={node} />
+                                            ))}
+                                        </div>
                                     </div>
                                 )}
                             </div>
