@@ -1810,13 +1810,19 @@
             };
 
             useEffect(() => {
-                const handleEsc = (e) => { if (e.key === 'Escape') onClose(); };
-                window.addEventListener('keydown', handleEsc);
-                return () => window.removeEventListener('keydown', handleEsc);
+                const handleEsc = (e) => { 
+                    if (e.key === 'Escape') {
+                        e.stopImmediatePropagation();
+                        onClose(); 
+                    }
+                };
+                window.addEventListener('keydown', handleEsc, true); // Use capture to intercept before parent
+                return () => window.removeEventListener('keydown', handleEsc, true);
             }, [onClose]);
 
             return (
-                <div className="fixed inset-0 z-[200] flex items-center justify-center p-4 bg-stone-900/80 backdrop-blur-md" onClick={onClose}>
+                <div className="fixed inset-0 z-[200] flex items-center justify-center p-4 bg-stone-900/80 backdrop-blur-md" 
+                    onClick={(e) => { e.stopPropagation(); onClose(); }}>
                     <div className="bg-white rounded-[2.5rem] shadow-2xl max-w-4xl w-full h-[85vh] flex flex-col overflow-hidden animate-fade-in" onClick={e => e.stopPropagation()}>
                         <div className="p-8 border-b border-stone-100 flex justify-between items-center bg-stone-50">
                             <div>
