@@ -132,14 +132,26 @@
         }
 
         /* Non-blood relationship styling */
-        .tree-node-container.non-blood::before,
-        .tree-node-container.non-blood::after {
-            display: none !important;
+        .tree-node-container.non-blood::before {
+            background: none !important;
+            border-left: 2px dashed #d6d3d1 !important;
+            height: 1.5rem !important;
+            top: -1.5rem !important;
+            display: block !important;
         }
+
         .tree-node-container.non-blood .tree-node-card {
             border-style: dashed;
             border-color: #d6d3d1;
             background-color: #fcfaf8;
+        }
+
+        /* Horizontal connection for non-blood groups */
+        .tree-children.has-non-blood::before {
+            background: none !important;
+            border-top: 2px dashed #d6d3d1 !important;
+            height: 0 !important;
+            top: -1.5rem !important;
         }
 
         .tree-node-card {
@@ -853,9 +865,21 @@
                 },
                 {
                     name: '但', nameEn: 'Dan', lat: 33.2489, lng: 35.6524, era: 'divided',
-                    books: ['Judges', '1 Kings'],
-                    desc: '以色列最北端城市。耶羅波安在此設立金牛犢，使以色列人陷入偶像崇拜。', ref: '王上12:28–30', icon: '🐂',
+                    books: ['Judges', '1 Kings', 'Jeremiah'],
+                    desc: '以色列最北端城市。耶羅波安在此設立金牛犢。耶利米預言災禍從北方（但）發出。', ref: '王上12:28–30, 耶4:15, 8:16', icon: '🐂',
                     rcuvText: '他（耶羅波安）就把牛犢一隻安在伯特利，一隻安在但。（王上12:29）'
+                },
+                {
+                    name: '亞拿突城', nameEn: 'Anathoth', lat: 31.8122, lng: 35.2633, era: 'divided',
+                    books: ['Jeremiah', '1 Kings'],
+                    desc: '耶利米的家鄉，位於耶路撒冷東北約5公里的利未人城邑。所羅門曾將祭司亞比亞他趕回此地。', ref: '耶1:1, 王上2:26', icon: '🏡',
+                    rcuvText: '便雅憫地、亞拿突城的祭司中，有一位耶利米；耶和華的話臨到他。（耶1:1-2）'
+                },
+                {
+                    name: '以法蓮山', nameEn: 'Hill Country of Ephraim', lat: 32.1, lng: 35.2, era: 'divided',
+                    books: ['Jeremiah', 'Judges', '1 Kings'],
+                    desc: '北國以色列的核心山地。耶利米預言守望者必在以法蓮山上呼叫百姓回歸錫安。', ref: '耶4:15, 31:6', icon: '⛰️',
+                    rcuvText: '有聲音從但傳揚，從以法蓮山報禍。（耶4:15）'
                 },
                 {
                     name: '迦密山', nameEn: 'Mount Carmel', lat: 32.7353, lng: 35.0429, era: 'divided',
@@ -930,6 +954,30 @@
                     books: ['Obadiah', 'Genesis', 'Deuteronomy', 'Isaiah'],
                     desc: '以掃後裔所居之地，位於死海南方的山地。以賽亞書與俄巴底亞書均宣告以東因驕傲與欺壓兄弟將遭神審判。', ref: '俄1:1–21, 賽34:5', icon: '🏔️',
                     rcuvText: '因為我的刀在天上已經喝足；看哪，這刀必臨到以東和我所詛咒的民，施行審判。（賽34:5）'
+                },
+                {
+                    name: '基提', nameEn: 'Kittim', lat: 35.0, lng: 33.0, era: 'empire',
+                    books: ['Jeremiah', 'Ezekiel', 'Numbers'],
+                    desc: '指賽普勒斯或西方沿海地帶。耶利米以此代表西方，與代表東方的基達並列。', ref: '耶2:10, 結27:6', icon: '🏝️',
+                    rcuvText: '你們且過到基提海島去察看，打發人往基達去留心查考。（耶2:10）'
+                },
+                {
+                    name: '基達', nameEn: 'Kedar', lat: 31.0, lng: 39.0, era: 'empire',
+                    books: ['Jeremiah', 'Isaiah', 'Psalms'],
+                    desc: '以實瑪利的後裔，居住在阿拉伯沙漠的游牧民族，以帳篷和羊群聞名。代表東方。', ref: '耶2:10, 49:28, 賽21:16', icon: '⛺',
+                    rcuvText: '打發人往基達去留心查考，看曾有這樣的事沒有。（耶2:10）'
+                },
+                {
+                    name: '尼羅河', nameEn: 'Nile River', lat: 30.1, lng: 31.2, era: 'empire',
+                    books: ['Jeremiah', 'Exodus', 'Isaiah'],
+                    desc: '埃及的命脈。耶利米質問百姓為何要去埃及喝尼羅河（西曷）的水，指靠攏外邦勢力。', ref: '耶2:18, 出7:14-25', icon: '🌊',
+                    rcuvText: '現今你為何在埃及路上要喝西曷河的水呢？（耶2:18）'
+                },
+                {
+                    name: '西曷河', nameEn: 'Shihor River', lat: 31.0, lng: 32.5, era: 'empire',
+                    books: ['Jeremiah', 'Joshua'],
+                    desc: '埃及東界的河流，常指尼羅河的最東支流。與尼羅河並列代表對埃及的依賴。', ref: '耶2:18, 書13:3', icon: '🛶',
+                    rcuvText: '現今你為何在埃及路上要喝西曷河的水呢？（耶2:18）'
                 },
 
                 // ══════════════════════ 福音 & 事工 ══════════════════════
@@ -1321,7 +1369,7 @@
                             name: '摩西', nameEn: 'Moses', role: '次子 (神人/領袖)', 
                             desc: '蒙神在荊棘火中呼召，帶領以色列人出埃及、頒布律法。',
                             children: [
-                                { name: '西坡拉', role: '妻子 (米甸之女)', desc: '米甸祭司葉忒羅的女兒。' },
+                                { name: '西坡拉', role: '妻子 (米甸之女)', desc: '米甸祭司葉忒羅的女兒。', isBlood: false },
                                 { name: '革舜 & 以利以謝', role: '摩西之子', desc: '摩西流亡米甸時期所生。' }
                             ]
                         }
@@ -1339,6 +1387,7 @@
                         { 
                             name: '路得 (與波阿斯)', role: '賢德的女子', 
                             desc: '摩押女子，死守婆婆拿俄米，回歸伯利恆後蒙大財主波阿斯救贖。',
+                            isBlood: false,
                             children: [
                                 { 
                                     name: '俄備得', role: '救贖之子', 
@@ -1365,7 +1414,8 @@
                     children: [
                         { 
                             name: '撒母耳', nameEn: 'Samuel', role: '最後一位士師', 
-                            desc: '神垂聽哈拿的禱告所賜，童年在聖殿服事，後膏立掃羅與大衛。'
+                            desc: '神垂聽哈拿的禱告所賜，童年在聖殿服事，後膏立掃羅與大衛。',
+                            isBlood: false
                         },
                         { 
                             name: '掃羅 (Saul)', role: '首任君王', 
@@ -1393,6 +1443,7 @@
                         { 
                             name: '末底改', role: '猶大籍官員', 
                             desc: '以斯帖的堂兄與養父，揭發刺王陰謀。',
+                            isBlood: false,
                             children: [
                                 { 
                                     name: '以斯帖 (Esther)', role: '波斯王后', 
@@ -1405,10 +1456,10 @@
                     ]
                 }
             },
-            'Matthew': { title: '馬太福音人物關係', root: { name: '耶穌基督與使徒', role: '天國福音的開啟', children: [{ name: '耶穌基督', role: '彌賽亞/神的兒子', desc: '核心救贖者。', children: [{ name: '馬利亞 & 約瑟', role: '肉身父母' }, { name: '施洗約翰', role: '開路先鋒' }, { name: '十二使徒', role: '核心見證人', children: [{ name: '彼得, 雅各, 約翰', role: '核心中的核心' }, { name: '其餘使徒', role: '見證與宣教' }] }] }] } },
-            'Mark': { title: '馬可福音：僕人與門徒', root: { name: '耶穌基督與使徒', role: '受苦僕人的榜樣', children: [{ name: '耶穌基督', role: '彌賽亞', desc: '服事人的主。', children: [{ name: '彼得', role: '重要口傳來源', desc: '馬可福音被視為彼得的回憶錄。' }, { name: '十二使徒', role: '跟隨者' }] }] } },
-            'Luke': { title: '路加福音：普世救主', root: { name: '耶穌基督與祂的時代', role: '降臨人世的真光', children: [{ name: '耶穌基督', role: '人子', desc: '醫治者與救主。', children: [{ name: '撒迦利亞 & 伊利莎白', role: '施洗約翰父母' }, { name: '路加', role: '作者/醫生', desc: '仔細考察後寫成此書。' }] }] } },
-            'John': { title: '約翰福音：神之道', root: { name: '道成肉身的道', role: '生命的供應者', children: [{ name: '耶穌基督', role: '神的兒子', desc: '太初與神同在。', children: [{ name: '愛的門徒約翰', role: '作者', desc: '耶穌最親近的三個門徒之一。' }, { name: '拉撒路一家', role: '馬大、馬利亞', desc: '耶穌使拉撒路復活。' }] }] } },
+            'Matthew': { title: '馬太福音人物關係', root: { name: '耶穌基督與使徒', role: '天國福音的開啟', children: [{ name: '耶穌基督', role: '彌賽亞/神的兒子', desc: '核心救贖者。', children: [{ name: '馬利亞 & 約瑟', role: '肉身父母' }, { name: '施洗約翰', role: '開路先鋒' }, { name: '十二使徒', role: '核心見證人', isBlood: false, children: [{ name: '彼得, 雅各, 約翰', role: '核心中的核心' }, { name: '其餘使徒', role: '見證與宣教' }] }] }] } },
+            'Mark': { title: '馬可福音：僕人與門徒', root: { name: '耶穌基督與使徒', role: '受苦僕人的榜樣', children: [{ name: '耶穌基督', role: '彌賽亞', desc: '服事人的主。', children: [{ name: '彼得', role: '重要口傳來源', desc: '馬可福音被視為彼得的回憶錄。', isBlood: false }, { name: '十二使徒', role: '跟隨者', isBlood: false }] }] } },
+            'Luke': { title: '路加福音：普世救主', root: { name: '耶穌基督與祂的時代', role: '降臨人世的真光', children: [{ name: '耶穌基督', role: '人子', desc: '醫治者與救主。', children: [{ name: '撒迦利亞 & 伊利莎白', role: '施洗約翰父母' }, { name: '路加', role: '作者/醫生', desc: '仔細考察後寫成此書。', isBlood: false }] }] } },
+            'John': { title: '約翰福音：神之道', root: { name: '道成肉身的道', role: '生命的供應者', children: [{ name: '耶穌基督', role: '神的兒子', desc: '太初與神同在。', children: [{ name: '愛的門徒約翰', role: '作者', desc: '耶穌最親近的三個門徒之一。', isBlood: false }, { name: '拉撒路一家', role: '馬大、馬利亞', desc: '耶穌使拉撒路復活。', isBlood: false }] }] } },
             'Acts': {
                 title: '使徒行傳：福音傳遍地極',
                 root: {
@@ -1445,7 +1496,7 @@
                             desc: '帶領利未支派處理聖所事務。',
                             children: [
                                 { name: '以利亞撒', role: '繼任者', desc: '在亞倫死後承接聖職。' },
-                                { name: '利未人', role: '輔助者', desc: '負責搬運、維護會幕與教導律法。' }
+                                { name: '利未人', role: '輔助者', desc: '負責搬運、維護會幕與教導律法。', isBlood: false }
                             ]
                         }
                     ]
@@ -1461,8 +1512,8 @@
                             name: '摩西與亞倫', role: '核心領袖', 
                             desc: '帶領百姓經歷雲柱火柱的引導。',
                             children: [
-                                { name: '約書亞', role: '信心探子', desc: '與迦勒同報好信，被立為繼承者。' },
-                                { name: '迦勒', role: '信心探子', desc: '專心跟從神，最終進入應許之地。' }
+                                { name: '約書亞', role: '信心探子', desc: '與迦勒同報好信，被立為繼承者。', isBlood: false },
+                                { name: '迦勒', role: '信心探子', desc: '專心跟從神，最終進入應許之地。', isBlood: false }
                             ]
                         },
                         { 
@@ -1484,7 +1535,8 @@
                             children: [
                                 { 
                                     name: '約書亞', role: '欽定繼承者', 
-                                    desc: '蒙神勉勵「要壯膽」，帶領新一代以色列人跨過約旦河。' 
+                                    desc: '蒙神勉勵「要壯膽」，帶領新一代以色列人跨過約旦河。',
+                                    isBlood: false
                                 }
                             ]
                         }
@@ -1498,9 +1550,9 @@
                     role: '戰帥與統帥',
                     desc: '帶領以色列人攻破耶利哥，征服迦南各城並分配土地。',
                     children: [
-                        { name: '喇合', role: '信心的外邦女子', desc: '拯救探子，最終名列大衛與耶穌的譜系。' },
-                        { name: '迦勒', role: '希伯崙的征服者', desc: '老當益壯，憑信心奪得山地。' },
-                        { name: '亞干', role: '警戒者', desc: '因貪心私藏戰利品導致艾城挫敗。' }
+                        { name: '喇合', role: '信心的外邦女子', desc: '拯救探子，最終名列大衛與耶穌的譜系。', isBlood: false },
+                        { name: '迦勒', role: '希伯崙的征服者', desc: '老當益壯，憑信心奪得山地。', isBlood: false },
+                        { name: '亞干', role: '警戒者', desc: '因貪心私藏戰利品導致艾城挫敗。', isBlood: false }
                     ]
                 }
             },
@@ -1511,10 +1563,10 @@
                     role: '神興起的拯救者',
                     desc: '在以色列各支派中興起，救拔百姓脫離仇敵。',
                     children: [
-                        { name: '底波拉 (與巴拉)', role: '女士師', desc: '在基順河擊敗西西拉。' },
-                        { name: '基甸', role: '300勇士領袖', desc: '擊敗米甸大軍。' },
-                        { name: '參孫', role: '大力士', desc: '一人對抗非利士，力竭死於大袞廟。' },
-                        { name: '耶弗他', role: '大能的勇士', desc: '擊敗亞捫人。' }
+                        { name: '底波拉 (與巴拉)', role: '女士師', desc: '在基順河擊敗西西拉。', isBlood: false },
+                        { name: '基甸', role: '300勇士領袖', desc: '擊敗米甸大軍。', isBlood: false },
+                        { name: '參孫', role: '大力士', desc: '一人對抗非利士，力竭死於大袞廟。', isBlood: false },
+                        { name: '耶弗他', role: '大能的勇士', desc: '擊敗亞捫人。', isBlood: false }
                     ]
                 }
             },
@@ -1525,10 +1577,10 @@
                     role: '統一以色列的君王',
                     desc: '定都耶路撒冷，迎接約櫃，蒙神立下「大衛之約」。',
                     children: [
-                        { name: '拔示巴', nameEn: 'Bathsheba', role: '王后', desc: '大衛與她所生的次子為所羅門。' },
+                        { name: '拔示巴', nameEn: 'Bathsheba', role: '王后', desc: '大衛與她所生的次子為所羅門。', isBlood: false },
                         { name: '押沙龍', nameEn: 'Absalom', role: '反叛的兒子', desc: '英俊且有野心，反叛大衛最終死於戰場。' },
-                        { name: '拿單', role: '先知/諍友', desc: '指責大衛的罪，並傳達建殿與王位之約。' },
-                        { name: '約押', role: '元帥', desc: '忠誠但手段殘酷的軍隊統帥。' }
+                        { name: '拿單', role: '先知/諍友', desc: '指責大衛的罪，並傳達建殿與王位之約。', isBlood: false },
+                        { name: '約押', role: '元帥', desc: '忠誠但手段殘酷的軍隊統帥。', isBlood: false }
                     ]
                 }
             },
@@ -1559,8 +1611,8 @@
                     ]
                 }
             },
-            '2 Kings': { title: '列王紀下：衰亡與被擄', root: { name: '諸王與先知', role: '興衰交替', children: [{ name: '希西家 & 約西亞', role: '南國賢王', desc: '進行宗教改革。' }, { name: '以利沙', nameEn: 'Elisha', role: '神蹟先知', desc: '醫治乃縵，使斧頭漂浮。' }, { name: '末代君王', role: '被擄至巴比倫/亞述' }] } },
-            '1 Chronicles': { title: '歷代志上：大衛的預備', root: { name: '大衛的王朝與祭司', role: '以聖殿為中心', children: [{ name: '大衛', nameEn: 'David', role: '建殿的籌備者', children: [{ name: '所羅門', nameEn: 'Solomon', role: '承接者' }, { name: '祭司與歌唱者', role: '利未體系' }] }] } },
+            '2 Kings': { title: '列王紀下：衰亡與被擄', root: { name: '諸王與先知', role: '興衰交替', children: [{ name: '希西家 & 約西亞', role: '南國賢王', desc: '進行宗教改革。', isBlood: false }, { name: '以利沙', nameEn: 'Elisha', role: '神蹟先知', desc: '醫治乃縵，使斧頭漂浮。', isBlood: false }, { name: '末代君王', role: '被擄至巴比倫/亞述', isBlood: false }] } },
+1603:             '1 Chronicles': { title: '歷代志上：大衛的預備', root: { name: '大衛的王朝與祭司', role: '以聖殿為中心', children: [{ name: '大衛', nameEn: 'David', role: '建殿的籌備者', children: [{ name: '所羅門', nameEn: 'Solomon', role: '承接者' }, { name: '祭司與歌唱者', role: '利未體系', isBlood: false }] }] } },
             '2 Chronicles': { title: '歷代志下：聖殿的興衰', root: { name: '猶大君王史', role: '宗教視角的歷史', children: [{ name: '所羅門', nameEn: 'Solomon', role: '建殿者' }, { name: '希西家/約西亞', role: '復興聖殿者' }, { name: '古列', nameEn: 'Cyrus', role: '波斯王', desc: '下令重修聖殿。', isBlood: false }] } },
             'Ezra': {
                 title: '以斯拉記：回歸與重修',
@@ -1568,8 +1620,8 @@
                     name: '被擄歸回的領袖',
                     role: '信仰與聖殿的重整',
                     children: [
-                        { name: '所羅巴伯', nameEn: 'Zerubbabel', role: '省長', desc: '带領第一批回歸者重修聖殿。' },
-                        { name: '以斯拉', nameEn: 'Ezra', role: '文士/祭司', desc: '帶領第二批回歸者，重整百姓靈命與律法。' }
+                        { name: '所羅巴伯', nameEn: 'Zerubbabel', role: '省長', desc: '带領第一批回歸者重修聖殿。', isBlood: false },
+                        { name: '以斯拉', nameEn: 'Ezra', role: '文士/祭司', desc: '帶領第二批回歸者，重整百姓靈命與律法。', isBlood: false }
                     ]
                 }
             },
@@ -1580,8 +1632,8 @@
                     role: '省長/建築者',
                     desc: '蒙波斯王允准回城重修耶路撒冷城牆，並進行改革。',
                     children: [
-                        { name: '以斯拉', nameEn: 'Ezra', role: '同工文士', desc: '在城樓上宣讀律法書。' },
-                        { name: '參巴拉 & 多比雅', role: '攔阻者', desc: '不斷嘲諷與威脅重修工作的人。' }
+                        { name: '以斯拉', nameEn: 'Ezra', role: '同工文士', desc: '在城樓上宣讀律法書。', isBlood: false },
+                        { name: '參巴拉 & 多比雅', role: '攔阻者', desc: '不斷嘲諷與威脅重修工作的人。', isBlood: false }
                     ]
                 }
             },
@@ -1606,12 +1658,13 @@
                     role: '眼淚先知',
                     desc: '在猶大末期宣告被擄的審判，並引導新約的應許。',
                     children: [
-                        { name: '巴錄', nameEn: 'Baruch', role: '書記/同工', desc: '忠心記錄耶利米的口諭並宣讀。' },
+                        { name: '巴錄', nameEn: 'Baruch', role: '書記/同工', desc: '忠心記錄耶利米的口諭並宣讀。', isBlood: false },
                         { 
                             name: '末代諸王', role: '事奉對象', 
                             desc: '經歷了約西亞、約雅敬至西底家的動盪期。',
+                            isBlood: false,
                             children: [
-                                { name: '西底家', nameEn: 'Zedekiah', role: '亡國之君', desc: '不聽耶利米勸告，最終導致耶路撒冷陷落。' }
+                                { name: '西底家', nameEn: 'Zedekiah', role: '亡國之君', desc: '不聽耶利米勸告，最終導致耶路撒冷陷落。', isBlood: false }
                             ]
                         }
                     ]
@@ -1625,7 +1678,7 @@
                     role: '祭司/先知',
                     desc: '在巴比倫迦巴魯河邊，向被擄的百姓傳遞異象與復興的盼望。',
                     children: [
-                        { name: '被擄的長老', role: '聽眾', desc: '常聚集在以西結座前詢問神的話語。' }
+                        { name: '被擄的長老', role: '聽眾', desc: '常聚集在以西結座前詢問神的話語。', isBlood: false }
                     ]
                 }
             },
@@ -1639,16 +1692,18 @@
                         { 
                             name: '三友', role: '信心同伴', 
                             desc: '共同經歷火窯的洗禮。',
+                            isBlood: false,
                             children: [
-                                { name: '沙得拉, 米煞, 阿比尼歌', role: '希伯來名：漢拿尼雅、米沙利、亞撒利雅' }
+                                { name: '沙得拉, 米煞, 阿比尼歌', role: '希伯來名：漢拿尼雅、米沙利、亞撒利雅', isBlood: false }
                             ]
                         },
                         { 
                             name: '諸王系譜', role: '事奉對象', 
                             desc: '見證了巴比倫至波斯的更迭。',
+                            isBlood: false,
                             children: [
-                                { name: '尼布甲尼撒', nameEn: 'Nebuchadnezzar', role: '巴比倫王', desc: '曾因驕傲如獸，後稱頌至高神。' },
-                                { name: '大利烏', nameEn: 'Darius', role: '波斯/瑪代王', desc: '因愛護但以理，不得不下令將其投入獅子坑。' }
+                                { name: '尼布甲尼撒', nameEn: 'Nebuchadnezzar', role: '巴比倫王', desc: '曾因驕傲如獸，後稱頌至高神。', isBlood: false },
+                                { name: '大利烏', nameEn: 'Darius', role: '波斯/瑪代王', desc: '因愛護但以理，不得不下令將其投入獅子坑。', isBlood: false }
                             ]
                         }
                     ]
@@ -1664,6 +1719,7 @@
                         { 
                             name: '歌篾', role: '妻子', 
                             desc: '淫亂的婦人，象徵背道受誘的以色列。',
+                            isBlood: false,
                             children: [
                                 { name: '耶斯列', role: '長子 (審判)', desc: '意為「神栽種/神審判」。' },
                                 { name: '羅路哈瑪', role: '長女 (不蒙憐憫)', desc: '意為「不再蒙憐憫」。' },
@@ -1673,9 +1729,9 @@
                     ]
                 }
             },
-            'Joel': { title: '約珥書：主的日子', root: { name: '約珥 (Joel)', role: '先知', children: [{ name: '受蝗災的百姓', role: '警示對象' }] } },
-            'Amos': { title: '阿摩司書：公義如滔滔江河', root: { name: '阿摩司 (Amos)', role: '牧人先知', children: [{ name: '亞瑪謝', nameEn: 'Amaziah', role: '伯特利的祭司', desc: '攔阻阿摩司說預言的對抗者。' }] } },
-            'Obadiah': { title: '俄巴底亞書：傲慢的代價', root: { name: '俄巴底亞', nameEn: 'Obadiah', role: '先知', children: [{ name: '以東人', role: '審判對象', desc: '以掃的後裔，因幸災樂禍遭審判。' }] } },
+            'Joel': { title: '約珥書：主的日子', root: { name: '約珥 (Joel)', role: '先知', children: [{ name: '受蝗災的百姓', role: '警示對象', isBlood: false }] } },
+            'Amos': { title: '阿摩司書：公義如滔滔江河', root: { name: '阿摩司 (Amos)', role: '牧人先知', children: [{ name: '亞瑪謝', nameEn: 'Amaziah', role: '伯特利的祭司', desc: '攔阻阿摩司說預言的對抗者。', isBlood: false }] } },
+            'Obadiah': { title: '俄巴底亞書：傲慢的代價', root: { name: '俄巴底亞', nameEn: 'Obadiah', role: '先知', children: [{ name: '以東人', role: '審判對象', desc: '以掃的後裔，因幸災樂禍遭審判。', isBlood: false }] } },
             'Jonah': {
                 title: '約拿書：恩典超越疆界',
                 root: {
@@ -1683,18 +1739,18 @@
                     role: '逃跑的先知',
                     desc: '經歷大魚腹中三日，最終向尼尼微宣傳悔改的消息。',
                     children: [
-                        { name: '水手們', role: '外邦人', desc: '在海邊見證神威榮後轉向敬畏。' },
-                        { name: '尼尼微王', role: '悔改的象徵', desc: '帶領全城披麻蒙灰悔改。' }
+                        { name: '水手們', role: '外邦人', desc: '在海邊見證神威榮後轉向敬畏。', isBlood: false },
+                        { name: '尼尼微王', role: '悔改的象徵', desc: '帶領全城披麻蒙灰悔改。', isBlood: false }
                     ]
                 }
             },
-            'Micah': { title: '彌迦書：行公義好憐憫', root: { name: '彌迦 (Micah)', role: '鄉村先知', children: [{ name: '猶大諸王', role: '指教對象', desc: '與以賽亞同期，關懷社會窮苦百姓。' }] } },
-            'Nahum': { title: '那鴻書：尼尼微的傾覆', root: { name: '那鴻 (Nahum)', role: '先知', children: [{ name: '亞述帝國', role: '受審對象' }] } },
-            'Habakkuk': { title: '哈巴谷書：信心的提問', root: { name: '哈巴谷 (Habakkuk)', role: '提問的先知', children: [{ name: '神 (Jehovah)', role: '回答者', desc: '「惟義人因信得生」。' }] } },
-            'Zephaniah': { title: '西番雅書：耶和華心中的忿怒', root: { name: '西番雅', nameEn: 'Zephaniah', role: '先知', desc: '希西家王的玄孫。', children: [{ name: '約西亞王', role: '同期君王' }] } },
-            'Haggai': { title: '哈該書：看重聖殿', root: { name: '哈該 (Haggai)', role: '先知', children: [{ name: '所羅巴伯 & 約書亞', role: '重建領袖', desc: '激勵百姓在回歸後恢復聖殿工程。' }] } },
-            'Zechariah': { title: '撒迦利亞書：萬軍之耶和華', root: { name: '撒迦利亞', nameEn: 'Zechariah', role: '祭司先知', desc: '回歸時期的先知，留下大量彌賽亞預言。', children: [{ name: '所羅巴伯', nameEn: 'Zerubbabel', role: '大衛苗裔象徵' }] } },
-            'Malachi': { title: '瑪拉基書：主使者的呼喚', root: { name: '瑪拉基 (Malachi)', role: '最後一位先知', desc: '在舊約結束前呼籲百姓回轉心志。', children: [{ name: '利未人與百姓', role: '受責與呼籲者' }] } }
+            'Micah': { title: '彌迦書：行公義好憐憫', root: { name: '彌迦 (Micah)', role: '鄉村先知', children: [{ name: '猶大諸王', role: '指教對象', desc: '與以賽亞同期，關懷社會窮苦百姓。', isBlood: false }] } },
+            'Nahum': { title: '那鴻書：尼尼微的傾覆', root: { name: '那鴻 (Nahum)', role: '先知', children: [{ name: '亞述帝國', role: '受審對象', isBlood: false }] } },
+            'Habakkuk': { title: '哈巴谷書：信心的提問', root: { name: '哈巴谷 (Habakkuk)', role: '提問的先知', children: [{ name: '神 (Jehovah)', role: '回答者', desc: '「惟義人因信得生」。', isBlood: false }] } },
+            'Zephaniah': { title: '西番雅書：耶和華心中的忿怒', root: { name: '西番雅', nameEn: 'Zephaniah', role: '先知', desc: '希西家王的玄孫。', children: [{ name: '約西亞王', role: '同期君王', isBlood: false }] } },
+            'Haggai': { title: '哈該書：看重聖殿', root: { name: '哈該 (Haggai)', role: '先知', children: [{ name: '所羅巴伯 & 約書亞', role: '重建領袖', desc: '激勵百姓在回歸後恢復聖殿工程。', isBlood: false }] } },
+            'Zechariah': { title: '撒迦利亞書：萬軍之耶和華', root: { name: '撒迦利亞', nameEn: 'Zechariah', role: '祭司先知', desc: '回歸時期的先知，留下大量彌賽亞預言。', children: [{ name: '所羅巴伯', nameEn: 'Zerubbabel', role: '大衛苗裔象徵', isBlood: false }] } },
+            'Malachi': { title: '瑪拉基書：主使者的呼喚', root: { name: '瑪拉基 (Malachi)', role: '最後一位先知', desc: '在舊約結束前呼籲百姓回轉心志。', children: [{ name: '利未人與百姓', role: '受責與呼籲者', isBlood: false }] } }
         };
 
         const RelationshipMapModal = ({ bookName, onClose }) => {
@@ -1734,31 +1790,19 @@
 
                         {hasChildren && isExpanded && (
                             <div className="flex flex-col items-center">
-                                {/* Only show vertical line if there are blood children */}
-                                {node.children.some(c => c.isBlood !== false) && (
-                                    <div className="w-0.5 h-8 bg-stone-200"></div>
-                                )}
+                                {/* Connector line from parent */}
+                                <div className={`w-0.5 h-6 ${node.children.every(c => c.isBlood === false) ? 'border-l-2 border-dashed border-stone-300' : 'bg-stone-300'}`}></div>
                                 
-                                {/* Blood children with tree lines */}
-                                {node.children.some(c => c.isBlood !== false) && (
-                                    <div className="tree-children">
-                                        {node.children.filter(c => c.isBlood !== false).map((child, idx) => (
-                                            <TreeNode key={idx} node={child} depth={depth + 1} />
-                                        ))}
-                                    </div>
-                                )}
-
-                                {/* Independent associates - No lines */}
-                                {node.children.some(c => c.isBlood === false) && (
-                                    <div className="mt-20 flex flex-wrap justify-center gap-16">
-                                        {node.children.filter(c => c.isBlood === false).map((child, idx) => (
-                                            <div key={idx} className="flex flex-col items-center">
-                                                <div className="text-[13px] font-black text-stone-400 uppercase tracking-[0.2em] mb-5 py-1.5 px-4 border border-stone-200 rounded-full bg-stone-50">當代相關 / Contemporaries</div>
-                                                <TreeNode node={child} depth={depth + 1} />
-                                            </div>
-                                        ))}
-                                    </div>
-                                )}
+                                <div className={`tree-children ${node.children.some(c => c.isBlood === false) ? 'has-non-blood' : ''}`}>
+                                    {node.children.map((child, idx) => (
+                                        <div key={idx} className="flex flex-col items-center">
+                                            {child.isBlood === false && (
+                                                <div className="text-[10px] font-black text-stone-400 uppercase tracking-widest mb-2 px-2 py-0.5 border border-stone-200 rounded-md bg-stone-50">當代相關</div>
+                                            )}
+                                            <TreeNode node={child} depth={depth + 1} />
+                                        </div>
+                                    ))}
+                                </div>
                             </div>
                         )}
                     </div>
