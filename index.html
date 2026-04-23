@@ -900,6 +900,12 @@
                     rcuvText: '猶大王希西家派人前往拉吉去見亞述王，說：「我有罪了，求你離開我；凡你罰我的，我必承當。」（王下18:14）'
                 },
                 {
+                    name: '基列', nameEn: 'Gilead', lat: 32.40, lng: 35.85, era: 'united',
+                    books: ['Genesis', 'Numbers', 'Joshua', 'Judges', '2 Samuel', '1 Kings', '2 Kings', 'Jeremiah'],
+                    desc: '約旦河東的山區，以出產「基列乳香」聞名。耶利米曾以此感嘆百姓靈命的荒廢。雅各與拉班在此立約。', ref: '耶8:22, 46:11, 創31:43–55', icon: '🌿',
+                    rcuvText: '在基列豈沒有乳香呢？在那裏豈沒有醫生呢？我的百姓為何不得痊癒呢？（耶8:22）'
+                },
+                {
                     name: '多坍', nameEn: 'Dothan', lat: 32.40, lng: 35.22, era: 'divided',
                     books: ['Genesis', '2 Kings'],
                     desc: '約瑟被哥哥們賣掉的地方。先知以利沙在此被亞蘭軍隊包圍，神開僕人的眼睛看見滿山火車火馬。', ref: '創37:17, 王下6:13–17', icon: '🐴',
@@ -1657,15 +1663,23 @@
                     name: '耶利米 (Jeremiah)',
                     role: '眼淚先知',
                     desc: '在猶大末期宣告被擄的審判，並引導新約的應許。',
-                    children: [
-                        { name: '巴錄', nameEn: 'Baruch', role: '書記/同工', desc: '忠心記錄耶利米的口諭並宣讀。', isBlood: false },
+                    above: [
                         { 
                             name: '末代諸王', role: '事奉對象', 
                             desc: '經歷了約西亞、約雅敬至西底家的動盪期。',
                             isBlood: false,
+                            relLabel: '事奉關係',
                             children: [
                                 { name: '西底家', nameEn: 'Zedekiah', role: '亡國之君', desc: '不聽耶利米勸告，最終導致耶路撒冷陷落。', isBlood: false }
                             ]
+                        }
+                    ],
+                    below: [
+                        { 
+                            name: '巴錄', nameEn: 'Baruch', role: '書記/同工', 
+                            desc: '忠心記錄耶利米的口諭並宣讀。', 
+                            isBlood: false,
+                            relLabel: '工作關係' 
                         }
                     ]
                 }
@@ -1836,8 +1850,39 @@
                             </button>
                         </div>
                         <div className="flex-grow overflow-auto p-12 bg-stone-100/50">
-                            <div className="min-w-max flex justify-center pt-8">
+                            <div className="min-w-max flex flex-col items-center pt-8">
+                                {/* Above Group (Ministry Targets) */}
+                                {data.root.above && (
+                                    <div className="flex flex-col items-center mb-0">
+                                        <div className="flex gap-12 mb-0">
+                                            {data.root.above.map((node, idx) => (
+                                                <div key={idx} className="flex flex-col items-center">
+                                                    <TreeNode node={node} />
+                                                    <div className="h-10 border-l-2 border-dashed border-stone-300 relative">
+                                                        <span className="absolute left-3 top-1/2 -translate-y-1/2 text-[10px] font-bold text-stone-400 whitespace-nowrap bg-white px-1 rounded">{node.relLabel}</span>
+                                                    </div>
+                                                </div>
+                                            ))}
+                                        </div>
+                                    </div>
+                                )}
+
+                                {/* Center Person */}
                                 <TreeNode node={data.root} isRoot={true} />
+
+                                {/* Below Group (Co-workers) */}
+                                {data.root.below && (
+                                    <div className="flex flex-col items-center mt-0">
+                                        {data.root.below.map((node, idx) => (
+                                            <div key={idx} className="flex flex-col items-center">
+                                                <div className="h-10 border-l-2 border-dashed border-stone-300 relative">
+                                                    <span className="absolute left-3 top-1/2 -translate-y-1/2 text-[10px] font-bold text-stone-400 whitespace-nowrap bg-white px-1 rounded">{node.relLabel}</span>
+                                                </div>
+                                                <TreeNode node={node} />
+                                            </div>
+                                        ))}
+                                    </div>
+                                )}
                             </div>
                         </div>
                         <div className="p-6 bg-stone-50 text-center text-xs text-stone-400 font-bold uppercase tracking-widest">
