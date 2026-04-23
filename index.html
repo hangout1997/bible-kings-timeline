@@ -1797,7 +1797,7 @@
 
                 return (
                     <div className={`tree-node-container ${isRoot ? 'is-root' : ''} ${isBlood ? 'has-parent' : 'non-blood'}`}>
-                        <div className={`tree-node-card bg-white rounded-2xl shadow-lg p-5 w-64 border-t-4 border-stone-800 relative group transition-all hover:scale-105`}>
+                        <div className={`tree-node-card bg-white rounded-2xl shadow-lg p-5 w-64 border-t-4 border-stone-800 relative group transition-all hover:scale-105 hover:z-50`}>
                             <div className="flex items-baseline gap-2 mb-1.5 flex-wrap">
                                 <div className="text-2xl font-black text-stone-900 leading-tight">{node.name}</div>
                                 {node.nameEn && <div className="text-[14px] font-bold text-stone-400 tracking-wider uppercase font-sans" style={{ opacity: 0.8 }}>{node.nameEn}</div>}
@@ -1866,7 +1866,7 @@
                             <div className="min-w-max flex flex-col items-center pt-8">
                                 {/* Above Group (Ministry Targets) */}
                                 {data.root.above && (
-                                    <div className="flex flex-col items-center mb-0">
+                                    <div className="flex flex-col items-center mb-0 relative z-[30]">
                                         <div className="flex gap-12 mb-0">
                                             {data.root.above.map((node, idx) => (
                                                 <div key={idx} className="flex flex-col items-center">
@@ -1881,11 +1881,13 @@
                                 )}
 
                                 {/* Center Person */}
-                                <TreeNode node={data.root} isRoot={true} />
+                                <div className="relative z-[20]">
+                                    <TreeNode node={data.root} isRoot={true} />
+                                </div>
 
                                 {/* Below Group (Co-workers) */}
                                 {data.root.below && (
-                                    <div className="flex flex-col items-center mt-0">
+                                    <div className="flex flex-col items-center mt-0 relative z-[10]">
                                         {data.root.below.map((node, idx) => (
                                             <div key={idx} className="flex flex-col items-center">
                                                 <div className="h-10 border-l-2 border-dashed border-stone-300 relative">
