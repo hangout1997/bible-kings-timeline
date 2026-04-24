@@ -3597,7 +3597,11 @@
                                                 padding: '0.25rem 0.7rem',
                                                 fontSize: '0.7rem'
                                             }}
-                                            onClick={() => setActiveEra(era.id)}>
+                                            onClick={() => {
+                                                setActiveEra(era.id);
+                                                setFocusLocation(null);
+                                                setFocusedBook(null);
+                                            }}>
                                             {era.name}
                                         </button>
                                     ))}
@@ -3614,10 +3618,11 @@
                                             if (focusLocation === 'PROMISED_LAND') {
                                                 setFocusLocation(null);
                                                 setFocusedBook(null);
+                                                setActiveEra('all');
                                             } else {
                                                 setFocusLocation('PROMISED_LAND');
                                                 setFocusedBook('Ezekiel');
-                                                setActiveEra('all');
+                                                setActiveEra(null);
                                             }
                                         }}>
                                         📍 應許之地 (兩版對照)
