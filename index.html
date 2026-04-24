@@ -2718,16 +2718,20 @@
 
             useEffect(() => {
                 if (!focusLocation || !mapInstanceRef.current) {
-                    if (!focusLocation) clearFocus();
+                    if (!focusLocation) {
+                        clearFocus();
+                    }
                     return;
                 }
                 const map = mapInstanceRef.current;
 
                 // Sync to local state
+                const isSpecial = focusLocation === 'PROMISED_LAND';
                 const isMulti = Array.isArray(focusLocation);
-                const names = isMulti ? focusLocation : [focusLocation];
-                const targetLocs = names.map(n => atlasData.locations.find(l => l.name === n)).filter(Boolean);
-                if (targetLocs.length === 0) return;
+                const names = isSpecial ? [] : (isMulti ? focusLocation : [focusLocation]);
+                const targetLocs = isSpecial ? [] : names.map(n => atlasData.locations.find(l => l.name === n)).filter(Boolean);
+                
+                if (!isSpecial && targetLocs.length === 0 && !isMulti) return;
 
                 setCurrentFocusList(names);
                 setIsFocusMode(true);
@@ -2738,9 +2742,13 @@
                 // Also find relevant regions for this book to include in the view bounds
                 const relevantRegions = regionsRef.current.filter(poly => poly._books.includes(focusedBook));
 
-                if (isMulti || relevantRegions.length > 0) {
-                    // Multi-location or regions: fitBounds + permanent pulsing highlights
-                    const bounds = L.latLngBounds(targetLocs.map(l => [l.lat, l.lng]));
+                if (isSpecial || isMulti || relevantRegions.length > 0) {
+                    // Multi-location or regions: fitBounds
+                    let bounds = L.latLngBounds([]);
+                    if (targetLocs.length > 0) {
+                        bounds = L.latLngBounds(targetLocs.map(l => [l.lat, l.lng]));
+                    }
+                    
                     relevantRegions.forEach(poly => {
                         // Leaflet circles need to be on the map to calculate bounds
                         if (poly instanceof L.Circle && !map.hasLayer(poly)) {
@@ -2965,7 +2973,7 @@
                                                     gtag('event', 'navigate_to_promised_land', { book_name: book.name });
                                                 }
                                                 // Navigate to map with Ezekiel focused, which will show the boundary
-                                                if (onNavigateToLocation) onNavigateToLocation([], book.nameEn);
+                                                if (onNavigateToLocation) onNavigateToLocation('PROMISED_LAND', book.nameEn);
                                             }}
                                             className="w-full text-left bg-teal-50 border-2 border-teal-100 rounded-[1.5rem] p-6 shadow-sm hover:shadow-md hover:bg-teal-100/50 hover:border-teal-200 transition-all active:scale-[0.98] group"
                                         >
@@ -3551,6 +3559,27 @@
                                             {era.name}
                                         </button>
                                     ))}
+                                    <div className="w-[1px] h-4 bg-stone-200 mx-1"></div>
+                                    <button
+                                        className={`era-chip shrink-0 ${focusLocation === 'PROMISED_LAND' ? 'active' : ''}`}
+                                        style={{
+                                            background: focusLocation === 'PROMISED_LAND' ? '#0d9488' : '#f5f5f4',
+                                            color: focusLocation === 'PROMISED_LAND' ? 'white' : '#78716c',
+                                            padding: '0.25rem 0.7rem',
+                                            fontSize: '0.7rem'
+                                        }}
+                                        onClick={() => {
+                                            if (focusLocation === 'PROMISED_LAND') {
+                                                setFocusLocation(null);
+                                                setFocusedBook(null);
+                                            } else {
+                                                setFocusLocation('PROMISED_LAND');
+                                                setFocusedBook('Ezekiel');
+                                                setActiveEra('all');
+                                            }
+                                        }}>
+                                        📍 應許之地
+                                    </button>
                                 </div>
                             </div>
                         )}
