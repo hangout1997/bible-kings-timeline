@@ -1238,6 +1238,26 @@
                     radius: 220000,
                     color: '#1e40af',
                     books: ['Jeremiah', 'Ezekiel', 'Daniel', 'Lamentations', 'Habakkuk', 'Isaiah']
+                },
+                {
+                    name: '以西結的應許之地界線',
+                    nameEn: 'Ezekiel\'s Promised Land Boundary',
+                    type: 'polygon',
+                    coords: [
+                        [34.4, 36.0], // Entrance of Hamath
+                        [33.5, 36.5], // Damascus area
+                        [32.8, 36.2], // Hauran
+                        [32.4, 35.6], // Gilead
+                        [31.4, 35.5], // Dead Sea
+                        [30.8, 35.4], // Tamar
+                        [30.6, 34.2], // Meribath-kadesh
+                        [31.1, 33.8], // Brook of Egypt
+                        [32.0, 34.7], // Coast near Joppa
+                        [33.0, 35.1], // Coast near Tyre
+                        [34.4, 36.0]  // Back to North
+                    ],
+                    color: '#0d9488',
+                    books: ['Ezekiel']
                 }
             ]
         };
@@ -2923,6 +2943,23 @@
                                         {book.desc}
                                     </p>
                                 </div>
+                                
+                                {book.nameEn === 'Ezekiel' && (
+                                    <div className="mt-6 animate-fade-in">
+                                        <div className="bg-teal-50 border-2 border-teal-100 rounded-[1.5rem] p-6 shadow-sm">
+                                            <div className="flex items-center gap-3 mb-3">
+                                                <span className="text-2xl">✨</span>
+                                                <h4 className="text-lg font-black text-teal-900">以西結的應許之地異象</h4>
+                                            </div>
+                                            <p className="text-[14px] text-teal-800 leading-relaxed mb-4 font-medium">
+                                                在以西結書 47:13-21 中，神詳述了復興後以色列地的疆界。這界線從北方的哈馬口延伸至南方的埃及小河，地圖上已標示出此神聖的地界範圍。
+                                            </p>
+                                            <div className="flex items-center gap-2 text-[11px] font-bold text-teal-600/70 uppercase tracking-widest border-t border-teal-100 pt-3">
+                                                <span>📖 經文參考：結 47:14-20</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                )}
 
                                  
                                 {relationshipData[book.nameEn] && (
