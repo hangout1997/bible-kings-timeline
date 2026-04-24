@@ -2955,9 +2955,19 @@
                                         </button>
                                         <div className="mt-4 flex flex-wrap gap-x-3 gap-y-2 justify-center px-4">
                                             {relatedLocations.map((loc, i) => (
-                                                <span key={i} className="text-sm font-bold text-stone-500 bg-stone-50 px-3 py-1 rounded-lg border border-stone-100/50 whitespace-nowrap">
+                                                <button
+                                                    key={i}
+                                                    onClick={() => {
+                                                        onClose();
+                                                        if (typeof gtag === 'function') {
+                                                            gtag('event', 'navigate_to_location', { location_name: loc.name, book_name: book.name });
+                                                        }
+                                                        if (onNavigateToLocation) onNavigateToLocation(loc.name, book.nameEn);
+                                                    }}
+                                                    className="text-sm font-bold text-stone-500 bg-stone-50 px-3 py-1 rounded-lg border border-stone-100/50 whitespace-nowrap hover:bg-cyan-50 hover:text-cyan-700 hover:border-cyan-200 transition-all active:scale-95 shadow-sm"
+                                                >
                                                     {loc.name}
-                                                </span>
+                                                </button>
                                             ))}
                                         </div>
                                     </div>
