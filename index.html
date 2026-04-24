@@ -1237,7 +1237,7 @@
                     center: [32.54, 44.42],
                     radius: 220000,
                     color: '#1e40af',
-                    books: ['Jeremiah', 'Ezekiel', 'Daniel', 'Lamentations', 'Habakkuk', 'Isaiah']
+                    books: ['Jeremiah', 'Daniel', 'Lamentations', 'Habakkuk', 'Isaiah']
                 },
                 {
                     name: '以西結的應許之地界線',
@@ -2468,6 +2468,7 @@
             const [currentFocusList, setCurrentFocusList] = useState([]);
             const highlightLayerRef = useRef(null);
             const regionsRef = useRef([]);
+            const staticMarkersRef = useRef([]);
 
             // Display name helper (defaults to Chinese, can be extended for i18n later)
             const getBookDisplayName = (nameEn) => {
@@ -2594,7 +2595,8 @@
                     });
 
                     // NOT pushed to markersRef so it isn't cleared by activeEra
-                    L.marker([c.lat, c.lng], { icon, interactive: false }).addTo(map);
+                    const marker = L.marker([c.lat, c.lng], { icon, interactive: false }).addTo(map);
+                    staticMarkersRef.current.push(marker);
                 });
 
                 // Add regions (Polygons or Circles)
@@ -2638,6 +2640,7 @@
                     map.remove();
                     mapInstanceRef.current = null;
                     markersRef.current = [];
+                    staticMarkersRef.current = [];
                 };
             }, []);
 
@@ -2665,6 +2668,15 @@
                         } else {
                             marker.removeFrom(mapInstanceRef.current);
                         }
+                    }
+                });
+
+                // Filter static labels - hide in focus mode
+                staticMarkersRef.current.forEach(m => {
+                    if (isFocusMode) {
+                        m.removeFrom(mapInstanceRef.current);
+                    } else {
+                        m.addTo(mapInstanceRef.current);
                     }
                 });
 
