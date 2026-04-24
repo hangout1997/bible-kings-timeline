@@ -2953,6 +2953,13 @@
                                             </div>
                                             <span className="ml-2 text-cyan-400 group-hover:translate-x-1 transition-transform">→</span>
                                         </button>
+                                        <div className="mt-4 flex flex-wrap gap-x-3 gap-y-2 justify-center px-4">
+                                            {relatedLocations.map((loc, i) => (
+                                                <span key={i} className="text-[11px] font-bold text-stone-400 bg-stone-50 px-2 py-0.5 rounded border border-stone-100/50 whitespace-nowrap">
+                                                    {loc.name}
+                                                </span>
+                                            ))}
+                                        </div>
                                     </div>
                                 )}
 
