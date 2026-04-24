@@ -2946,10 +2946,23 @@
                                 
                                 {book.nameEn === 'Ezekiel' && (
                                     <div className="mt-6 animate-fade-in">
-                                        <div className="bg-teal-50 border-2 border-teal-100 rounded-[1.5rem] p-6 shadow-sm">
+                                        <button
+                                            onClick={() => {
+                                                onClose();
+                                                if (typeof gtag === 'function') {
+                                                    gtag('event', 'navigate_to_promised_land', { book_name: book.name });
+                                                }
+                                                // Navigate to map with Ezekiel focused, which will show the boundary
+                                                if (onNavigateToLocation) onNavigateToLocation([], book.nameEn);
+                                            }}
+                                            className="w-full text-left bg-teal-50 border-2 border-teal-100 rounded-[1.5rem] p-6 shadow-sm hover:shadow-md hover:bg-teal-100/50 hover:border-teal-200 transition-all active:scale-[0.98] group"
+                                        >
                                             <div className="flex items-center gap-3 mb-3">
-                                                <span className="text-2xl">✨</span>
-                                                <h4 className="text-lg font-black text-teal-900">以西結的應許之地異象</h4>
+                                                <span className="text-2xl group-hover:rotate-12 transition-transform">✨</span>
+                                                <h4 className="text-lg font-black text-teal-900 flex items-center gap-2">
+                                                    以西結的應許之地異象
+                                                    <span className="text-teal-400 text-sm group-hover:translate-x-1 transition-transform">→</span>
+                                                </h4>
                                             </div>
                                             <p className="text-[14px] text-teal-800 leading-relaxed mb-4 font-medium">
                                                 在以西結書 47:13-21 中，神詳述了復興後以色列地的疆界。這界線從北方的哈馬口延伸至南方的埃及小河，地圖上已標示出此神聖的地界範圍。
@@ -2957,7 +2970,7 @@
                                             <div className="flex items-center gap-2 text-[11px] font-bold text-teal-600/70 uppercase tracking-widest border-t border-teal-100 pt-3">
                                                 <span>📖 經文參考：結 47:14-20</span>
                                             </div>
-                                        </div>
+                                        </button>
                                     </div>
                                 )}
 
