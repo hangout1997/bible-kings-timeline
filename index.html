@@ -2874,7 +2874,9 @@
                 }, [onClose, book]);
 
                 // Dynamically find related atlas locations
-                const relatedLocations = atlasData.locations.filter(loc => loc.books && loc.books.includes(book.nameEn));
+                const relatedLocations = atlasData.locations
+                    .filter(loc => loc.books && loc.books.includes(book.nameEn))
+                    .sort((a, b) => new Intl.Collator('zh-Hant-TW-u-co-stroke').compare(a.name, b.name));
                 const eraColorMap = {};
                 atlasData.eras.forEach(e => { eraColorMap[e.id] = e.color; });
 
