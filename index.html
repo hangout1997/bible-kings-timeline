@@ -1259,8 +1259,8 @@
                     books: ['Jeremiah', 'Daniel', 'Lamentations', 'Habakkuk', 'Isaiah']
                 },
                 {
-                    name: '以西結的應許之地界線',
-                    nameEn: 'Ezekiel\'s Promised Land Boundary',
+                    name: '應許之地界線 (以西結書 47 版)',
+                    nameEn: 'Promised Land (Ezekiel 47)',
                     type: 'polygon',
                     coords: [
                         [34.4, 36.0], // Entrance of Hamath
@@ -1277,6 +1277,25 @@
                     ],
                     color: '#0d9488',
                     books: ['Ezekiel']
+                },
+                {
+                    name: '應許之地界線 (民數記 34 版)',
+                    nameEn: 'Promised Land (Numbers 34)',
+                    type: 'polygon',
+                    coords: [
+                        [33.3, 35.1], // Northern border (Mount Hor/Tyre area)
+                        [33.2, 35.8], // Zedad
+                        [32.8, 36.3], // Hazar-enan
+                        [32.8, 35.7], // Sea of Galilee East
+                        [31.8, 35.6], // Jordan River
+                        [31.0, 35.4], // Dead Sea South (Tamar)
+                        [30.6, 34.4], // Kadesh-barnea
+                        [31.1, 33.8], // Brook of Egypt (Wadi El-Arish)
+                        [32.0, 34.8], // Coast
+                        [33.3, 35.1]  // Back to North
+                    ],
+                    color: '#d97706',
+                    books: ['Ezekiel', 'Numbers']
                 }
             ]
         };
@@ -3008,10 +3027,10 @@
                                                 </h4>
                                             </div>
                                             <p className="text-[14px] text-teal-800 leading-relaxed mb-4 font-medium">
-                                                在以西結書 47:13-21 中，神詳述了復興後以色列地的疆界。這界線從北方的哈馬口延伸至南方的埃及小河，地圖上已標示出此神聖的地界範圍。
+                                                在以西結書 47:13-21 中，神詳述了復興後以色列地的疆界。地圖上將同時顯示「民數記 34 版」與「以西結版」的對照範圍，後者在北界與東界更為擴張。
                                             </p>
                                             <div className="flex items-center gap-2 text-[11px] font-bold text-teal-600/70 uppercase tracking-widest border-t border-teal-100 pt-3">
-                                                <span>📖 經文參考：結 47:14-20</span>
+                                                <span>📖 經文：結 47:14-20 & 民 34:1-12</span>
                                             </div>
                                         </button>
                                     </div>
@@ -3601,7 +3620,7 @@
                                                 setActiveEra('all');
                                             }
                                         }}>
-                                        📍 應許之地
+                                        📍 應許之地 (兩版對照)
                                     </button>
                                 </div>
                             </div>
