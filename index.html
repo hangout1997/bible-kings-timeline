@@ -2875,7 +2875,7 @@
                             <div ref={mapRef} style={{ width: '100%', height: '100%' }}></div>
 
                              
-                            {focusedBook && (
+                            {focusedBook && focusLocation !== 'PROMISED_LAND' && (
                                 <div className="absolute top-3 left-3 z-[1000] flex items-center gap-3 bg-stone-900/90 backdrop-blur px-3 py-1.5 rounded-full shadow-2xl animate-fade-in w-fit border border-white/20 ring-1 ring-white/10">
                                     <div className="flex items-center gap-2 pr-3 border-r border-white/20">
                                         <span className="relative flex h-2 w-2">
@@ -3582,7 +3582,7 @@
                         </div>
 
                          
-                        {currentPage === 'atlas' && !focusedBook && (
+                        {currentPage === 'atlas' && (
                             <div className="mt-2 pt-2 border-t border-stone-100 flex flex-col gap-2">
                                 <div className="flex flex-nowrap gap-2 overflow-x-auto items-center pb-1 no-scrollbar shrink-0">
                                     <span className="text-stone-400 font-bold text-[10px] md:text-[11px] mr-1 uppercase tracking-wider shrink-0 whitespace-nowrap" style={{ fontFamily: 'Inter, sans-serif' }}>
