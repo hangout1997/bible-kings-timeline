@@ -928,15 +928,28 @@
                 },
                 {
                     name: '基列', nameEn: 'Gilead', lat: 32.40, lng: 35.85, era: 'united',
-                    books: ['Genesis', 'Numbers', 'Joshua', 'Judges', '2 Samuel', '1 Kings', '2 Kings', 'Jeremiah'],
-                    desc: '約旦河東的山區，以出產「基列乳香」聞名。耶利米曾以此感嘆百姓靈命的荒廢。雅各與拉班在此立約。', ref: '耶8:22, 46:11, 創31:43–55', icon: '🌿',
-                    rcuvText: '在基列豈沒有乳香呢？在那裏豈沒有醫生呢？我的百姓為何不得痊癒呢？（耶8:22）'
+                    books: ['Genesis', 'Numbers', 'Joshua', 'Judges', '2 Samuel', '1 Kings', '2 Kings', 'Jeremiah', 'Hosea'],
+                    desc: '約旦河東的山區，以出產「基列乳香」聞名。何西阿指出基列充滿作孽之人、被血污染，指北國偶像崇拜與社會腐敗。耶利米曾以此感嘆百姓靈命的荒廢。', ref: '何6:8, 12:11, 耶8:22', icon: '🌿',
+                    rcuvText: '基列是作孽之人的城，是被血污染的。（何6:8）'
                 },
                 {
                     name: '多坍', nameEn: 'Dothan', lat: 32.40, lng: 35.22, era: 'divided',
                     books: ['Genesis', '2 Kings'],
                     desc: '約瑟被哥哥們賣掉的地方。先知以利沙在此被亞蘭軍隊包圍，神開僕人的眼睛看見滿山火車火馬。', ref: '創37:17, 王下6:13–17', icon: '🐴',
                     rcuvText: '以利沙禱告說：「耶和華啊，求你開這少年人的眼目，使他能看見。」…滿山有火車火馬。（王下6:17）'
+                },
+
+                {
+                    name: '吉甲', nameEn: 'Gilgal', lat: 31.83, lng: 35.49, era: 'divided',
+                    books: ['Joshua', '1 Samuel', '2 Kings', 'Hosea', 'Amos'],
+                    desc: '以色列人渡約旦河後紮營之地，十二塊石頭紀念渡河神蹟。士師時期掃羅在此被膏為王。何西阿書中「吉甲」成為偶像崇拜的象徵地點，先知以此斥責以色列的背道。', ref: '書4:19–20, 撒上11:14–15, 何4:15, 9:15, 12:11', icon: '🪨',
+                    rcuvText: '你們不要往吉甲去，也不要上到伯特利，不要指著耶和華的永生起誓。（何4:15）'
+                },
+                {
+                    name: '基比亞', nameEn: 'Gibeah', lat: 31.8440, lng: 35.2296, era: 'divided',
+                    books: ['Judges', '1 Samuel', 'Hosea'],
+                    desc: '便雅憫支派的城邑，掃羅的故鄉。士師時期曾發生利未人妾被凌辱的慘事，引發全以色列支派聯合征伐便雅憫之戰。何西阿引用此事件斥責以色列從起初就「犯了罪」，基比亞成為象徵以色列深根的罪惡之地。', ref: '士19–20, 撒上10:26, 何9:9, 10:9', icon: '🏘️',
+                    rcuvText: '以色列啊，你從基比亞的日子就犯了罪，你們站在那裏；在基比亞豈不是有一場爭戰臨到作孽之人嗎？（何10:9）'
                 },
 
                 // ══════════════════════ 外邦帝國 ══════════════════════
@@ -960,8 +973,8 @@
                 },
                 {
                     name: '推羅', nameEn: 'Tyre', lat: 33.2705, lng: 35.2038, era: 'empire',
-                    books: ['1 Kings', 'Ezekiel', 'Matthew', 'Acts'],
-                    desc: '腓尼基沿海商業大城。所羅門建殿木料來自此處的希蘭王。以西結預言其毀滅。', ref: '王上5, 結26–28', icon: '⚓',
+                    books: ['1 Kings', 'Ezekiel', 'Matthew', 'Acts', 'Hosea'],
+                    desc: '腓尼基沿海商業大城。所羅門建殿木料來自此處的希蘭王。何西阿斥責以色列如妓女向列邦（包括推羅）尋求安全，忘記耶和華。以西結預言其毀滅。', ref: '何5:13, 7:11, 王上5, 結26–28', icon: '⚓',
                     rcuvText: '主耶和華如此說：推羅啊，看哪，我必與你為敵，使許多國民上來攻擊你，如同海使波浪湧上來一樣。（結26:3）'
                 },
                 {
@@ -1262,13 +1275,38 @@
                     books: ['Isaiah', 'Jeremiah', 'Micah', 'Zephaniah', 'Lamentations']
                 },
                 {
-                    name: '亞述國 (大概範圍)',
+                    name: '亞述帝國 (極盛期範圍)',
                     nameEn: 'Neo-Assyrian Empire',
-                    type: 'circle',
-                    center: [36.1, 43.5],
-                    radius: 160000,
+                    type: 'polygon',
+                    coords: [
+                        [36.36, 43.15], // Nineveh (capital)
+                        [37.10, 40.60], // Upper Tigris
+                        [36.80, 38.00], // Carchemish
+                        [37.20, 36.40], // Taurus foothills
+                        [37.00, 35.50], // Cilicia border
+                        [36.80, 36.10], // Northern Syria
+                        [35.50, 36.50], // Central Syria
+                        [34.00, 36.30], // Lebanon/Damascus area
+                        [33.27, 35.20], // Tyre coast
+                        [32.00, 34.90], // Philistia coast
+                        [30.00, 32.30], // Egypt border
+                        [29.50, 32.50], // Northern Sinai
+                        [30.50, 34.50], // Negev
+                        [31.50, 35.50], // Dead Sea
+                        [32.00, 37.00], // Transjordan
+                        [33.00, 38.50], // Arabian Desert border
+                        [33.50, 41.00], // Euphrates mid
+                        [34.80, 43.80], // Babylon area
+                        [32.00, 47.00], // Southern Mesopotamia
+                        [30.00, 48.00], // Persian Gulf
+                        [32.00, 48.50], // Chaldea
+                        [33.50, 47.50], // Elam border
+                        [35.00, 46.00], // Zagros foothills
+                        [36.30, 44.50], // Assyria heartland
+                        [36.36, 43.15]  // Back to Nineveh
+                    ],
                     color: '#7c3aed',
-                    books: ['Isaiah', 'Jonah', 'Nahum', 'Lamentations']
+                    books: ['Isaiah', 'Jonah', 'Nahum', 'Lamentations', 'Hosea', '2 Kings']
                 },
                 {
                     name: '巴比倫國 (大概範圍)',
