@@ -3654,67 +3654,136 @@
 
         const MessiahSection = () => {
             return (
-                <div className="space-y-12">
+                <div className="space-y-16">
+                    {/* 1. 概覽 */}
                     <section>
                         <div className="flex items-center gap-4 mb-6">
                             <div className="w-12 h-12 bg-amber-100 rounded-2xl flex items-center justify-center text-2xl shadow-inner">👑</div>
                             <h3 className="text-2xl font-black text-stone-800" style={{ fontFamily: 'Noto Serif TC, serif' }}>概覽</h3>
                         </div>
-                        <p className="text-lg text-stone-700 leading-relaxed border-l-4 border-amber-500 pl-6">
-                            「彌賽亞」（Mashiach）本義為「受膏者」，希臘文即「基督」。在希伯來聖經中，這個詞最初指君王、祭司等執行神授使命的人。到新約時代，基督教確信耶穌就是上帝所應許的基督。
+                        <div className="space-y-4">
+                            <p className="text-lg text-stone-700 leading-relaxed border-l-4 border-amber-500 pl-6 bg-amber-50/30 py-2">
+                                「彌賽亞」一詞來自希伯來文 <em>mashiach</em>，本義是「受膏者」；其希臘文對應詞是 <em>christos</em>，中文通常譯為「基督」。
+                            </p>
+                            <p className="text-stone-600 leading-relaxed">
+                                在希伯來聖經中，這個詞最初不專指末世性的單一人物，而可用於君王、祭司。到第二聖殿時期，猶太社群對「那位將要來的彌賽亞」的期待逐漸聚焦為一位末後的拯救者，但各群體對其身分與工作內容並不完全一致。
+                            </p>
+                        </div>
+                    </section>
+
+                    {/* 2. 詞義與基本背景 */}
+                    <section className="bg-white rounded-[2.5rem] p-8 border border-stone-200 shadow-sm">
+                        <h4 className="text-xl font-black text-stone-800 mb-4 flex items-center gap-2">
+                            <span className="text-amber-500 text-2xl">📜</span> 詞義與基本背景
+                        </h4>
+                        <p className="text-stone-600 leading-relaxed mb-6">
+                            「彌賽亞」在原始語義上並非直接等同於「救主」，而是<strong>「被膏立、被分別出來執行神授使命的人」</strong>。在舊約文本中，掃羅、大衛等君王，以及大祭司都被稱為受膏者。隨著大衛之約、先知預言與亡國經驗的累積，這個詞逐漸承載起對未來大衛後裔王者、復興以色列者與和平秩序建立者的盼望。
                         </p>
-                    </section>
-
-                    <section className="grid grid-cols-1 md:grid-cols-3 gap-6">
-                        {[
-                            { title: '君王型', icon: '🏰', desc: '出自大衛家、恢復公義與國度秩序，是猶太教中最核心的期待。' },
-                            { title: '受苦型', icon: '✝️', desc: '基督教強調耶穌以受難、贖罪與復活整合了受苦僕人的圖像。' },
-                            { title: '末世型', icon: '☁️', desc: '駕雲而來、領受永遠國度的榮耀王者，呼應但以理書的異象。' }
-                        ].map((item, i) => (
-                            <div key={i} className="bg-white p-6 rounded-[2rem] border border-stone-200 shadow-sm hover:shadow-md transition-shadow">
-                                <span className="text-3xl mb-4 block">{item.icon}</span>
-                                <h4 className="text-lg font-black text-stone-800 mb-2">{item.title}彌賽亞</h4>
-                                <p className="text-stone-600 text-sm leading-relaxed">{item.desc}</p>
+                        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                            <div className="p-5 bg-stone-50 rounded-2xl border border-stone-100">
+                                <h5 className="font-bold text-stone-800 mb-2">舊約中的「受膏者」</h5>
+                                <p className="text-sm text-stone-500">常指當下已被膏立的王或祭司，是在其歷史語境中談論王權與祭司制度。</p>
                             </div>
-                        ))}
+                            <div className="p-5 bg-amber-50 rounded-2xl border border-amber-100">
+                                <h5 className="font-bold text-amber-900 mb-2">彌賽亞性經文</h5>
+                                <p className="text-sm text-amber-700">許多經文雖未直接使用「受膏者」一詞，但因描寫和平君王、受苦僕人而被視為高度「彌賽亞性」。</p>
+                            </div>
+                        </div>
                     </section>
 
+                    {/* 3. 主要類型差異 */}
                     <section>
-                        <h4 className="text-xl font-bold text-stone-800 mb-6">猶太教與基督教對彌賽亞的比較</h4>
-                        <div className="overflow-x-auto rounded-3xl border border-stone-200 bg-white">
+                        <h4 className="text-xl font-black text-stone-800 mb-8 text-center">彌賽亞期待的主要類型</h4>
+                        <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+                            {[
+                                { 
+                                    title: '君王型', icon: '🏰', 
+                                    desc: '最核心且普遍的期待。一位出自大衛家、恢復公義與國度秩序的人間君王。',
+                                    ref: '結 34, 賽 11'
+                                },
+                                { 
+                                    title: '受苦型', icon: '✝️', 
+                                    desc: '基督教核心觀點。認為彌賽亞必須先以受苦僕人的身分代贖罪孽。',
+                                    ref: '賽 53, 詩 22'
+                                },
+                                { 
+                                    title: '榮耀型', icon: '☁️', 
+                                    desc: '末世性的審判者與王者。駕雲而來，領受永遠的國度與權柄。',
+                                    ref: '但 7, 啟 19'
+                                }
+                            ].map((item, i) => (
+                                <div key={i} className="group bg-white p-8 rounded-[2.5rem] border border-stone-200 shadow-sm hover:shadow-xl hover:-translate-y-2 transition-all duration-300">
+                                    <div className="text-4xl mb-6 transform group-hover:scale-110 transition-transform">{item.icon}</div>
+                                    <h5 className="text-xl font-black text-stone-800 mb-3">{item.title}彌賽亞</h5>
+                                    <p className="text-stone-500 text-sm leading-relaxed mb-4">{item.desc}</p>
+                                    <div className="text-[10px] font-bold text-amber-600 bg-amber-50 px-2 py-1 rounded-full w-fit">典據：{item.ref}</div>
+                                </div>
+                            ))}
+                        </div>
+                    </section>
+
+                    {/* 4. 觀點對照表 */}
+                    <section>
+                        <div className="flex flex-col items-center mb-10">
+                            <h4 className="text-2xl font-black text-stone-800 mb-2">猶太教與基督教觀點對照</h4>
+                            <div className="w-16 h-1 bg-amber-500 rounded-full"></div>
+                        </div>
+                        <div className="overflow-x-auto rounded-[2rem] border border-stone-200 bg-white shadow-lg">
                             <table className="w-full text-left border-collapse">
                                 <thead className="bg-stone-50 border-b border-stone-200">
                                     <tr>
-                                        <th className="p-4 font-black text-stone-600 text-sm">面向</th>
-                                        <th className="p-4 font-black text-stone-600 text-sm">猶太教主流理解</th>
-                                        <th className="p-4 font-black text-stone-600 text-sm">基督教主流理解</th>
+                                        <th className="p-6 font-black text-stone-600 text-sm uppercase tracking-wider">核心面向</th>
+                                        <th className="p-6 font-black text-amber-700 text-sm">猶太教主流理解</th>
+                                        <th className="p-6 font-black text-blue-700 text-sm">基督教主流理解</th>
                                     </tr>
                                 </thead>
-                                <tbody className="divide-y divide-stone-100 text-sm">
-                                    <tr>
-                                        <td className="p-4 font-bold">主要身分</td>
-                                        <td className="p-4">大衛後裔的人間君王</td>
-                                        <td className="p-4">大衛後裔、基督、神子、救主</td>
-                                    </tr>
-                                    <tr>
-                                        <td className="p-4 font-bold">主要任務</td>
-                                        <td className="p-4">聚集分散者、復興以色列、建立公義秩序</td>
-                                        <td className="p-4">受死與復活完成救贖，再來完成普世和平</td>
-                                    </tr>
-                                    <tr>
-                                        <td className="p-4 font-bold">受苦僕人</td>
-                                        <td className="p-4">通常視為以色列群體或義人群體</td>
-                                        <td className="p-4">視為耶穌受苦、代贖與復活的關鍵預表</td>
-                                    </tr>
-                                    <tr>
-                                        <td className="p-4 font-bold">未實現預言</td>
-                                        <td className="p-4">若任務未達成，表示彌賽亞尚未來到</td>
-                                        <td className="p-4">以「兩次降臨」解釋已然與未然的張力</td>
-                                    </tr>
+                                <tbody className="divide-y divide-stone-100">
+                                    {[
+                                        { label: '基本身分', jew: '大衛後裔的人間君王', chr: '大衛後裔、基督、神子、救主' },
+                                        { label: '核心任務', jew: '復興以色列、帶來普世和平、重建聖殿', chr: '第一次以降臨成就贖罪，第二次以再來完成國度' },
+                                        { label: '受苦僕人', jew: '通常指以色列集體或義人群體', chr: '預表耶穌的受難與代贖' },
+                                        { label: '失敗判定', jew: '若世界和平未實現，則表示彌賽亞尚未來到', chr: '以「已然未然」框架解釋預言的逐步實現' },
+                                        { label: '權威來源', jew: '希伯來聖經與猶太詮釋傳統', chr: '舊約＋新約，並在基督裡重新詮釋舊約' }
+                                    ].map((row, i) => (
+                                        <tr key={i} className="hover:bg-stone-50 transition-colors">
+                                            <td className="p-6 text-sm font-black text-stone-800 bg-stone-50/30">{row.label}</td>
+                                            <td className="p-6 text-sm text-stone-600 leading-relaxed">{row.jew}</td>
+                                            <td className="p-6 text-sm text-stone-600 leading-relaxed">{row.chr}</td>
+                                        </tr>
+                                    ))}
                                 </tbody>
                             </table>
                         </div>
                     </section>
+
+                    {/* 5. 重要經文索引 */}
+                    <section className="bg-stone-900 rounded-[3rem] p-10 text-stone-100 shadow-2xl relative overflow-hidden">
+                        <div className="absolute top-0 right-0 p-8 opacity-10 text-8xl">📖</div>
+                        <h4 className="text-2xl font-black mb-8 border-b border-white/10 pb-4">重要經文索引</h4>
+                        <div className="grid grid-cols-1 md:grid-cols-2 gap-x-12 gap-y-6">
+                            {[
+                                { ref: '創世記 49:10', desc: '王權與猶大支派的線索。' },
+                                { ref: '撒下 7:12-16', desc: '大衛之約與永固的王位。' },
+                                { ref: '詩篇 2, 110', desc: '受膏君王與主權王者的圖像。' },
+                                { ref: '賽 7:14, 9:6-7', desc: '必有童女懷孕生子，大衛位上的和平君王。' },
+                                { ref: '賽 52:13-53:12', desc: '受苦僕人：代罪受難的關鍵文本。' },
+                                { ref: '但以理書 7:13-14', desc: '人子：駕雲而來領受永遠權柄者。' },
+                                { ref: '約翰福音 4:25', desc: '新約明言：「彌賽亞翻出來就是基督」。' }
+                            ].map((item, i) => (
+                                <div key={i} className="flex gap-4 items-start">
+                                    <div className="text-amber-400 font-black whitespace-nowrap text-sm mt-1">{item.ref}</div>
+                                    <div className="text-stone-400 text-sm leading-relaxed">{item.desc}</div>
+                                </div>
+                            ))}
+                        </div>
+                    </section>
+
+                    {/* 綜合結論 */}
+                    <div className="text-center max-w-2xl mx-auto pt-8">
+                        <p className="text-stone-400 italic text-sm">
+                            「彌賽亞並非單一平面的概念，而是從職分逐步發展為對末後拯救者的期待。基督教以復活信仰為中心整合了這些圖像，而猶太教則仍在等待歷史性任務的完成。」
+                        </p>
+                    </div>
                 </div>
             );
         };
