@@ -217,6 +217,11 @@
             font-family: 'Noto Serif TC', serif;
         }
 
+        .focus-mode-active .atlas-marker-label {
+            display: none !important;
+        }
+
+
         .leaflet-popup-content {
             margin: 0 !important;
             min-width: 260px !important;
@@ -2834,6 +2839,7 @@
                                 html: `
                                 <div style="position: relative; width: 0; height: 0;">
                                     <div class="atlas-highlight-pulse" style="--pulse-color: ${color}; position: absolute; left: -24px; top: -24px;"></div>
+                                    <div class="atlas-label-tag" style="--label-border: ${color}; position: absolute; left: 0; top: 0; transform: translate(-50%, -31px);">${loc.name}</div>
                                 </div>
                             `,
                                 iconSize: [0, 0],
@@ -2865,6 +2871,7 @@
                             html: `
                             <div style="position: relative; width: 0; height: 0;">
                                 <div class="atlas-highlight-pulse" style="--pulse-color: ${color}; position: absolute; left: -24px; top: -24px;"></div>
+                                <div class="atlas-label-tag" style="--label-border: ${color}; position: absolute; left: 0; top: 0; transform: translate(-50%, -31px);">${loc.name}</div>
                             </div>
                         `,
                             iconSize: [0, 0],
@@ -2890,7 +2897,7 @@
                 <div className="page-enter w-full">
                     <div className="w-full px-0">
                          
-                        <div className="map-container rounded-[1.5rem] overflow-hidden shadow-2xl border-2 border-stone-300 relative" style={{ height: 'calc(100vh - 100px)', minHeight: '500px' }}>
+                        <div className={`map-container rounded-[1.5rem] overflow-hidden shadow-2xl border-2 border-stone-300 relative ${isFocusMode ? 'focus-mode-active' : ''}`} style={{ height: 'calc(100vh - 100px)', minHeight: '500px' }}>
                             <div ref={mapRef} style={{ width: '100%', height: '100%' }}></div>
 
                              
