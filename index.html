@@ -3815,91 +3815,98 @@
             );
         };
 
-        const SonOfManSection = () => {
+        const AngelsSection = () => {
+            const angelTypes = [
+                { category: '一般天使', role: '傳訊、保護、執行審判', icon: '🕊️', ref: '創 19, 太 1-2' },
+                { category: '加百列', role: '解釋異象、宣告救恩信息', icon: '📢', ref: '但 8:16, 路 1:26' },
+                { category: '米迦勒', role: '天使長、護衛神子民', icon: '⚔️', ref: '但 10:13, 啟 12:7' },
+                { category: '基路伯', role: '守護神聖、彰顯榮耀', icon: '🏛️', ref: '創 3:24, 結 10' },
+                { category: '撒拉弗', role: '寶座前敬拜、潔淨先知', icon: '🔥', ref: '賽 6:1-7' },
+                { category: '墮落使者', role: '敵對、迷惑、最終受審', icon: '🌑', ref: '啟 12:7, 猶 1:6' }
+            ];
+
             return (
-                <div className="space-y-12">
+                <div className="space-y-16">
+                    {/* 1. 概覽 */}
                     <section>
                         <div className="flex items-center gap-4 mb-6">
-                            <div className="w-12 h-12 bg-stone-800 rounded-2xl flex items-center justify-center text-2xl text-white shadow-lg">👤</div>
+                            <div className="w-12 h-12 bg-blue-100 rounded-2xl flex items-center justify-center text-2xl shadow-inner">👼</div>
                             <h3 className="text-2xl font-black text-stone-800" style={{ fontFamily: 'Noto Serif TC, serif' }}>概覽</h3>
                         </div>
-                        <p className="text-lg text-stone-700 leading-relaxed border-l-4 border-stone-800 pl-6">
-                            「人子」在聖經中出現約 190 餘次。其含義經歷了從「泛指人類」到「先知稱號」，再到「末世天上君王」的演進，最終在耶穌自稱中達到三者合一的成全。
-                        </p>
+                        <div className="space-y-4">
+                            <p className="text-lg text-stone-700 leading-relaxed border-l-4 border-blue-500 pl-6 bg-blue-50/30 py-2">
+                                聖經中的「天使」本義為「使者」；希伯來文 <em>malʾakh</em> 與希臘文 <em>angelos</em> 都可指奉差遣傳遞信息、執行命令的服役者。
+                            </p>
+                            <p className="text-stone-600 leading-relaxed">
+                                聖經呈現了多樣的屬靈活物，其核心功能並非成為敬拜中心，而是指向神的旨意與救恩歷史。最穩妥的認識方式是按照聖經直接出現的類型與事蹟來整理。
+                            </p>
+                        </div>
                     </section>
 
-                    <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-                        <section className="space-y-6">
-                            <h4 className="text-xl font-bold text-stone-800">舊約的演進</h4>
-                            <div className="space-y-4">
-                                <div className="p-5 bg-white rounded-2xl border border-stone-100 shadow-sm">
-                                    <div className="flex justify-between mb-2">
-                                        <span className="font-black text-stone-800">1. 一般詩歌用法</span>
-                                        <span className="text-xs font-bold text-stone-400">詩 8:4 / 146:3</span>
-                                    </div>
-                                    <p className="text-stone-600 text-sm">泛指「人類」，強調人的渺小卑微、有限與不可信靠。</p>
-                                </div>
-                                <div className="p-5 bg-white rounded-2xl border border-stone-100 shadow-sm">
-                                    <div className="flex justify-between mb-2">
-                                        <span className="font-black text-stone-800">2. 以西結書用法</span>
-                                        <span className="text-xs font-bold text-stone-400">結 2:1 (出現91次)</span>
-                                    </div>
-                                    <p className="text-stone-600 text-sm">上帝對先知的稱呼，強調先知是「凡人/有限的僕人」。</p>
-                                </div>
-                                <div className="p-5 bg-stone-900 text-white rounded-2xl shadow-md">
-                                    <div className="flex justify-between mb-2">
-                                        <span className="font-black">3. 但以理書異象</span>
-                                        <span className="text-xs font-bold opacity-60">但 7:13</span>
-                                    </div>
-                                    <p className="text-stone-300 text-sm">末世的天上君王，從神領受永遠國度，具天上尊榮。</p>
-                                </div>
+                    {/* 2. 總覽網格 */}
+                    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                        {angelTypes.map((type, i) => (
+                            <div key={i} className="bg-white p-6 rounded-[2rem] border border-stone-200 shadow-sm hover:shadow-md transition-all group">
+                                <div className="text-3xl mb-4 transform group-hover:scale-110 transition-transform">{type.icon}</div>
+                                <h4 className="text-lg font-black text-stone-800 mb-2">{type.category}</h4>
+                                <p className="text-stone-600 text-sm mb-4 leading-relaxed h-10">{type.role}</p>
+                                <div className="text-[10px] font-bold text-blue-600 bg-blue-50 px-2 py-1 rounded-md w-fit">典據：{type.ref}</div>
                             </div>
-                        </section>
-
-                        <section className="space-y-6">
-                            <h4 className="text-xl font-bold text-stone-800">耶穌的重新定義 (新約)</h4>
-                            <div className="p-8 bg-stone-100 rounded-[2rem] border border-stone-200">
-                                <p className="text-stone-700 leading-relaxed mb-6 font-medium">
-                                    耶穌自稱「人子」約 80 餘次，是祂有意整合並重新定義這個稱號：
-                                </p>
-                                <ul className="space-y-6">
-                                    <li className="flex gap-3">
-                                        <span className="text-stone-800 text-xl">●</span>
-                                        <div>
-                                            <span className="font-bold block text-stone-900">人性與卑微</span>
-                                            <span className="text-sm text-stone-500">「人子沒有枕頭的地方」 (太 8:20)</span>
-                                        </div>
-                                    </li>
-                                    <li className="flex gap-3">
-                                        <span className="text-stone-800 text-xl">●</span>
-                                        <div>
-                                            <span className="font-bold block text-stone-900">受苦與代贖</span>
-                                            <span className="text-sm text-stone-500">「人子來...捨命作多人的贖價」 (可 10:45)</span>
-                                        </div>
-                                    </li>
-                                    <li className="flex gap-3">
-                                        <span className="text-stone-800 text-xl">●</span>
-                                        <div>
-                                            <span className="font-bold block text-stone-900">榮耀與再來</span>
-                                            <span className="text-sm text-stone-500">「看見人子坐在權能者右邊」 (太 26:64)</span>
-                                        </div>
-                                    </li>
-                                </ul>
-                            </div>
-                        </section>
+                        ))}
                     </div>
 
-                    <div className="bg-stone-800 p-8 rounded-[2.5rem] text-center text-white shadow-xl">
-                        <p className="text-lg font-black mb-3">神學演進總結</p>
-                        <div className="flex flex-col md:flex-row items-center justify-center gap-4 text-sm font-bold">
-                            <span className="px-3 py-1 bg-white/10 rounded-full">渺小的人 (詩篇)</span>
-                            <span className="text-stone-500">→</span>
-                            <span className="px-3 py-1 bg-white/10 rounded-full">卑微先知 (以西結)</span>
-                            <span className="text-stone-500">→</span>
-                            <span className="px-3 py-1 bg-white/10 rounded-full">榮耀君王 (但以理)</span>
-                            <span className="text-stone-500">→</span>
-                            <span className="px-4 py-2 bg-stone-700 text-white rounded-xl ring-1 ring-stone-600">三者合一 (耶穌)</span>
+                    {/* 3. 功能分類 */}
+                    <section className="bg-stone-50 rounded-[2.5rem] p-8 border border-stone-200">
+                        <h4 className="text-xl font-black text-stone-800 mb-6 flex items-center gap-2">
+                            <span className="text-blue-500 text-2xl">⚡</span> 主要功能分類
+                        </h4>
+                        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                            {[
+                                { label: '傳訊與宣告', desc: '向先知、牧羊人等宣告神的關鍵計畫。' },
+                                { label: '保護與拯救', desc: '在危難中引導或救出神的百姓（如彼得、羅得）。' },
+                                { label: '敬拜與頌讚', desc: '圍繞寶座彰顯神的聖潔（撒拉弗、活物）。' },
+                                { label: '執行與爭戰', desc: '執行審判或在靈界與黑暗勢力交戰。' }
+                            ].map((func, i) => (
+                                <div key={i} className="flex gap-4 items-start p-4 bg-white rounded-2xl shadow-sm">
+                                    <div className="w-2 h-2 bg-blue-400 rounded-full mt-2 shrink-0"></div>
+                                    <div>
+                                        <span className="font-bold text-stone-800 block mb-1 text-sm">{func.label}</span>
+                                        <span className="text-xs text-stone-500 leading-relaxed">{func.desc}</span>
+                                    </div>
+                                </div>
+                            ))}
                         </div>
+                    </section>
+
+                    {/* 4. 特殊存在 */}
+                    <section>
+                        <h4 className="text-xl font-black text-stone-800 mb-8 text-center">聖經中特殊的屬靈存在</h4>
+                        <div className="space-y-6">
+                            <div className="p-6 bg-white rounded-[2rem] border border-stone-200 shadow-sm relative overflow-hidden group">
+                                <div className="absolute -right-4 -top-4 text-6xl opacity-5 group-hover:opacity-10 transition-opacity">✨</div>
+                                <h5 className="font-black text-stone-800 mb-2 flex items-center gap-2">
+                                    耶和華的使者 (The Angel of the LORD)
+                                </h5>
+                                <p className="text-stone-600 text-sm leading-relaxed">
+                                    常以第一人稱代神說話，帶有高度神同在色彩。部分傳統理解為道成肉身之前的基督顯現，承載神的臨在與啟示。
+                                </p>
+                            </div>
+                            <div className="p-6 bg-white rounded-[2rem] border border-stone-200 shadow-sm relative overflow-hidden group">
+                                <div className="absolute -right-4 -top-4 text-6xl opacity-5 group-hover:opacity-10 transition-opacity">👁️</div>
+                                <h5 className="font-black text-stone-800 mb-2 flex items-center gap-2">
+                                    寶座前的活物 (Living Creatures)
+                                </h5>
+                                <p className="text-stone-600 text-sm leading-relaxed">
+                                    出現在以西結與啟示錄的異象中。多面、多翼、充滿眼睛，突出神的全知、威榮與對全地的掌權。
+                                </p>
+                            </div>
+                        </div>
+                    </section>
+
+                    <div className="text-center pt-8 border-t border-stone-200">
+                        <p className="text-stone-400 italic text-sm">
+                            「天使的主要功能不是為了滿足好奇，而是把人的注意力引回到寶座上的神。」
+                        </p>
                     </div>
                 </div>
             );
@@ -3911,6 +3918,7 @@
                 if (hash.includes('analysis/promised-land')) return 'promised-land';
                 if (hash.includes('analysis/messiah')) return 'messiah';
                 if (hash.includes('analysis/son-of-man')) return 'son-of-man';
+                if (hash.includes('analysis/angels')) return 'angels';
                 return 'promised-land';
             });
 
@@ -3918,6 +3926,7 @@
                 { id: 'promised-land', name: '應許之地', icon: '🏞️' },
                 { id: 'messiah', name: '彌賽亞', icon: '👑' },
                 { id: 'son-of-man', name: '人子', icon: '👤' },
+                { id: 'angels', name: '屬靈使者', icon: '👼' },
             ];
 
             useEffect(() => {
@@ -3926,6 +3935,7 @@
                     if (hash.includes('analysis/promised-land')) setActiveSubTab('promised-land');
                     else if (hash.includes('analysis/messiah')) setActiveSubTab('messiah');
                     else if (hash.includes('analysis/son-of-man')) setActiveSubTab('son-of-man');
+                    else if (hash.includes('analysis/angels')) setActiveSubTab('angels');
                 };
                 window.addEventListener('hashchange', handleHash);
                 return () => window.removeEventListener('hashchange', handleHash);
@@ -3963,6 +3973,7 @@
                             {activeSubTab === 'promised-land' && <PromisedLandSection onNavigateToLocation={onNavigateToLocation} />}
                             {activeSubTab === 'messiah' && <MessiahSection />}
                             {activeSubTab === 'son-of-man' && <SonOfManSection />}
+                            {activeSubTab === 'angels' && <AngelsSection />}
                         </div>
                     </div>
                 </div>
