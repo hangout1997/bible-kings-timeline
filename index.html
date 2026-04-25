@@ -4121,6 +4121,180 @@
             );
         };
 
+        const IsraelSection = () => {
+            const stages = [
+                {
+                    title: '第一階段：以色列首先是一個人',
+                    subtitle: '雅各的新名',
+                    desc: '「以色列」最早不是一個國家，也不是一塊地，而是雅各在毗努伊勒與神摔跤後所得的新名字。《創世記》32章與35章把這個更名放在極具轉折性的場景中，表示雅各的人生、身分與命運被神重新界定。',
+                    point: '名稱的神學意義：名稱本身帶有「與神較力」、「神掌權」或「神得勝」之意，強調神人相遇與命運轉折。',
+                    icon: '🧘'
+                },
+                {
+                    title: '第二階段：成為雅各後裔的總稱',
+                    subtitle: '宗族共同體',
+                    desc: '從《創世記》後段到《出埃及記》開頭，「以色列」開始常指雅各一家與他的後裔，也就是後來的「以色列人」。主要是家族—宗族—血緣的名稱，核心是支派和後代的延續。',
+                    point: '十二支派的雛形：雅各的十二個兒子構成後來十二支派的源頭，具有個人性起源與集體性延伸兩層意義。',
+                    icon: '👨‍👩‍👧‍👦'
+                },
+                {
+                    title: '第三階段：成為與神立約的百姓',
+                    subtitle: '立約身分 (Covenant People)',
+                    desc: '出埃及後，「以色列」不只是血緣共同體，更是被神從埃及拯救出來、在西奈山與神立約的百姓。定義不在政治疆界，而在與耶和華的特殊立約關係。',
+                    point: '使命標籤：這群人被揀選，不只是為自己存在，而是為了成為神在列國中的見證。',
+                    icon: '📜'
+                },
+                {
+                    title: '第四階段：作為十二支派共同體',
+                    subtitle: '士師時期的聯盟結構',
+                    desc: '在士師時期，「以色列」多半是指進入應許之地後的十二支派共同體。尚未形成穩定中央王權，更像宗教—軍事—族群聯盟。',
+                    point: '地方性與整體性的拉扯：意思介於「十二支派總稱」與「鬆散聯盟共同體」之間。',
+                    icon: '🛡️'
+                },
+                {
+                    title: '第五階段：成為統一王國',
+                    subtitle: '王權政治實體',
+                    desc: '從掃羅、大衛到所羅門，「以色列」第一次清楚成為一個統一王國的國名。這時的「以色列」是一個有王、有首都、有軍事與行政整合的政治實體。',
+                    point: '神學與政治的重疊：它既是 Kingdom，也是 Covenant People，與現代民族國家概念不同。',
+                    icon: '👑'
+                },
+                {
+                    title: '第六階段：特指北國',
+                    subtitle: '南北分裂後的詞義收縮',
+                    desc: '所羅門死後，王國分裂為南國猶大與北國以色列；從此之後，「以色列」在許多歷史書與先知書中會特指北方十支派組成的政治實體。',
+                    point: '語義收縮：原本包含十二支派全體的名稱，改成只代表其中一部分，與「猶大」對稱。',
+                    icon: '🧩'
+                },
+                {
+                    title: '第七階段：審判、餘民與復興的神學名詞',
+                    subtitle: '被擄以後的擴大與深化',
+                    desc: '被擄後，「以色列」不再只是政治國號，而逐漸被先知書神學化，表示那個曾蒙約、卻悖逆受審、但仍被神記念並應許恢復的百姓整體。',
+                    point: '餘民觀念：強調不是所有自稱屬於以色列的人都在屬靈意義上忠於神，轉向信心與神揀選的議題。',
+                    icon: '🕯️'
+                },
+                {
+                    title: '第八階段：第二聖殿與新約中的以色列',
+                    subtitle: '基督裡的重新界定',
+                    desc: '新約中，「以色列」既保留猶太民族、列祖後裔的歷史意義，又進入一個在基督裡重新界定的階段。耶穌被呈現為以色列故事的濃縮與成全者。',
+                    point: '真以色列：保羅強調不是所有出於以色列的都是真以色列，以信心與外邦人納入的框架重新思考。',
+                    icon: '✝️'
+                }
+            ];
+
+            const compareTable = [
+                { type: '個人名', meaning: '雅各的新名', era: '創世記', clue: '文脈聚焦在雅各個人經歷' },
+                { type: '家族名', meaning: '雅各全家與其後裔', era: '創後—出埃及前', clue: '與家譜、兒子、下埃及等相關' },
+                { type: '立約百姓', meaning: '與神立約的整體子民', era: '出—申', clue: '常與律法、出埃及、聖約相連' },
+                { type: '支派聯盟', meaning: '十二支派共同體', era: '書—士', clue: '常與支派、會眾、爭戰相關' },
+                { type: '國家名', meaning: '統一王國', era: '掃羅—所羅門', clue: '與王權、首都、朝廷相關' },
+                { type: '北國國號', meaning: '與猶大相對的北國', era: '王上12後', clue: '與猶大並列，或以法蓮代稱' },
+                { type: '神學群體', meaning: '餘民、蒙約百姓、復興對象', era: '先知—被擄後', clue: '常與悔改、復興、揀選相關' },
+                { type: '基督裡重述的群體', meaning: '在新約中被重新思考的神子民概念', era: '新約', clue: '常與彌賽亞、信心、外邦人納入相關' }
+            ];
+
+            return (
+                <div className="space-y-16">
+                    {/* Header */}
+                    <section className="text-center max-w-4xl mx-auto space-y-6">
+                        <div className="inline-block px-4 py-1.5 bg-indigo-50 text-indigo-600 rounded-full text-sm font-bold tracking-widest uppercase mb-2">Meaning of Israel</div>
+                        <h3 className="text-4xl font-black text-stone-800" style={{ fontFamily: 'Noto Serif TC, serif' }}>「以色列」的意涵</h3>
+                        <p className="text-lg text-stone-600 leading-relaxed">
+                            「以色列」在聖經中不是單一固定意義的名詞，而是一個隨著救恩歷史與文學語境不斷擴展、轉換、重組的關鍵詞。理解其演變是解讀聖經敘事的關鍵。
+                        </p>
+                        <div className="p-6 bg-white rounded-3xl border border-indigo-100 shadow-sm text-left">
+                            <h4 className="font-black text-indigo-900 mb-3 flex items-center gap-2">
+                                <span className="text-xl">🎯</span> 核心結論
+                            </h4>
+                            <p className="text-stone-600 text-sm leading-relaxed">
+                                若按聖經歷史發展來看，「以色列」至少有八種主要意涵：雅各個人的新名、家族總稱、立約百姓、支派共同體、統一王國、分裂後的北國、被擄後的餘民，以及新約中在基督裡重新理解的群體。這些意涵有其連續性，但包含歷史、政治與神學層次的演進。
+                            </p>
+                        </div>
+                    </section>
+
+                    {/* Overview Table */}
+                    <section className="overflow-x-auto rounded-[2rem] border border-stone-200 shadow-xl bg-white">
+                        <table className="w-full text-left border-collapse">
+                            <thead>
+                                <tr className="bg-stone-50 border-b border-stone-200">
+                                    <th className="p-5 text-sm font-black text-stone-800">時期 / 類型</th>
+                                    <th className="p-5 text-sm font-black text-stone-800">主要所指 / 意義</th>
+                                    <th className="p-5 text-sm font-black text-stone-800">代表時期</th>
+                                    <th className="p-5 text-sm font-black text-stone-800">判讀線索</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {compareTable.map((item, i) => (
+                                    <tr key={i} className="border-b border-stone-100 hover:bg-stone-50/50 transition-colors">
+                                        <td className="p-5 font-bold text-stone-900">{item.type}</td>
+                                        <td className="p-5 text-stone-600 text-sm">{item.meaning}</td>
+                                        <td className="p-5 text-stone-500 text-sm">{item.era}</td>
+                                        <td className="p-5 text-stone-600 text-sm">{item.clue}</td>
+                                    </tr>
+                                ))}
+                            </tbody>
+                        </table>
+                    </section>
+
+                    {/* Deep Dive - Stages */}
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+                        {stages.map((stage, i) => (
+                            <div key={i} className="p-8 bg-white rounded-[3rem] border border-stone-200 shadow-sm hover:shadow-md transition-shadow space-y-4">
+                                <div className="flex items-center gap-3 mb-2">
+                                    <span className="text-3xl">{stage.icon}</span>
+                                    <div>
+                                        <h4 className="text-lg font-black text-stone-800 leading-tight">{stage.title}</h4>
+                                        <div className="text-xs font-bold text-indigo-500 uppercase tracking-wider mt-1">{stage.subtitle}</div>
+                                    </div>
+                                </div>
+                                <p className="text-stone-600 text-sm leading-relaxed">
+                                    {stage.desc}
+                                </p>
+                                <div className="pt-3 border-t border-stone-100">
+                                    <p className="text-stone-800 text-sm font-bold leading-relaxed">
+                                        💡 {stage.point}
+                                    </p>
+                                </div>
+                            </div>
+                        ))}
+                    </div>
+
+                    {/* Interpretation Principles */}
+                    <section className="bg-stone-800 rounded-[3rem] p-10 text-stone-100 shadow-2xl relative overflow-hidden">
+                        <div className="absolute top-0 right-0 p-8 opacity-10 text-8xl">🧐</div>
+                        <h4 className="text-2xl font-black mb-8 border-b border-white/10 pb-4">讀經時的實用判讀原則</h4>
+                        <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+                            <div className="space-y-3">
+                                <div className="text-indigo-400 font-black text-lg">01. 先問是哪個時代</div>
+                                <p className="text-stone-400 text-sm leading-relaxed">
+                                    文本所在的歷史時期決定了「以色列」的基本所指。創世記指個人，出埃及記指百姓，列王紀需辨認是否指北國。
+                                </p>
+                            </div>
+                            <div className="space-y-3">
+                                <div className="text-indigo-400 font-black text-lg">02. 問語境層次</div>
+                                <p className="text-stone-400 text-sm leading-relaxed">
+                                    區分歷史、政治與神學語境。有時先知責備現實的國家，有時又安慰作為神子民的理想群體。
+                                </p>
+                            </div>
+                            <div className="space-y-3">
+                                <div className="text-indigo-400 font-black text-lg">03. 問作者詮釋</div>
+                                <p className="text-stone-400 text-sm leading-relaxed">
+                                    新約作者常在彌賽亞與外邦人納入的框架下重新詮釋「以色列」，不可單純視為民族稱呼。
+                                </p>
+                            </div>
+                        </div>
+                    </section>
+
+                    {/* Conclusion */}
+                    <div className="bg-indigo-50 p-8 rounded-[2.5rem] border border-indigo-100 text-center">
+                        <h4 className="text-xl font-black text-indigo-900 mb-4">綜合結論</h4>
+                        <p className="text-stone-700 leading-relaxed max-w-3xl mx-auto">
+                            「以色列」的多義性不是混亂，而是救恩歷史層層推進留下的語義軌跡。理解它的關鍵不在於找出單一定義，而是辨認它在不同救恩歷史座標中的具體所指。
+                        </p>
+                    </div>
+                </div>
+            );
+        };
+
         const AnalysisPage = ({ onNavigateToLocation }) => {
             const [activeSubTab, setActiveSubTab] = useState(() => {
                 const hash = window.location.hash;
@@ -4128,6 +4302,7 @@
                 if (hash.includes('analysis/messiah')) return 'messiah';
                 if (hash.includes('analysis/son-of-man')) return 'son-of-man';
                 if (hash.includes('analysis/angels')) return 'angels';
+                if (hash.includes('analysis/israel')) return 'israel';
                 return 'promised-land';
             });
 
@@ -4136,6 +4311,7 @@
                 { id: 'messiah', name: '彌賽亞', icon: '👑' },
                 { id: 'son-of-man', name: '人子', icon: '👤' },
                 { id: 'angels', name: '屬靈使者', icon: '👼' },
+                { id: 'israel', name: '以色列', icon: '🇮🇱' },
             ];
 
             useEffect(() => {
@@ -4145,6 +4321,7 @@
                     else if (hash.includes('analysis/messiah')) setActiveSubTab('messiah');
                     else if (hash.includes('analysis/son-of-man')) setActiveSubTab('son-of-man');
                     else if (hash.includes('analysis/angels')) setActiveSubTab('angels');
+                    else if (hash.includes('analysis/israel')) setActiveSubTab('israel');
                 };
                 window.addEventListener('hashchange', handleHash);
                 return () => window.removeEventListener('hashchange', handleHash);
@@ -4183,6 +4360,7 @@
                             {activeSubTab === 'messiah' && <MessiahSection />}
                             {activeSubTab === 'son-of-man' && <SonOfManSection />}
                             {activeSubTab === 'angels' && <AngelsSection />}
+                            {activeSubTab === 'israel' && <IsraelSection />}
                         </div>
                     </div>
                 </div>
