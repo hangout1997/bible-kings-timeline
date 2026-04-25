@@ -4428,72 +4428,301 @@
             );
         };
 
-        const AnalysisPage = ({ onNavigateToLocation }) => {
-            const [activeSubTab, setActiveSubTab] = useState(() => {
-                const hash = window.location.hash;
-                if (hash.includes('analysis/promised-land')) return 'promised-land';
-                if (hash.includes('analysis/messiah')) return 'messiah';
-                if (hash.includes('analysis/son-of-man')) return 'son-of-man';
-                if (hash.includes('analysis/angels')) return 'angels';
-                if (hash.includes('analysis/israel')) return 'israel';
-                return 'promised-land';
-            });
 
-            const tabs = [
-                { id: 'promised-land', name: '應許之地', icon: '🏞️' },
-                { id: 'messiah', name: '彌賽亞', icon: '👑' },
-                { id: 'son-of-man', name: '人子', icon: '👤' },
-                { id: 'angels', name: '屬靈使者', icon: '👼' },
-                { id: 'israel', name: '以色列', icon: '🇮🇱' },
+        const HolinessSection = () => {
+            const otItems = [
+                { title: '物件與空間的分別', icon: '🏛️', desc: '會幕、聖殿、祭壇、器皿被「分別為聖」——這些東西不再是一般用具，而是只為敬拜、事奉耶和華而存在。神說「我已選擇這殿，分別為聖，使我的名永在其中」，表示這地方被拉進神的特殊領域。' },
+                { title: '日子與活動的分別', icon: '📅', desc: '安息日被「分別為聖」，是從其他日子中被分出來，專門用來歸向神、休息與敬拜。節期、獻祭等也因被神指定而成為「聖」——不是因為本身神秘，而是因為歸神使用。' },
+                { title: '人與群體的分別', icon: '🫂', desc: '以色列整個民族被稱為「聖潔的國民」——在列國當中被挑出來，作為神的產業與見證者。祭司被分別為聖，代表他們的身分與時間都不再「自己作主」，而是以聖所與服事為中心。' },
             ];
+            const ntItems = [
+                { title: '地位上的「已被分別」', icon: '✅', badge: '已完成', badgeColor: 'bg-emerald-100 text-emerald-700', desc: '新約說信徒在基督裡「已經成聖」——藉著基督的獻上與神的揀選，信徒已被從世界分別出來，歸於神，成為「聖徒」。希伯來書說「我們靠耶穌基督只一次獻上祂的身體，就得成聖」。這是地位上的分別為聖，是神主動的結果。' },
+                { title: '生活上的「正在被分別」', icon: '🌱', badge: '持續進行', badgeColor: 'bg-blue-100 text-blue-700', desc: '新約又不斷呼召信徒要「在一切所行的事上也要聖潔」——在價值觀、行為、習慣上與罪、與世界的模式逐漸拉開距離，向神對齊。這個過程和「被聖靈更新、被神話語潔淨」緊緊相連，是一個持續進行的成聖旅程。' },
+            ];
+            return (
+                <div className="space-y-14">
+                    {/* Header */}
+                    <section className="text-center max-w-3xl mx-auto space-y-4">
+                        <div className="inline-block px-4 py-1.5 bg-emerald-50 text-emerald-700 rounded-full text-sm font-bold tracking-widest uppercase">Holiness / Set Apart</div>
+                        <h3 className="text-4xl font-black text-stone-800" style={{ fontFamily: 'Noto Serif TC, serif' }}>分別為聖</h3>
+                        <p className="text-lg text-stone-600 leading-relaxed">「分別為聖」首先是<strong>歸屬的改變</strong>：從「普通」轉為「屬神」。道德純潔是這個歸屬的自然結果，而不是唯一定義。</p>
+                        <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mt-6 text-left">
+                            <div className="p-5 bg-white rounded-2xl border border-stone-200 shadow-sm">
+                                <div className="font-black text-stone-800 mb-1 text-sm">舊約字根 qadash / qodesh</div>
+                                <p className="text-stone-500 text-sm leading-relaxed">「分別、歸屬、屬於神的領域」——不是先強調道德完美，而是「不再屬於一般用途，而是專屬於耶和華」。</p>
+                            </div>
+                            <div className="p-5 bg-white rounded-2xl border border-stone-200 shadow-sm">
+                                <div className="font-black text-stone-800 mb-1 text-sm">新約字根 hagios / hagiasmos</div>
+                                <p className="text-stone-500 text-sm leading-relaxed">「成聖、分別、被上帝標記、為神用途而潔淨」——同樣強調歸屬的改變。</p>
+                            </div>
+                        </div>
+                    </section>
+
+                    {/* OT Section */}
+                    <section>
+                        <div className="flex items-center gap-4 mb-8">
+                            <div className="w-12 h-12 bg-amber-100 rounded-2xl flex items-center justify-center text-2xl shadow-inner">📜</div>
+                            <div>
+                                <h4 className="text-2xl font-black text-stone-800" style={{ fontFamily: 'Noto Serif TC, serif' }}>舊約：人、物、時間都可以「分別為聖」</h4>
+                                <p className="text-stone-400 text-sm">不只是人，一切都可以被神「拉進」祂的聖潔領域</p>
+                            </div>
+                        </div>
+                        <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+                            {otItems.map((item, i) => (
+                                <div key={i} className="p-7 bg-white rounded-[2.5rem] border border-stone-200 shadow-sm hover:shadow-md transition-shadow space-y-3">
+                                    <div className="text-3xl">{item.icon}</div>
+                                    <h5 className="font-black text-stone-800">{item.title}</h5>
+                                    <p className="text-stone-500 text-sm leading-relaxed">{item.desc}</p>
+                                </div>
+                            ))}
+                        </div>
+                    </section>
+
+                    {/* NT Section */}
+                    <section>
+                        <div className="flex items-center gap-4 mb-8">
+                            <div className="w-12 h-12 bg-emerald-100 rounded-2xl flex items-center justify-center text-2xl shadow-inner">✝️</div>
+                            <div>
+                                <h4 className="text-2xl font-black text-stone-800" style={{ fontFamily: 'Noto Serif TC, serif' }}>新約：在基督裡被分別出來的「聖徒」</h4>
+                                <p className="text-stone-400 text-sm">兩個時態並存——「已完成」與「進行中」</p>
+                            </div>
+                        </div>
+                        <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+                            {ntItems.map((item, i) => (
+                                <div key={i} className="p-8 bg-white rounded-[3rem] border border-stone-200 shadow-sm space-y-4">
+                                    <div className="flex items-center gap-3">
+                                        <span className="text-3xl">{item.icon}</span>
+                                        <div>
+                                            <span className={`text-xs font-black px-2 py-0.5 rounded-full ${item.badgeColor}`}>{item.badge}</span>
+                                            <h5 className="font-black text-stone-800 mt-1">{item.title}</h5>
+                                        </div>
+                                    </div>
+                                    <p className="text-stone-600 text-sm leading-relaxed">{item.desc}</p>
+                                </div>
+                            ))}
+                        </div>
+                    </section>
+
+                    {/* Two Directions */}
+                    <section className="bg-stone-800 rounded-[3rem] p-10 text-white shadow-2xl relative overflow-hidden">
+                        <div className="absolute -right-4 -top-4 opacity-5 text-[12rem] font-black leading-none">聖</div>
+                        <h4 className="text-2xl font-black mb-8 border-b border-white/10 pb-4">分別為聖的兩個方向</h4>
+                        <div className="grid grid-cols-1 md:grid-cols-2 gap-10">
+                            <div className="space-y-4">
+                                <div className="text-emerald-400 font-black text-lg flex items-center gap-2"><span>←</span> 從什麼「分出來」</div>
+                                <ul className="space-y-3 text-stone-300 text-sm">
+                                    <li className="flex gap-3"><span className="text-emerald-400 mt-0.5">▸</span>從「普通用途」分出來——不再只是一般的地方、時間、人生</li>
+                                    <li className="flex gap-3"><span className="text-emerald-400 mt-0.5">▸</span>從「罪惡與偶像」分出來——不再受罪支配，不再隨從世俗價值</li>
+                                </ul>
+                            </div>
+                            <div className="space-y-4">
+                                <div className="text-emerald-400 font-black text-lg flex items-center gap-2"><span>→</span> 歸給誰、用來做什麼</div>
+                                <ul className="space-y-3 text-stone-300 text-sm">
+                                    <li className="flex gap-3"><span className="text-emerald-400 mt-0.5">▸</span>歸給上帝，成為「只屬祂」的——人也好、時間也好、資源也好</li>
+                                    <li className="flex gap-3"><span className="text-emerald-400 mt-0.5">▸</span>用於敬拜、服事、見證、愛人，如同活祭獻上身體，作「聖潔、蒙悅納的祭」</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </section>
+
+                    {/* Core Sentence */}
+                    <div className="bg-emerald-50 p-8 rounded-[2.5rem] border border-emerald-100 text-center">
+                        <h4 className="text-lg font-black text-emerald-900 mb-3">一句話的核心</h4>
+                        <p className="text-stone-700 text-lg leading-relaxed max-w-2xl mx-auto">
+                            「分別為聖」不是一種氣質，而是<strong>歸屬 + 用途</strong>的徹底改變：<br/>
+                            從「為自己、為世界」轉為「為神、為祂的國」，<br/>
+                            然後在道德、生活與價值上，慢慢變得與那位聖潔的神相配。
+                        </p>
+                    </div>
+                </div>
+            );
+        };
+
+        const AnalysisPage = ({ onNavigateToLocation }) => {
+            // ── Topic registry ────────────────────────────────────
+            const allTopics = [
+                {
+                    id: 'promised-land', name: '應許之地', icon: '🏞️',
+                    category: '地理歷史', categoryId: 'geo',
+                    desc: '神對以色列應許的土地疆界與神學意義'
+                },
+                {
+                    id: 'israel', name: '以色列的意涵', icon: '🇮🇱',
+                    category: '神學概念', categoryId: 'theology',
+                    desc: '從個人名到神學群體的八重意涵演進'
+                },
+                {
+                    id: 'messiah', name: '彌賽亞', icon: '👑',
+                    category: '神學概念', categoryId: 'theology',
+                    desc: '從受膏者到末後拯救者的期待演變'
+                },
+                {
+                    id: 'son-of-man', name: '人子', icon: '👤',
+                    category: '神學概念', categoryId: 'theology',
+                    desc: '但以理書到新約中「人子」的多重意義'
+                },
+                {
+                    id: 'holiness', name: '分別為聖', icon: '✨',
+                    category: '神學概念', categoryId: 'theology',
+                    desc: '歸屬與用途的徹底改變——從普通到屬神'
+                },
+                {
+                    id: 'angels', name: '屬靈使者', icon: '👼',
+                    category: '屬靈存在', categoryId: 'spiritual',
+                    desc: '天使、天使長、基路伯、撒拉弗的分類與職分'
+                },
+            ];
+
+            const categories = [
+                { id: 'all', name: '全部', icon: '📚' },
+                { id: 'theology', name: '神學概念', icon: '✝️' },
+                { id: 'geo', name: '地理歷史', icon: '🗺️' },
+                { id: 'spiritual', name: '屬靈存在', icon: '🌟' },
+            ];
+
+            // ── State ─────────────────────────────────────────────
+            const getInitialTopic = () => {
+                const hash = window.location.hash;
+                const found = allTopics.find(t => hash.includes(`analysis/${t.id}`));
+                return found ? found.id : 'promised-land';
+            };
+
+            const [activeTopicId, setActiveTopicId] = useState(getInitialTopic);
+            const [activeCat, setActiveCat] = useState('all');
+            const [search, setSearch] = useState('');
+            const [sidebarOpen, setSidebarOpen] = useState(false);
 
             useEffect(() => {
                 const handleHash = () => {
-                    const hash = window.location.hash;
-                    if (hash.includes('analysis/promised-land')) setActiveSubTab('promised-land');
-                    else if (hash.includes('analysis/messiah')) setActiveSubTab('messiah');
-                    else if (hash.includes('analysis/son-of-man')) setActiveSubTab('son-of-man');
-                    else if (hash.includes('analysis/angels')) setActiveSubTab('angels');
-                    else if (hash.includes('analysis/israel')) setActiveSubTab('israel');
+                    const found = allTopics.find(t => window.location.hash.includes(`analysis/${t.id}`));
+                    if (found) setActiveTopicId(found.id);
                 };
                 window.addEventListener('hashchange', handleHash);
                 return () => window.removeEventListener('hashchange', handleHash);
             }, []);
 
-            const navigateSubTab = (id) => {
+            const navigate = (id) => {
                 window.location.hash = `analysis/${id}`;
+                setActiveTopicId(id);
+                setSidebarOpen(false);
             };
+
+            const filtered = allTopics.filter(t => {
+                const matchCat = activeCat === 'all' || t.categoryId === activeCat;
+                const matchSearch = !search || t.name.includes(search) || t.desc.includes(search);
+                return matchCat && matchSearch;
+            });
+
+            const activeTopic = allTopics.find(t => t.id === activeTopicId);
+
+            // ── Sidebar content ───────────────────────────────────
+            const Sidebar = () => (
+                <div className="flex flex-col h-full">
+                    {/* Search */}
+                    <div className="p-4 border-b border-stone-200">
+                        <div className="relative">
+                            <span className="absolute left-3 top-1/2 -translate-y-1/2 text-stone-400 text-sm">🔍</span>
+                            <input
+                                type="text"
+                                placeholder="搜尋主題…"
+                                value={search}
+                                onChange={e => setSearch(e.target.value)}
+                                className="w-full pl-9 pr-3 py-2 bg-stone-100 rounded-xl text-sm font-medium text-stone-700 placeholder-stone-400 focus:outline-none focus:ring-2 focus:ring-stone-300"
+                            />
+                        </div>
+                    </div>
+                    {/* Category filter */}
+                    <div className="flex flex-wrap gap-1.5 p-3 border-b border-stone-100">
+                        {categories.map(cat => (
+                            <button
+                                key={cat.id}
+                                onClick={() => setActiveCat(cat.id)}
+                                className={`px-2.5 py-1 rounded-xl text-xs font-bold transition-all ${activeCat === cat.id ? 'bg-stone-800 text-white' : 'bg-stone-100 text-stone-500 hover:bg-stone-200'}`}
+                            >
+                                {cat.icon} {cat.name}
+                            </button>
+                        ))}
+                    </div>
+                    {/* Topic list */}
+                    <div className="flex-1 overflow-y-auto py-2">
+                        {filtered.length === 0 && (
+                            <div className="text-center text-stone-400 text-sm py-10">找不到相關主題</div>
+                        )}
+                        {filtered.map(topic => (
+                            <button
+                                key={topic.id}
+                                onClick={() => navigate(topic.id)}
+                                className={`w-full text-left px-4 py-3.5 flex items-start gap-3 transition-all border-l-4 ${activeTopicId === topic.id ? 'bg-stone-100 border-stone-800' : 'border-transparent hover:bg-stone-50 hover:border-stone-200'}`}
+                            >
+                                <span className="text-xl mt-0.5 shrink-0">{topic.icon}</span>
+                                <div className="min-w-0">
+                                    <div className={`font-bold text-sm leading-tight truncate ${activeTopicId === topic.id ? 'text-stone-900' : 'text-stone-700'}`}>{topic.name}</div>
+                                    <div className="text-xs text-stone-400 mt-0.5 leading-snug line-clamp-2">{topic.desc}</div>
+                                    <span className="inline-block mt-1 text-[10px] font-bold text-stone-400 bg-stone-100 px-1.5 py-0.5 rounded-md">{topic.category}</span>
+                                </div>
+                            </button>
+                        ))}
+                    </div>
+                    <div className="px-4 py-3 border-t border-stone-100 text-center text-[11px] text-stone-300 font-medium">
+                        {allTopics.length} 個主題 · 持續更新中
+                    </div>
+                </div>
+            );
 
             return (
                 <div className="page-enter">
-                    <div className="bg-stone-50 w-full max-w-none w-[98vw] mx-auto shadow-2xl rounded-[3rem] p-6 md:p-12 border border-stone-300">
-                        <div className="text-center mb-8">
-                            <h2 className="text-3xl md:text-4xl font-black text-stone-800 mb-3" style={{ fontFamily: 'Noto Serif TC, serif' }}>聖經解析</h2>
-                            <p className="text-stone-500 text-sm md:text-base max-w-2xl mx-auto leading-relaxed">
-                                深入探討聖經中的核心主題，從地理邊界到神學預言，全面理解啟示的內涵與演進。
-                            </p>
+                    <div className="bg-stone-50 w-full max-w-none w-[98vw] mx-auto shadow-2xl rounded-[3rem] border border-stone-300 overflow-hidden">
+                        {/* Page header */}
+                        <div className="p-6 md:p-8 border-b border-stone-200 bg-white flex items-center justify-between gap-4">
+                            <div>
+                                <h2 className="text-2xl md:text-3xl font-black text-stone-800" style={{ fontFamily: 'Noto Serif TC, serif' }}>聖經解析</h2>
+                                <p className="text-stone-400 text-sm mt-1 hidden md:block">深入探討聖經中的核心主題，全面理解啟示的內涵與演進。</p>
+                            </div>
+                            {/* Mobile topic picker button */}
+                            <button
+                                onClick={() => setSidebarOpen(v => !v)}
+                                className="md:hidden flex items-center gap-2 px-4 py-2 bg-stone-100 rounded-xl font-bold text-stone-700 text-sm"
+                            >
+                                <span>{activeTopic?.icon}</span>
+                                <span>{activeTopic?.name}</span>
+                                <span className="text-stone-400">{sidebarOpen ? '▲' : '▼'}</span>
+                            </button>
                         </div>
 
-                        <div className="flex justify-center mb-10 border-b border-stone-200 overflow-x-auto no-scrollbar">
-                            {tabs.map(tab => (
-                                <button
-                                    key={tab.id}
-                                    className={`px-4 md:px-8 py-3 font-bold text-base md:text-lg transition-all border-b-4 flex items-center gap-2 whitespace-nowrap ${activeSubTab === tab.id ? 'border-stone-800 text-stone-900' : 'border-transparent text-stone-400 hover:text-stone-600'}`}
-                                    onClick={() => navigateSubTab(tab.id)}
-                                    style={{ fontFamily: 'Noto Serif TC, serif' }}
-                                >
-                                    <span className="text-xl">{tab.icon}</span>
-                                    {tab.name}
-                                </button>
-                            ))}
-                        </div>
+                        {/* Mobile sidebar drawer */}
+                        {sidebarOpen && (
+                            <div className="md:hidden border-b border-stone-200 bg-white max-h-80 overflow-auto">
+                                <Sidebar />
+                            </div>
+                        )}
 
-                        <div className="animate-fade-in max-w-5xl mx-auto">
-                            {activeSubTab === 'promised-land' && <PromisedLandSection onNavigateToLocation={onNavigateToLocation} />}
-                            {activeSubTab === 'messiah' && <MessiahSection />}
-                            {activeSubTab === 'son-of-man' && <SonOfManSection />}
-                            {activeSubTab === 'angels' && <AngelsSection />}
-                            {activeSubTab === 'israel' && <IsraelSection />}
+                        {/* Main layout: sidebar + content */}
+                        <div className="flex" style={{ minHeight: '70vh' }}>
+                            {/* Desktop sidebar */}
+                            <div className="hidden md:flex flex-col w-72 shrink-0 border-r border-stone-200 bg-white" style={{ minHeight: '70vh' }}>
+                                <Sidebar />
+                            </div>
+
+                            {/* Content area */}
+                            <div className="flex-1 overflow-auto p-6 md:p-10">
+                                {/* Breadcrumb */}
+                                <div className="flex items-center gap-2 text-xs text-stone-400 font-bold mb-6">
+                                    <span>聖經解析</span>
+                                    <span>›</span>
+                                    <span className="text-stone-600">{activeTopic?.category}</span>
+                                    <span>›</span>
+                                    <span className="text-stone-800">{activeTopic?.name}</span>
+                                </div>
+
+                                <div className="animate-fade-in">
+                                    {activeTopicId === 'promised-land' && <PromisedLandSection onNavigateToLocation={onNavigateToLocation} />}
+                                    {activeTopicId === 'messiah' && <MessiahSection />}
+                                    {activeTopicId === 'son-of-man' && <SonOfManSection />}
+                                    {activeTopicId === 'angels' && <AngelsSection />}
+                                    {activeTopicId === 'israel' && <IsraelSection />}
+                                    {activeTopicId === 'holiness' && <HolinessSection />}
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
