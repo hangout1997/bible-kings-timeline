@@ -82,7 +82,7 @@
         .tree-children {
             display: flex;
             justify-content: center;
-            gap: 1rem;
+            gap: 4rem;
             margin-top: 1.5rem;
             position: relative;
         }
@@ -1522,9 +1522,12 @@
             'Genesis': {
                 title: '創世記主要人物家族史',
                 root: {
-                    name: '亞當 & 夏娃',
+                    name: '亞當',
                     role: '人類始祖 (受造)',
                     desc: '由神親自創造，安置於伊甸園，因犯罪墜落後被逐。',
+                    spouses: [
+                        { name: '夏娃', role: '妻子 (生命之母)', desc: '神用亞當的肋骨所造，人類之母。', isBlood: false }
+                    ],
                     children: [
                         { name: '該隱', role: '長子 (耕地者)', desc: '因嫉妒殺害亞伯，後流落各地建立城邑。' },
                         { name: '亞伯', role: '次子 (牧羊者)', desc: '因獻祭蒙神悅納遭該隱殺害。' },
@@ -1579,9 +1582,12 @@
             'Exodus': {
                 title: '出埃及記：摩西領袖家族',
                 root: {
-                    name: '亞姆蘭 & 約基別',
+                    name: '亞姆蘭',
                     role: '利未支派家族',
                     desc: '敬畏神的一家人，在法老殺嬰令中憑信心保下摩西。',
+                    spouses: [
+                        { name: '約基別', role: '妻子', desc: '在蘆葦叢中保護幼年摩西的勇敢母親。', isBlood: false }
+                    ],
                     children: [
                         { name: '米利暗', role: '長女 (女先知)', desc: '在紅海邊帶領婦女擊鼓跳舞讚美神，後因毀謗摩西曾患大麻瘋。' },
                         { 
@@ -1596,8 +1602,10 @@
                         { 
                             name: '摩西', nameEn: 'Moses', role: '次子 (神人/領袖)', 
                             desc: '蒙神在荊棘火中呼召，帶領以色列人出埃及、頒布律法。',
+                            spouses: [
+                                { name: '西坡拉', role: '妻子 (米甸之女)', desc: '米甸祭司葉忒羅的女兒。', isBlood: false }
+                            ],
                             children: [
-                                { name: '西坡拉', role: '妻子 (米甸之女)', desc: '米甸祭司葉忒羅的女兒。', isBlood: false },
                                 { name: '革舜 & 以利以謝', role: '摩西之子', desc: '摩西流亡米甸時期所生。' }
                             ]
                         }
@@ -1804,11 +1812,13 @@
                     name: '大衛王',
                     role: '統一以色列的君王',
                     desc: '定都耶路撒冷，迎接約櫃，蒙神立下「大衛之約」。',
+                    spouses: [
+                        { name: '拔示巴', nameEn: 'Bathsheba', role: '王后', desc: '大衛與她所生的次子為所羅門。', isBlood: false }
+                    ],
                     children: [
-                        { name: '拔示巴', nameEn: 'Bathsheba', role: '王后', desc: '大衛與她所生的次子為所羅門。', isBlood: false },
                         { name: '押沙龍', nameEn: 'Absalom', role: '反叛的兒子', desc: '英俊且有野心，反叛大衛最終死於戰場。' },
                         { name: '拿單', role: '先知/諍友', desc: '指責大衛的罪，並傳達建殿與王位之約。', isBlood: false },
-                        { name: '約押', role: '元帥', desc: '忠誠但手段殘酷的軍隊統帥。', isBlood: false }
+                        { name: '約雅', role: '元帥', desc: '忠誠但手段殘酷的軍隊統帥。', isBlood: false }
                     ]
                 }
             },
@@ -1993,17 +2003,17 @@
                     name: '何西阿 (Hosea)',
                     role: '先知',
                     desc: '以自身的婚姻象徵神對以色列那破裂但忠貞的愛。',
-                    children: [
+                    spouses: [
                         { 
                             name: '歌篾', role: '妻子', 
                             desc: '淫亂的婦人，象徵背道受誘的以色列。',
-                            isBlood: false,
-                            children: [
-                                { name: '耶斯列', role: '長子 (審判)', desc: '意為「神栽種/神審判」。' },
-                                { name: '羅路哈瑪', role: '長女 (不蒙憐憫)', desc: '意為「不再蒙憐憫」。' },
-                                { name: '羅阿米', role: '次子 (非我民)', desc: '意為「非我民」。' }
-                            ]
+                            isBlood: false
                         }
+                    ],
+                    children: [
+                        { name: '耶斯列', role: '長子 (審判)', desc: '意為「神栽種/神審判」。' },
+                        { name: '羅路哈瑪', role: '長女 (不蒙憐憫)', desc: '意為「不再蒙憐憫」。' },
+                        { name: '羅阿米', role: '次子 (非我民)', desc: '意為「非我民」。' }
                     ]
                 }
             },
@@ -2046,33 +2056,48 @@
                 const hasChildren = node.children && node.children.length > 0;
                 const isBlood = node.isBlood !== false;
 
+                const Card = ({ n, isMain = false }) => (
+                    <div className={`tree-node-card bg-white rounded-2xl shadow-lg p-5 w-64 border-t-4 ${isMain ? 'border-stone-800' : 'border-stone-300 border-dashed'} relative group transition-all hover:scale-105 hover:z-50`}>
+                        <div className="flex items-baseline gap-2 mb-1.5 flex-wrap">
+                            <div className="text-2xl font-black text-stone-900 leading-tight">{n.name}</div>
+                            {n.nameEn && <div className="text-[14px] font-bold text-stone-400 tracking-wider uppercase font-sans" style={{ opacity: 0.8 }}>{n.nameEn}</div>}
+                        </div>
+                        <div className="text-[15px] font-bold text-amber-700 uppercase tracking-wider mb-3">{n.role}</div>
+                        {n.desc && (
+                            <div className="text-[14px] text-stone-200 leading-snug opacity-0 group-hover:opacity-100 transition-opacity absolute top-full left-0 w-full bg-stone-900 text-white p-4 rounded-2xl z-50 pointer-events-none mt-2 shadow-2xl border border-white/10">
+                                <div className="mb-2">{n.desc}</div>
+                                {n.ref && (
+                                    <div className="mt-2 pt-2 border-t border-white/20 flex items-center gap-2">
+                                        <span className="bg-amber-500/20 text-amber-400 text-[9px] px-1.5 py-0.5 rounded font-black uppercase tracking-tighter">Ref</span>
+                                        <span className="text-amber-400/80 text-[11px] font-bold tracking-wider">{n.ref}</span>
+                                    </div>
+                                )}
+                            </div>
+                        )}
+                        {isMain && hasChildren && (
+                            <button 
+                                onClick={(e) => { e.stopPropagation(); toggleNode(n.name); }}
+                                className="absolute -bottom-4 left-1/2 -translate-x-1/2 w-8 h-8 bg-stone-800 text-white rounded-full flex items-center justify-center text-sm shadow-md hover:bg-stone-600 transition-colors z-10"
+                            >
+                                {isExpanded ? '−' : '+'}
+                            </button>
+                        )}
+                    </div>
+                );
+
                 return (
                     <div className={`tree-node-container ${isRoot ? 'is-root' : ''} ${isBlood ? 'has-parent' : 'non-blood'}`}>
-                        <div className={`tree-node-card bg-white rounded-2xl shadow-lg p-5 w-64 border-t-4 border-stone-800 relative group transition-all hover:scale-105 hover:z-50`}>
-                            <div className="flex items-baseline gap-2 mb-1.5 flex-wrap">
-                                <div className="text-2xl font-black text-stone-900 leading-tight">{node.name}</div>
-                                {node.nameEn && <div className="text-[14px] font-bold text-stone-400 tracking-wider uppercase font-sans" style={{ opacity: 0.8 }}>{node.nameEn}</div>}
-                            </div>
-                            <div className="text-[15px] font-bold text-amber-700 uppercase tracking-wider mb-3">{node.role}</div>
-                            {node.desc && (
-                                <div className="text-[14px] text-stone-200 leading-snug opacity-0 group-hover:opacity-100 transition-opacity absolute top-full left-0 w-full bg-stone-900 text-white p-4 rounded-2xl z-50 pointer-events-none mt-2 shadow-2xl border border-white/10">
-                                    <div className="mb-2">{node.desc}</div>
-                                    {node.ref && (
-                                        <div className="mt-2 pt-2 border-t border-white/20 flex items-center gap-2">
-                                            <span className="bg-amber-500/20 text-amber-400 text-[9px] px-1.5 py-0.5 rounded font-black uppercase tracking-tighter">Ref</span>
-                                            <span className="text-amber-400/80 text-[11px] font-bold tracking-wider">{node.ref}</span>
+                        <div className="relative flex justify-center items-center">
+                            <Card n={node} isMain={true} />
+                            {node.spouses && (
+                                <div className="absolute left-full top-0 h-full flex items-center pl-4 z-20 pointer-events-none">
+                                    {node.spouses.map((spouse, idx) => (
+                                        <div key={idx} className="flex items-center pointer-events-auto">
+                                            <div className="w-8 h-px border-t-2 border-dashed border-stone-300"></div>
+                                            <Card n={spouse} isMain={false} />
                                         </div>
-                                    )}
+                                    ))}
                                 </div>
-                            )}
-                            
-                            {hasChildren && (
-                                <button 
-                                    onClick={() => toggleNode(node.name)}
-                                    className="absolute -bottom-4 left-1/2 -translate-x-1/2 w-8 h-8 bg-stone-800 text-white rounded-full flex items-center justify-center text-sm shadow-md hover:bg-stone-600 transition-colors z-10"
-                                >
-                                    {isExpanded ? '−' : '+'}
-                                </button>
                             )}
                         </div>
 
@@ -4096,6 +4121,180 @@
             );
         };
 
+        const IsraelSection = () => {
+            const stages = [
+                {
+                    title: '第一階段：以色列首先是一個人',
+                    subtitle: '雅各的新名',
+                    desc: '「以色列」最早不是一個國家，也不是一塊地，而是雅各在毗努伊勒與神摔跤後所得的新名字。《創世記》32章與35章把這個更名放在極具轉折性的場景中，表示雅各的人生、身分與命運被神重新界定。',
+                    point: '名稱的神學意義：名稱本身帶有「與神較力」、「神掌權」或「神得勝」之意，強調神人相遇與命運轉折。',
+                    icon: '🧘'
+                },
+                {
+                    title: '第二階段：成為雅各後裔的總稱',
+                    subtitle: '宗族共同體',
+                    desc: '從《創世記》後段到《出埃及記》開頭，「以色列」開始常指雅各一家與他的後裔，也就是後來的「以色列人」。主要是家族—宗族—血緣的名稱，核心是支派和後代的延續。',
+                    point: '十二支派的雛形：雅各的十二個兒子構成後來十二支派的源頭，具有個人性起源與集體性延伸兩層意義。',
+                    icon: '👨‍👩‍👧‍👦'
+                },
+                {
+                    title: '第三階段：成為與神立約的百姓',
+                    subtitle: '立約身分 (Covenant People)',
+                    desc: '出埃及後，「以色列」不只是血緣共同體，更是被神從埃及拯救出來、在西奈山與神立約的百姓。定義不在政治疆界，而在與耶和華的特殊立約關係。',
+                    point: '使命標籤：這群人被揀選，不只是為自己存在，而是為了成為神在列國中的見證。',
+                    icon: '📜'
+                },
+                {
+                    title: '第四階段：作為十二支派共同體',
+                    subtitle: '士師時期的聯盟結構',
+                    desc: '在士師時期，「以色列」多半是指進入應許之地後的十二支派共同體。尚未形成穩定中央王權，更像宗教—軍事—族群聯盟。',
+                    point: '地方性與整體性的拉扯：意思介於「十二支派總稱」與「鬆散聯盟共同體」之間。',
+                    icon: '🛡️'
+                },
+                {
+                    title: '第五階段：成為統一王國',
+                    subtitle: '王權政治實體',
+                    desc: '從掃羅、大衛到所羅門，「以色列」第一次清楚成為一個統一王國的國名。這時的「以色列」是一個有王、有首都、有軍事與行政整合的政治實體。',
+                    point: '神學與政治的重疊：它既是 Kingdom，也是 Covenant People，與現代民族國家概念不同。',
+                    icon: '👑'
+                },
+                {
+                    title: '第六階段：特指北國',
+                    subtitle: '南北分裂後的詞義收縮',
+                    desc: '所羅門死後，王國分裂為南國猶大與北國以色列；從此之後，「以色列」在許多歷史書與先知書中會特指北方十支派組成的政治實體。',
+                    point: '語義收縮：原本包含十二支派全體的名稱，改成只代表其中一部分，與「猶大」對稱。',
+                    icon: '🧩'
+                },
+                {
+                    title: '第七階段：審判、餘民與復興的神學名詞',
+                    subtitle: '被擄以後的擴大與深化',
+                    desc: '被擄後，「以色列」不再只是政治國號，而逐漸被先知書神學化，表示那個曾蒙約、卻悖逆受審、但仍被神記念並應許恢復的百姓整體。',
+                    point: '餘民觀念：強調不是所有自稱屬於以色列的人都在屬靈意義上忠於神，轉向信心與神揀選的議題。',
+                    icon: '🕯️'
+                },
+                {
+                    title: '第八階段：第二聖殿與新約中的以色列',
+                    subtitle: '基督裡的重新界定',
+                    desc: '新約中，「以色列」既保留猶太民族、列祖後裔的歷史意義，又進入一個在基督裡重新界定的階段。耶穌被呈現為以色列故事的濃縮與成全者。',
+                    point: '真以色列：保羅強調不是所有出於以色列的都是真以色列，以信心與外邦人納入的框架重新思考。',
+                    icon: '✝️'
+                }
+            ];
+
+            const compareTable = [
+                { type: '個人名', meaning: '雅各的新名', era: '創世記', clue: '文脈聚焦在雅各個人經歷' },
+                { type: '家族名', meaning: '雅各全家與其後裔', era: '創後—出埃及前', clue: '與家譜、兒子、下埃及等相關' },
+                { type: '立約百姓', meaning: '與神立約的整體子民', era: '出—申', clue: '常與律法、出埃及、聖約相連' },
+                { type: '支派聯盟', meaning: '十二支派共同體', era: '書—士', clue: '常與支派、會眾、爭戰相關' },
+                { type: '國家名', meaning: '統一王國', era: '掃羅—所羅門', clue: '與王權、首都、朝廷相關' },
+                { type: '北國國號', meaning: '與猶大相對的北國', era: '王上12後', clue: '與猶大並列，或以法蓮代稱' },
+                { type: '神學群體', meaning: '餘民、蒙約百姓、復興對象', era: '先知—被擄後', clue: '常與悔改、復興、揀選相關' },
+                { type: '基督裡重述的群體', meaning: '在新約中被重新思考的神子民概念', era: '新約', clue: '常與彌賽亞、信心、外邦人納入相關' }
+            ];
+
+            return (
+                <div className="space-y-16">
+                    {/* Header */}
+                    <section className="text-center max-w-4xl mx-auto space-y-6">
+                        <div className="inline-block px-4 py-1.5 bg-indigo-50 text-indigo-600 rounded-full text-sm font-bold tracking-widest uppercase mb-2">Meaning of Israel</div>
+                        <h3 className="text-4xl font-black text-stone-800" style={{ fontFamily: 'Noto Serif TC, serif' }}>「以色列」的意涵</h3>
+                        <p className="text-lg text-stone-600 leading-relaxed">
+                            「以色列」在聖經中不是單一固定意義的名詞，而是一個隨著救恩歷史與文學語境不斷擴展、轉換、重組的關鍵詞。理解其演變是解讀聖經敘事的關鍵。
+                        </p>
+                        <div className="p-6 bg-white rounded-3xl border border-indigo-100 shadow-sm text-left">
+                            <h4 className="font-black text-indigo-900 mb-3 flex items-center gap-2">
+                                <span className="text-xl">🎯</span> 核心結論
+                            </h4>
+                            <p className="text-stone-600 text-sm leading-relaxed">
+                                若按聖經歷史發展來看，「以色列」至少有八種主要意涵：雅各個人的新名、家族總稱、立約百姓、支派共同體、統一王國、分裂後的北國、被擄後的餘民，以及新約中在基督裡重新理解的群體。這些意涵有其連續性，但包含歷史、政治與神學層次的演進。
+                            </p>
+                        </div>
+                    </section>
+
+                    {/* Overview Table */}
+                    <section className="overflow-x-auto rounded-[2rem] border border-stone-200 shadow-xl bg-white">
+                        <table className="w-full text-left border-collapse">
+                            <thead>
+                                <tr className="bg-stone-50 border-b border-stone-200">
+                                    <th className="p-5 text-sm font-black text-stone-800">時期 / 類型</th>
+                                    <th className="p-5 text-sm font-black text-stone-800">主要所指 / 意義</th>
+                                    <th className="p-5 text-sm font-black text-stone-800">代表時期</th>
+                                    <th className="p-5 text-sm font-black text-stone-800">判讀線索</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {compareTable.map((item, i) => (
+                                    <tr key={i} className="border-b border-stone-100 hover:bg-stone-50/50 transition-colors">
+                                        <td className="p-5 font-bold text-stone-900">{item.type}</td>
+                                        <td className="p-5 text-stone-600 text-sm">{item.meaning}</td>
+                                        <td className="p-5 text-stone-500 text-sm">{item.era}</td>
+                                        <td className="p-5 text-stone-600 text-sm">{item.clue}</td>
+                                    </tr>
+                                ))}
+                            </tbody>
+                        </table>
+                    </section>
+
+                    {/* Deep Dive - Stages */}
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+                        {stages.map((stage, i) => (
+                            <div key={i} className="p-8 bg-white rounded-[3rem] border border-stone-200 shadow-sm hover:shadow-md transition-shadow space-y-4">
+                                <div className="flex items-center gap-3 mb-2">
+                                    <span className="text-3xl">{stage.icon}</span>
+                                    <div>
+                                        <h4 className="text-lg font-black text-stone-800 leading-tight">{stage.title}</h4>
+                                        <div className="text-xs font-bold text-indigo-500 uppercase tracking-wider mt-1">{stage.subtitle}</div>
+                                    </div>
+                                </div>
+                                <p className="text-stone-600 text-sm leading-relaxed">
+                                    {stage.desc}
+                                </p>
+                                <div className="pt-3 border-t border-stone-100">
+                                    <p className="text-stone-800 text-sm font-bold leading-relaxed">
+                                        💡 {stage.point}
+                                    </p>
+                                </div>
+                            </div>
+                        ))}
+                    </div>
+
+                    {/* Interpretation Principles */}
+                    <section className="bg-stone-800 rounded-[3rem] p-10 text-stone-100 shadow-2xl relative overflow-hidden">
+                        <div className="absolute top-0 right-0 p-8 opacity-10 text-8xl">🧐</div>
+                        <h4 className="text-2xl font-black mb-8 border-b border-white/10 pb-4">讀經時的實用判讀原則</h4>
+                        <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+                            <div className="space-y-3">
+                                <div className="text-indigo-400 font-black text-lg">01. 先問是哪個時代</div>
+                                <p className="text-stone-400 text-sm leading-relaxed">
+                                    文本所在的歷史時期決定了「以色列」的基本所指。創世記指個人，出埃及記指百姓，列王紀需辨認是否指北國。
+                                </p>
+                            </div>
+                            <div className="space-y-3">
+                                <div className="text-indigo-400 font-black text-lg">02. 問語境層次</div>
+                                <p className="text-stone-400 text-sm leading-relaxed">
+                                    區分歷史、政治與神學語境。有時先知責備現實的國家，有時又安慰作為神子民的理想群體。
+                                </p>
+                            </div>
+                            <div className="space-y-3">
+                                <div className="text-indigo-400 font-black text-lg">03. 問作者詮釋</div>
+                                <p className="text-stone-400 text-sm leading-relaxed">
+                                    新約作者常在彌賽亞與外邦人納入的框架下重新詮釋「以色列」，不可單純視為民族稱呼。
+                                </p>
+                            </div>
+                        </div>
+                    </section>
+
+                    {/* Conclusion */}
+                    <div className="bg-indigo-50 p-8 rounded-[2.5rem] border border-indigo-100 text-center">
+                        <h4 className="text-xl font-black text-indigo-900 mb-4">綜合結論</h4>
+                        <p className="text-stone-700 leading-relaxed max-w-3xl mx-auto">
+                            「以色列」的多義性不是混亂，而是救恩歷史層層推進留下的語義軌跡。理解它的關鍵不在於找出單一定義，而是辨認它在不同救恩歷史座標中的具體所指。
+                        </p>
+                    </div>
+                </div>
+            );
+        };
+
         const AnalysisPage = ({ onNavigateToLocation }) => {
             const [activeSubTab, setActiveSubTab] = useState(() => {
                 const hash = window.location.hash;
@@ -4103,6 +4302,7 @@
                 if (hash.includes('analysis/messiah')) return 'messiah';
                 if (hash.includes('analysis/son-of-man')) return 'son-of-man';
                 if (hash.includes('analysis/angels')) return 'angels';
+                if (hash.includes('analysis/israel')) return 'israel';
                 return 'promised-land';
             });
 
@@ -4111,6 +4311,7 @@
                 { id: 'messiah', name: '彌賽亞', icon: '👑' },
                 { id: 'son-of-man', name: '人子', icon: '👤' },
                 { id: 'angels', name: '屬靈使者', icon: '👼' },
+                { id: 'israel', name: '以色列', icon: '🇮🇱' },
             ];
 
             useEffect(() => {
@@ -4120,6 +4321,7 @@
                     else if (hash.includes('analysis/messiah')) setActiveSubTab('messiah');
                     else if (hash.includes('analysis/son-of-man')) setActiveSubTab('son-of-man');
                     else if (hash.includes('analysis/angels')) setActiveSubTab('angels');
+                    else if (hash.includes('analysis/israel')) setActiveSubTab('israel');
                 };
                 window.addEventListener('hashchange', handleHash);
                 return () => window.removeEventListener('hashchange', handleHash);
@@ -4158,6 +4360,7 @@
                             {activeSubTab === 'messiah' && <MessiahSection />}
                             {activeSubTab === 'son-of-man' && <SonOfManSection />}
                             {activeSubTab === 'angels' && <AngelsSection />}
+                            {activeSubTab === 'israel' && <IsraelSection />}
                         </div>
                     </div>
                 </div>
