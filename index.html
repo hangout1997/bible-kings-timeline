@@ -82,7 +82,7 @@
         .tree-children {
             display: flex;
             justify-content: center;
-            gap: 1rem;
+            gap: 4rem;
             margin-top: 1.5rem;
             position: relative;
         }
@@ -1522,9 +1522,12 @@
             'Genesis': {
                 title: '創世記主要人物家族史',
                 root: {
-                    name: '亞當 & 夏娃',
+                    name: '亞當',
                     role: '人類始祖 (受造)',
                     desc: '由神親自創造，安置於伊甸園，因犯罪墜落後被逐。',
+                    spouses: [
+                        { name: '夏娃', role: '妻子 (生命之母)', desc: '神用亞當的肋骨所造，人類之母。', isBlood: false }
+                    ],
                     children: [
                         { name: '該隱', role: '長子 (耕地者)', desc: '因嫉妒殺害亞伯，後流落各地建立城邑。' },
                         { name: '亞伯', role: '次子 (牧羊者)', desc: '因獻祭蒙神悅納遭該隱殺害。' },
@@ -1579,9 +1582,12 @@
             'Exodus': {
                 title: '出埃及記：摩西領袖家族',
                 root: {
-                    name: '亞姆蘭 & 約基別',
+                    name: '亞姆蘭',
                     role: '利未支派家族',
                     desc: '敬畏神的一家人，在法老殺嬰令中憑信心保下摩西。',
+                    spouses: [
+                        { name: '約基別', role: '妻子', desc: '在蘆葦叢中保護幼年摩西的勇敢母親。', isBlood: false }
+                    ],
                     children: [
                         { name: '米利暗', role: '長女 (女先知)', desc: '在紅海邊帶領婦女擊鼓跳舞讚美神，後因毀謗摩西曾患大麻瘋。' },
                         { 
@@ -1596,8 +1602,10 @@
                         { 
                             name: '摩西', nameEn: 'Moses', role: '次子 (神人/領袖)', 
                             desc: '蒙神在荊棘火中呼召，帶領以色列人出埃及、頒布律法。',
+                            spouses: [
+                                { name: '西坡拉', role: '妻子 (米甸之女)', desc: '米甸祭司葉忒羅的女兒。', isBlood: false }
+                            ],
                             children: [
-                                { name: '西坡拉', role: '妻子 (米甸之女)', desc: '米甸祭司葉忒羅的女兒。', isBlood: false },
                                 { name: '革舜 & 以利以謝', role: '摩西之子', desc: '摩西流亡米甸時期所生。' }
                             ]
                         }
@@ -1804,11 +1812,13 @@
                     name: '大衛王',
                     role: '統一以色列的君王',
                     desc: '定都耶路撒冷，迎接約櫃，蒙神立下「大衛之約」。',
+                    spouses: [
+                        { name: '拔示巴', nameEn: 'Bathsheba', role: '王后', desc: '大衛與她所生的次子為所羅門。', isBlood: false }
+                    ],
                     children: [
-                        { name: '拔示巴', nameEn: 'Bathsheba', role: '王后', desc: '大衛與她所生的次子為所羅門。', isBlood: false },
                         { name: '押沙龍', nameEn: 'Absalom', role: '反叛的兒子', desc: '英俊且有野心，反叛大衛最終死於戰場。' },
                         { name: '拿單', role: '先知/諍友', desc: '指責大衛的罪，並傳達建殿與王位之約。', isBlood: false },
-                        { name: '約押', role: '元帥', desc: '忠誠但手段殘酷的軍隊統帥。', isBlood: false }
+                        { name: '約雅', role: '元帥', desc: '忠誠但手段殘酷的軍隊統帥。', isBlood: false }
                     ]
                 }
             },
@@ -1993,17 +2003,17 @@
                     name: '何西阿 (Hosea)',
                     role: '先知',
                     desc: '以自身的婚姻象徵神對以色列那破裂但忠貞的愛。',
-                    children: [
+                    spouses: [
                         { 
                             name: '歌篾', role: '妻子', 
                             desc: '淫亂的婦人，象徵背道受誘的以色列。',
-                            isBlood: false,
-                            children: [
-                                { name: '耶斯列', role: '長子 (審判)', desc: '意為「神栽種/神審判」。' },
-                                { name: '羅路哈瑪', role: '長女 (不蒙憐憫)', desc: '意為「不再蒙憐憫」。' },
-                                { name: '羅阿米', role: '次子 (非我民)', desc: '意為「非我民」。' }
-                            ]
+                            isBlood: false
                         }
+                    ],
+                    children: [
+                        { name: '耶斯列', role: '長子 (審判)', desc: '意為「神栽種/神審判」。' },
+                        { name: '羅路哈瑪', role: '長女 (不蒙憐憫)', desc: '意為「不再蒙憐憫」。' },
+                        { name: '羅阿米', role: '次子 (非我民)', desc: '意為「非我民」。' }
                     ]
                 }
             },
@@ -2046,33 +2056,48 @@
                 const hasChildren = node.children && node.children.length > 0;
                 const isBlood = node.isBlood !== false;
 
+                const Card = ({ n, isMain = false }) => (
+                    <div className={`tree-node-card bg-white rounded-2xl shadow-lg p-5 w-64 border-t-4 ${isMain ? 'border-stone-800' : 'border-stone-300 border-dashed'} relative group transition-all hover:scale-105 hover:z-50`}>
+                        <div className="flex items-baseline gap-2 mb-1.5 flex-wrap">
+                            <div className="text-2xl font-black text-stone-900 leading-tight">{n.name}</div>
+                            {n.nameEn && <div className="text-[14px] font-bold text-stone-400 tracking-wider uppercase font-sans" style={{ opacity: 0.8 }}>{n.nameEn}</div>}
+                        </div>
+                        <div className="text-[15px] font-bold text-amber-700 uppercase tracking-wider mb-3">{n.role}</div>
+                        {n.desc && (
+                            <div className="text-[14px] text-stone-200 leading-snug opacity-0 group-hover:opacity-100 transition-opacity absolute top-full left-0 w-full bg-stone-900 text-white p-4 rounded-2xl z-50 pointer-events-none mt-2 shadow-2xl border border-white/10">
+                                <div className="mb-2">{n.desc}</div>
+                                {n.ref && (
+                                    <div className="mt-2 pt-2 border-t border-white/20 flex items-center gap-2">
+                                        <span className="bg-amber-500/20 text-amber-400 text-[9px] px-1.5 py-0.5 rounded font-black uppercase tracking-tighter">Ref</span>
+                                        <span className="text-amber-400/80 text-[11px] font-bold tracking-wider">{n.ref}</span>
+                                    </div>
+                                )}
+                            </div>
+                        )}
+                        {isMain && hasChildren && (
+                            <button 
+                                onClick={(e) => { e.stopPropagation(); toggleNode(n.name); }}
+                                className="absolute -bottom-4 left-1/2 -translate-x-1/2 w-8 h-8 bg-stone-800 text-white rounded-full flex items-center justify-center text-sm shadow-md hover:bg-stone-600 transition-colors z-10"
+                            >
+                                {isExpanded ? '−' : '+'}
+                            </button>
+                        )}
+                    </div>
+                );
+
                 return (
                     <div className={`tree-node-container ${isRoot ? 'is-root' : ''} ${isBlood ? 'has-parent' : 'non-blood'}`}>
-                        <div className={`tree-node-card bg-white rounded-2xl shadow-lg p-5 w-64 border-t-4 border-stone-800 relative group transition-all hover:scale-105 hover:z-50`}>
-                            <div className="flex items-baseline gap-2 mb-1.5 flex-wrap">
-                                <div className="text-2xl font-black text-stone-900 leading-tight">{node.name}</div>
-                                {node.nameEn && <div className="text-[14px] font-bold text-stone-400 tracking-wider uppercase font-sans" style={{ opacity: 0.8 }}>{node.nameEn}</div>}
-                            </div>
-                            <div className="text-[15px] font-bold text-amber-700 uppercase tracking-wider mb-3">{node.role}</div>
-                            {node.desc && (
-                                <div className="text-[14px] text-stone-200 leading-snug opacity-0 group-hover:opacity-100 transition-opacity absolute top-full left-0 w-full bg-stone-900 text-white p-4 rounded-2xl z-50 pointer-events-none mt-2 shadow-2xl border border-white/10">
-                                    <div className="mb-2">{node.desc}</div>
-                                    {node.ref && (
-                                        <div className="mt-2 pt-2 border-t border-white/20 flex items-center gap-2">
-                                            <span className="bg-amber-500/20 text-amber-400 text-[9px] px-1.5 py-0.5 rounded font-black uppercase tracking-tighter">Ref</span>
-                                            <span className="text-amber-400/80 text-[11px] font-bold tracking-wider">{node.ref}</span>
+                        <div className="relative flex justify-center items-center">
+                            <Card n={node} isMain={true} />
+                            {node.spouses && (
+                                <div className="absolute left-full top-0 h-full flex items-center pl-4 z-20 pointer-events-none">
+                                    {node.spouses.map((spouse, idx) => (
+                                        <div key={idx} className="flex items-center pointer-events-auto">
+                                            <div className="w-8 h-px border-t-2 border-dashed border-stone-300"></div>
+                                            <Card n={spouse} isMain={false} />
                                         </div>
-                                    )}
+                                    ))}
                                 </div>
-                            )}
-                            
-                            {hasChildren && (
-                                <button 
-                                    onClick={() => toggleNode(node.name)}
-                                    className="absolute -bottom-4 left-1/2 -translate-x-1/2 w-8 h-8 bg-stone-800 text-white rounded-full flex items-center justify-center text-sm shadow-md hover:bg-stone-600 transition-colors z-10"
-                                >
-                                    {isExpanded ? '−' : '+'}
-                                </button>
                             )}
                         </div>
 
