@@ -33,6 +33,35 @@ def generate_sitemap():
         # URL Construction
         if file == "index.html":
             url = BASE_URL
+            
+            # Special case: Add sub-pages for SPA-style index.html
+            sub_routes = [
+                "analysis/promised-land",
+                "analysis/messiah",
+                "analysis/son-of-man",
+                "analysis/angels",
+                "atlas",
+                "timeline",
+                "structure"
+            ]
+            
+            # Add index.html first
+            xml_content.append('  <url>')
+            xml_content.append(f'    <loc>{url}</loc>')
+            xml_content.append(f'    <lastmod>{now}</lastmod>')
+            xml_content.append(f'    <changefreq>weekly</changefreq>')
+            xml_content.append(f'    <priority>1.0</priority>')
+            xml_content.append('  </url>')
+            
+            # Add hash routes
+            for route in sub_routes:
+                xml_content.append('  <url>')
+                xml_content.append(f'    <loc>{BASE_URL}#{route}</loc>')
+                xml_content.append(f'    <lastmod>{now}</lastmod>')
+                xml_content.append(f'    <changefreq>weekly</changefreq>')
+                xml_content.append(f'    <priority>0.8</priority>')
+                xml_content.append('  </url>')
+            continue
         else:
             # URL encode for Chinese characters
             encoded_file = urllib.parse.quote(file)
