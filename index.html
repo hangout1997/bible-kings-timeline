@@ -748,6 +748,8 @@
                 { name: '亞述巴尼拔', empire: '亞述', empireTag: 'bg-orange-600', start: 669, end: 627, bg: 'bg-orange-50', border: 'border-orange-500', note: '亞述帝國全盛；那鴻預言其首都尼尼微必傾覆（663–612 BC）。' },
                 { name: '拿波帕拉薩', empire: '巴比倫', empireTag: 'bg-red-700', start: 626, end: 605, bg: 'bg-red-50', border: 'border-red-500', note: '新巴比倫帝國奠基者；612 BC 攻滅尼尼微，亞述帝國覆滅。' },
                 { name: '尼布甲尼撒二世', empire: '巴比倫', empireTag: 'bg-red-700', start: 605, end: 562, bg: 'bg-red-50', border: 'border-red-500', note: '605 BC 卡基米施大捷；三次入侵猶大（605、597、586 BC）；耶路撒冷陷落。' },
+                { name: '伯沙撒', empire: '巴比倫', empireTag: 'bg-red-700', start: 553, end: 539, bg: 'bg-red-50', border: 'border-red-500', note: '巴比倫末代王（與父拿波尼度共治）；牆上現指寫字異象之夜，巴比倫陷落。（但5）' },
+                { name: '大利烏 (瑪代)', empire: '波斯/瑪代', empireTag: 'bg-slate-700', start: 539, end: 536, bg: 'bg-slate-50', border: 'border-slate-500', note: '攻佔巴比倫後治理該地；將但以理投入獅子坑（但6）。' },
             ],
         };
 
@@ -1296,6 +1298,24 @@
                     ],
                     color: '#d97706',
                     books: ['Ezekiel', 'Numbers']
+                },
+                {
+                    name: '迦勒底國',
+                    nameEn: 'Chaldea',
+                    type: 'circle',
+                    center: [31.0, 46.1],
+                    radius: 100000,
+                    color: '#9a3412',
+                    books: ['Daniel', 'Jeremiah']
+                },
+                {
+                    name: '大流士國 (波斯瑪代)',
+                    nameEn: 'Kingdom of Darius',
+                    type: 'circle',
+                    center: [33.0, 47.5],
+                    radius: 300000,
+                    color: '#475569',
+                    books: ['Daniel', 'Ezra']
                 }
             ]
         };
@@ -1922,6 +1942,7 @@
                             isBlood: false,
                             children: [
                                 { name: '尼布甲尼撒', nameEn: 'Nebuchadnezzar', role: '巴比倫王', desc: '曾因驕傲如獸，後稱頌至高神。', isBlood: false },
+                                { name: '伯沙撒', nameEn: 'Belshazzar', role: '巴比倫末代王', desc: '見牆上現指，國亡之夜被殺。', isBlood: false },
                                 { name: '大利烏', nameEn: 'Darius', role: '波斯/瑪代王', desc: '因愛護但以理，不得不下令將其投入獅子坑。', isBlood: false }
                             ]
                         }
@@ -2211,7 +2232,7 @@
             const [showProphets, setShowProphets] = useState(false);
             const [showEmpires, setShowEmpires] = useState(false);
             const START_YEAR = 931;
-            const END_YEAR = 586;
+            const END_YEAR = 530;
             const YEAR_PX = 28;
             const data = timelineData;
 
@@ -2369,7 +2390,7 @@
                                 分裂王國、先知與外邦強國對照（比例時間軸）
                             </h2>
                             <p className="text-center text-stone-500 text-lg md:text-xl mb-12">
-                                931 BC（王國分裂）→ 722 BC（北國亞述滅）→ 586 BC（南國巴比倫滅）
+                                931 BC（王國分裂）→ 722 BC（北國亞述滅）→ 586 BC（南國巴比倫滅）→ 530 BC（波斯帝國初期）
                             </p>
 
                              
@@ -2895,6 +2916,27 @@
                                 </div>
                             )}
 
+                            {focusLocation === 'PROMISED_LAND' && (
+                                <div className="absolute top-3 left-3 z-[1000] flex items-center gap-3 bg-teal-900/95 backdrop-blur px-3 py-1.5 rounded-full shadow-2xl animate-fade-in w-fit border border-teal-500/50 ring-1 ring-teal-400/20">
+                                    <div className="flex items-center gap-2 pr-3 border-r border-teal-700/50">
+                                        <span className="relative flex h-2 w-2">
+                                            <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-teal-400 opacity-75"></span>
+                                            <span className="relative inline-flex rounded-full h-2 w-2 bg-teal-400"></span>
+                                        </span>
+                                        <span className="font-bold text-white text-[11px] md:text-sm tracking-wide whitespace-nowrap" style={{ fontFamily: 'Noto Serif TC, serif' }}>
+                                            應許之地 (兩版對照)
+                                        </span>
+                                    </div>
+                                    <button
+                                        onClick={() => window.location.hash = 'analysis/promised-land'}
+                                        className="hover:text-teal-400 text-teal-500 bg-white px-2.5 py-1 rounded-full text-[10px] md:text-xs font-black transition-all flex items-center gap-1.5 group whitespace-nowrap shadow-lg"
+                                    >
+                                        <span>📖 聖經解析</span>
+                                        <span className="text-[12px] transition-transform group-hover:translate-x-0.5">→</span>
+                                    </button>
+                                </div>
+                            )}
+
                         </div>
 
                          
@@ -3404,7 +3446,7 @@
                     </div>
 
                      
-                    <div className="relative z-10 grid grid-cols-1 md:grid-cols-3 gap-6 md:gap-8 w-full max-w-5xl landing-fadeup landing-fadeup-delay3">
+                    <div className="relative z-10 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 md:gap-8 w-full max-w-6xl landing-fadeup landing-fadeup-delay3">
                          
                         <div className="feature-card bg-gradient-to-br from-indigo-50 to-violet-50"
                             onClick={() => onNavigate('structure')}>
@@ -3452,10 +3494,44 @@
                                 <span>→</span>
                             </div>
                         </div>
+
+                        <div className="feature-card bg-gradient-to-br from-rose-50 to-pink-50"
+                            onClick={() => onNavigate('analysis/promised-land')}>
+                            <div className="text-5xl mb-4 landing-float" style={{ animationDelay: '1.2s' }}>💡</div>
+                            <h2 className="text-2xl font-black text-stone-800 mb-2" style={{ fontFamily: 'Noto Serif TC, serif' }}>
+                                聖經解析
+                            </h2>
+                            <p className="text-stone-500 text-sm leading-relaxed mb-4">
+                                深入探討應許之地、彌賽亞與人子等核心主題，從文字中看見救贖計畫的軌跡。
+                            </p>
+                            <div className="flex items-center gap-2 text-rose-700 font-bold text-sm" style={{ fontFamily: 'Inter, sans-serif' }}>
+                                <span>開始探索</span>
+                                <span>→</span>
+                            </div>
+                        </div>
                     </div>
 
                      
                     <div className="relative z-10 mt-16 text-center" style={{ fontFamily: 'Inter, sans-serif' }}>
+                        <div className="flex items-center justify-center gap-8 mb-8">
+                            <a href="https://www.threads.com/@visiodivina2026" target="_blank" rel="noopener noreferrer" className="text-stone-400 hover:text-stone-800 transition-all hover:scale-110" title="Threads">
+                                <svg width="22" height="22" viewBox="0 0 192 192" fill="currentColor">
+                                    <path d="M141.537 88.9883C140.71 88.5919 139.87 88.2104 139.019 87.8451C137.537 60.5382 122.616 44.905 97.5619 44.745C97.4484 44.7443 97.3355 44.7443 97.222 44.7443C82.2364 44.7443 69.7731 51.1409 62.102 62.7807L75.881 72.2328C81.6116 63.5383 90.6052 61.6848 97.2286 61.6848C97.3051 61.6848 97.3819 61.6848 97.4576 61.6855C105.707 61.7381 111.932 64.1366 115.961 68.814C118.893 72.2193 120.854 76.925 121.825 82.8638C114.511 81.6207 106.601 81.2385 98.145 81.7233C74.3247 83.0954 59.0111 96.9879 60.0396 116.292C60.5615 126.084 65.4397 134.508 73.775 140.011C80.8224 144.663 89.899 146.938 99.3323 146.423C111.79 145.74 121.563 140.987 128.381 132.296C133.559 125.696 136.834 117.143 138.28 106.366C144.217 109.949 148.617 114.664 151.047 120.332C155.179 129.967 155.42 145.8 142.501 158.708C131.182 170.016 117.576 174.908 97.0135 175.059C74.2042 174.89 56.9538 167.575 45.7381 153.317C35.2355 139.966 29.8077 120.682 29.6052 96C29.8077 71.3178 35.2355 52.0336 45.7381 38.6827C56.9538 24.4249 74.2039 17.11 97.0132 16.9405C119.988 17.1113 137.539 24.4614 149.184 38.788C154.894 45.8136 159.199 54.6488 162.037 64.9503L178.184 60.6422C174.744 47.9622 169.331 37.0357 161.965 27.974C147.036 9.60668 125.202 0.195148 97.0695 0H96.9569C68.8816 0.19447 47.2921 9.6418 32.7883 28.0793C19.8819 44.4864 13.2244 67.3157 13.0007 95.9325L13 96L13.0007 96.0675C13.2244 124.684 19.8819 147.514 32.7883 163.921C47.2921 182.358 68.8816 191.806 96.9569 192H97.0695C122.03 191.827 139.624 185.292 154.118 170.811C173.081 151.866 172.51 128.119 166.26 113.541C161.776 103.087 153.227 94.5962 141.537 88.9883ZM98.4405 129.507C88.0005 130.095 77.1544 125.409 76.6196 115.372C76.2232 107.93 81.9158 99.626 99.0812 98.6368C101.047 98.5234 102.976 98.468 104.871 98.468C111.106 98.468 116.939 99.0737 122.242 100.233C120.264 124.935 108.662 128.946 98.4405 129.507Z"/>
+                                </svg>
+                            </a>
+                            <a href="https://www.instagram.com/visiodivina2026" target="_blank" rel="noopener noreferrer" className="text-stone-400 hover:text-stone-800 transition-all hover:scale-110" title="Instagram">
+                                <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                                    <rect width="20" height="20" x="2" y="2" rx="5" ry="5"/>
+                                    <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/>
+                                    <line x1="17.5" x2="17.51" y1="6.5" y2="6.5"/>
+                                </svg>
+                            </a>
+                            <a href="https://www.facebook.com/visiodivina2026" target="_blank" rel="noopener noreferrer" className="text-stone-400 hover:text-stone-800 transition-all hover:scale-110" title="Facebook">
+                                <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                                    <path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"/>
+                                </svg>
+                            </a>
+                        </div>
                         <p className="text-stone-400 text-xs font-bold">
                             © 2026 Visio Divina · 看見聖經
                         </p>
@@ -3465,6 +3541,321 @@
                             </a>
                             <span className="text-stone-300 text-xs">|</span>
                             <a href="#privacy" onClick={() => onNavigate('privacy')} className="text-stone-400 hover:text-stone-600 text-xs transition-colors" style={{ fontFamily: 'Noto Serif TC, serif', fontWeight: 700 }}>隱私權政策</a>
+                        </div>
+                    </div>
+                </div>
+            );
+        };
+
+        const PromisedLandSection = ({ onNavigateToLocation }) => {
+            return (
+                <div className="space-y-12">
+                    <section>
+                        <div className="flex items-center gap-4 mb-6">
+                            <div className="w-12 h-12 bg-teal-100 rounded-2xl flex items-center justify-center text-2xl shadow-inner">🏞️</div>
+                            <h3 className="text-2xl font-black text-stone-800" style={{ fontFamily: 'Noto Serif TC, serif' }}>概覽</h3>
+                        </div>
+                        <p className="text-lg text-stone-700 leading-relaxed border-l-4 border-teal-500 pl-6">
+                            「應許之地」在聖經中首先是上帝向亞伯拉罕及其後裔所作的地土應許，核心地理對象通常是迦南地，但不同經文對其範圍、用途與神學意義有不同層次的表達。這一主題從《創世記》的立約，延伸到《約書亞記》的承受地業，以及《以西結書》與《希伯來書》的更新性詮釋。
+                        </p>
+                    </section>
+
+                    <section>
+                        <h4 className="text-xl font-bold text-stone-800 mb-6 flex items-center gap-2">
+                            <span className="w-2 h-6 bg-teal-500 rounded-full"></span>
+                            核心經文對照
+                        </h4>
+                        <div className="overflow-x-auto rounded-3xl border border-stone-200 shadow-sm bg-white">
+                            <table className="w-full text-left border-collapse">
+                                <thead className="bg-stone-50 border-b border-stone-200">
+                                    <tr>
+                                        <th className="p-4 font-black text-stone-600 text-sm">經文</th>
+                                        <th className="p-4 font-black text-stone-600 text-sm">範圍表述</th>
+                                        <th className="p-4 font-black text-stone-600 text-sm">概念定位</th>
+                                    </tr>
+                                </thead>
+                                <tbody className="divide-y divide-stone-100">
+                                    <tr>
+                                        <td className="p-4 font-bold text-teal-700">創世記 15:18-21</td>
+                                        <td className="p-4 text-stone-700">從埃及河直到伯拉大河</td>
+                                        <td className="p-4 text-stone-500 text-sm">神學性、立約總綱</td>
+                                    </tr>
+                                    <tr>
+                                        <td className="p-4 font-bold text-teal-700">出埃及記 23:31</td>
+                                        <td className="p-4 text-stone-700">從紅海直到非利士海，又從曠野直到大河</td>
+                                        <td className="p-4 text-stone-500 text-sm">拯救歷史中的前進目標</td>
+                                    </tr>
+                                    <tr>
+                                        <td className="p-4 font-bold text-teal-700">民數記 34:1-12</td>
+                                        <td className="p-4 text-stone-700">南、西、北、東四界逐一列出</td>
+                                        <td className="p-4 text-stone-500 text-sm">正式分地、法律邊界</td>
+                                    </tr>
+                                    <tr>
+                                        <td className="p-4 font-bold text-teal-700">以西結書 47:13-20</td>
+                                        <td className="p-4 text-stone-700">北、東、南、西各界重新敘述</td>
+                                        <td className="p-4 text-stone-500 text-sm">復興異象、理想秩序</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </section>
+
+                    <section className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                        <div className="bg-amber-50 p-8 rounded-[2rem] border border-amber-100">
+                            <h4 className="text-xl font-black text-amber-900 mb-4 flex items-center gap-2">
+                                🍯 祝福性描述
+                            </h4>
+                            <p className="text-stone-700 leading-relaxed text-sm md:text-base">
+                                以「流奶與蜜之地」為代表，強調土地不只是戰略空間，也是供應生命、彰顯神恩與支撐立約群體生活的場所。這種描述將土地理解為與神同在、敬拜秩序與社群安居的恩典空間。
+                            </p>
+                        </div>
+                        <div className="bg-blue-50 p-8 rounded-[2rem] border border-blue-100">
+                            <h4 className="text-xl font-black text-blue-900 mb-4 flex items-center gap-2">
+                                🕊️ 產業與安息
+                            </h4>
+                            <p className="text-stone-700 leading-relaxed text-sm md:text-base">
+                                「地業」「產業」「安息」把土地提升為約中產業。《希伯來書》保留這些語言，但將焦點提升到「安息」與更終極的屬天基業，指向更完全的安息與末後承受。
+                            </p>
+                        </div>
+                    </section>
+
+                    <section className="bg-teal-900 text-white p-8 md:p-12 rounded-[3rem] shadow-xl relative overflow-hidden group">
+                        <div className="absolute top-0 right-0 p-8 opacity-10 text-9xl pointer-events-none group-hover:scale-110 transition-transform duration-500">🗺️</div>
+                        <div className="relative z-10">
+                            <h4 className="text-2xl font-black mb-4 flex items-center gap-3">
+                                <span>📍</span> 實地探索地圖邊界
+                            </h4>
+                            <p className="text-teal-100 mb-8 max-w-2xl leading-relaxed text-sm md:text-base">
+                                在「聖經地理」模組中，我們視覺化了民數記 34 章與以西結書 47 章的兩版邊界對照，您可以親自觀察預言中疆界的擴張與地理標誌。
+                            </p>
+                            <button 
+                                onClick={() => onNavigateToLocation && onNavigateToLocation('PROMISED_LAND', 'Ezekiel')}
+                                className="bg-white text-teal-900 px-8 py-4 rounded-2xl font-black flex items-center gap-2 hover:bg-teal-50 transition-all active:scale-95 shadow-lg"
+                            >
+                                🗺️ 前往聖經地理：應許之地
+                                <span>→</span>
+                            </button>
+                        </div>
+                    </section>
+                </div>
+            );
+        };
+
+        const MessiahSection = () => {
+            return (
+                <div className="space-y-12">
+                    <section>
+                        <div className="flex items-center gap-4 mb-6">
+                            <div className="w-12 h-12 bg-amber-100 rounded-2xl flex items-center justify-center text-2xl shadow-inner">👑</div>
+                            <h3 className="text-2xl font-black text-stone-800" style={{ fontFamily: 'Noto Serif TC, serif' }}>概覽</h3>
+                        </div>
+                        <p className="text-lg text-stone-700 leading-relaxed border-l-4 border-amber-500 pl-6">
+                            「彌賽亞」（Mashiach）本義為「受膏者」，希臘文即「基督」。在希伯來聖經中，這個詞最初指君王、祭司等執行神授使命的人。到新約時代，基督教確信耶穌就是上帝所應許的基督。
+                        </p>
+                    </section>
+
+                    <section className="grid grid-cols-1 md:grid-cols-3 gap-6">
+                        {[
+                            { title: '君王型', icon: '🏰', desc: '出自大衛家、恢復公義與國度秩序，是猶太教中最核心的期待。' },
+                            { title: '受苦型', icon: '✝️', desc: '基督教強調耶穌以受難、贖罪與復活整合了受苦僕人的圖像。' },
+                            { title: '末世型', icon: '☁️', desc: '駕雲而來、領受永遠國度的榮耀王者，呼應但以理書的異象。' }
+                        ].map((item, i) => (
+                            <div key={i} className="bg-white p-6 rounded-[2rem] border border-stone-200 shadow-sm hover:shadow-md transition-shadow">
+                                <span className="text-3xl mb-4 block">{item.icon}</span>
+                                <h4 className="text-lg font-black text-stone-800 mb-2">{item.title}彌賽亞</h4>
+                                <p className="text-stone-600 text-sm leading-relaxed">{item.desc}</p>
+                            </div>
+                        ))}
+                    </section>
+
+                    <section>
+                        <h4 className="text-xl font-bold text-stone-800 mb-6">猶太教與基督教對彌賽亞的比較</h4>
+                        <div className="overflow-x-auto rounded-3xl border border-stone-200 bg-white">
+                            <table className="w-full text-left border-collapse">
+                                <thead className="bg-stone-50 border-b border-stone-200">
+                                    <tr>
+                                        <th className="p-4 font-black text-stone-600 text-sm">面向</th>
+                                        <th className="p-4 font-black text-stone-600 text-sm">猶太教主流理解</th>
+                                        <th className="p-4 font-black text-stone-600 text-sm">基督教主流理解</th>
+                                    </tr>
+                                </thead>
+                                <tbody className="divide-y divide-stone-100 text-sm">
+                                    <tr>
+                                        <td className="p-4 font-bold">主要身分</td>
+                                        <td className="p-4">大衛後裔的人間君王</td>
+                                        <td className="p-4">大衛後裔、基督、神子、救主</td>
+                                    </tr>
+                                    <tr>
+                                        <td className="p-4 font-bold">主要任務</td>
+                                        <td className="p-4">聚集分散者、復興以色列、建立公義秩序</td>
+                                        <td className="p-4">受死與復活完成救贖，再來完成普世和平</td>
+                                    </tr>
+                                    <tr>
+                                        <td className="p-4 font-bold">受苦僕人</td>
+                                        <td className="p-4">通常視為以色列群體或義人群體</td>
+                                        <td className="p-4">視為耶穌受苦、代贖與復活的關鍵預表</td>
+                                    </tr>
+                                    <tr>
+                                        <td className="p-4 font-bold">未實現預言</td>
+                                        <td className="p-4">若任務未達成，表示彌賽亞尚未來到</td>
+                                        <td className="p-4">以「兩次降臨」解釋已然與未然的張力</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </section>
+                </div>
+            );
+        };
+
+        const SonOfManSection = () => {
+            return (
+                <div className="space-y-12">
+                    <section>
+                        <div className="flex items-center gap-4 mb-6">
+                            <div className="w-12 h-12 bg-stone-800 rounded-2xl flex items-center justify-center text-2xl text-white shadow-lg">👤</div>
+                            <h3 className="text-2xl font-black text-stone-800" style={{ fontFamily: 'Noto Serif TC, serif' }}>概覽</h3>
+                        </div>
+                        <p className="text-lg text-stone-700 leading-relaxed border-l-4 border-stone-800 pl-6">
+                            「人子」在聖經中出現約 190 餘次。其含義經歷了從「泛指人類」到「先知稱號」，再到「末世天上君王」的演進，最終在耶穌自稱中達到三者合一的成全。
+                        </p>
+                    </section>
+
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+                        <section className="space-y-6">
+                            <h4 className="text-xl font-bold text-stone-800">舊約的演進</h4>
+                            <div className="space-y-4">
+                                <div className="p-5 bg-white rounded-2xl border border-stone-100 shadow-sm">
+                                    <div className="flex justify-between mb-2">
+                                        <span className="font-black text-stone-800">1. 一般詩歌用法</span>
+                                        <span className="text-xs font-bold text-stone-400">詩 8:4 / 146:3</span>
+                                    </div>
+                                    <p className="text-stone-600 text-sm">泛指「人類」，強調人的渺小卑微、有限與不可信靠。</p>
+                                </div>
+                                <div className="p-5 bg-white rounded-2xl border border-stone-100 shadow-sm">
+                                    <div className="flex justify-between mb-2">
+                                        <span className="font-black text-stone-800">2. 以西結書用法</span>
+                                        <span className="text-xs font-bold text-stone-400">結 2:1 (出現91次)</span>
+                                    </div>
+                                    <p className="text-stone-600 text-sm">上帝對先知的稱呼，強調先知是「凡人/有限的僕人」。</p>
+                                </div>
+                                <div className="p-5 bg-stone-900 text-white rounded-2xl shadow-md">
+                                    <div className="flex justify-between mb-2">
+                                        <span className="font-black">3. 但以理書異象</span>
+                                        <span className="text-xs font-bold opacity-60">但 7:13</span>
+                                    </div>
+                                    <p className="text-stone-300 text-sm">末世的天上君王，從神領受永遠國度，具天上尊榮。</p>
+                                </div>
+                            </div>
+                        </section>
+
+                        <section className="space-y-6">
+                            <h4 className="text-xl font-bold text-stone-800">耶穌的重新定義 (新約)</h4>
+                            <div className="p-8 bg-stone-100 rounded-[2rem] border border-stone-200">
+                                <p className="text-stone-700 leading-relaxed mb-6 font-medium">
+                                    耶穌自稱「人子」約 80 餘次，是祂有意整合並重新定義這個稱號：
+                                </p>
+                                <ul className="space-y-6">
+                                    <li className="flex gap-3">
+                                        <span className="text-stone-800 text-xl">●</span>
+                                        <div>
+                                            <span className="font-bold block text-stone-900">人性與卑微</span>
+                                            <span className="text-sm text-stone-500">「人子沒有枕頭的地方」 (太 8:20)</span>
+                                        </div>
+                                    </li>
+                                    <li className="flex gap-3">
+                                        <span className="text-stone-800 text-xl">●</span>
+                                        <div>
+                                            <span className="font-bold block text-stone-900">受苦與代贖</span>
+                                            <span className="text-sm text-stone-500">「人子來...捨命作多人的贖價」 (可 10:45)</span>
+                                        </div>
+                                    </li>
+                                    <li className="flex gap-3">
+                                        <span className="text-stone-800 text-xl">●</span>
+                                        <div>
+                                            <span className="font-bold block text-stone-900">榮耀與再來</span>
+                                            <span className="text-sm text-stone-500">「看見人子坐在權能者右邊」 (太 26:64)</span>
+                                        </div>
+                                    </li>
+                                </ul>
+                            </div>
+                        </section>
+                    </div>
+
+                    <div className="bg-stone-800 p-8 rounded-[2.5rem] text-center text-white shadow-xl">
+                        <p className="text-lg font-black mb-3">神學演進總結</p>
+                        <div className="flex flex-col md:flex-row items-center justify-center gap-4 text-sm font-bold">
+                            <span className="px-3 py-1 bg-white/10 rounded-full">渺小的人 (詩篇)</span>
+                            <span className="text-stone-500">→</span>
+                            <span className="px-3 py-1 bg-white/10 rounded-full">卑微先知 (以西結)</span>
+                            <span className="text-stone-500">→</span>
+                            <span className="px-3 py-1 bg-white/10 rounded-full">榮耀君王 (但以理)</span>
+                            <span className="text-stone-500">→</span>
+                            <span className="px-4 py-2 bg-stone-700 text-white rounded-xl ring-1 ring-stone-600">三者合一 (耶穌)</span>
+                        </div>
+                    </div>
+                </div>
+            );
+        };
+
+        const AnalysisPage = ({ onNavigateToLocation }) => {
+            const [activeSubTab, setActiveSubTab] = useState(() => {
+                const hash = window.location.hash;
+                if (hash.includes('analysis/promised-land')) return 'promised-land';
+                if (hash.includes('analysis/messiah')) return 'messiah';
+                if (hash.includes('analysis/son-of-man')) return 'son-of-man';
+                return 'promised-land';
+            });
+
+            const tabs = [
+                { id: 'promised-land', name: '應許之地', icon: '🏞️' },
+                { id: 'messiah', name: '彌賽亞', icon: '👑' },
+                { id: 'son-of-man', name: '人子', icon: '👤' },
+            ];
+
+            useEffect(() => {
+                const handleHash = () => {
+                    const hash = window.location.hash;
+                    if (hash.includes('analysis/promised-land')) setActiveSubTab('promised-land');
+                    else if (hash.includes('analysis/messiah')) setActiveSubTab('messiah');
+                    else if (hash.includes('analysis/son-of-man')) setActiveSubTab('son-of-man');
+                };
+                window.addEventListener('hashchange', handleHash);
+                return () => window.removeEventListener('hashchange', handleHash);
+            }, []);
+
+            const navigateSubTab = (id) => {
+                window.location.hash = `analysis/${id}`;
+            };
+
+            return (
+                <div className="page-enter">
+                    <div className="bg-stone-50 w-full max-w-none w-[98vw] mx-auto shadow-2xl rounded-[3rem] p-6 md:p-12 border border-stone-300">
+                        <div className="text-center mb-8">
+                            <h2 className="text-3xl md:text-4xl font-black text-stone-800 mb-3" style={{ fontFamily: 'Noto Serif TC, serif' }}>聖經解析</h2>
+                            <p className="text-stone-500 text-sm md:text-base max-w-2xl mx-auto leading-relaxed">
+                                深入探討聖經中的核心主題，從地理邊界到神學預言，全面理解啟示的內涵與演進。
+                            </p>
+                        </div>
+
+                        <div className="flex justify-center mb-10 border-b border-stone-200 overflow-x-auto no-scrollbar">
+                            {tabs.map(tab => (
+                                <button
+                                    key={tab.id}
+                                    className={`px-4 md:px-8 py-3 font-bold text-base md:text-lg transition-all border-b-4 flex items-center gap-2 whitespace-nowrap ${activeSubTab === tab.id ? 'border-stone-800 text-stone-900' : 'border-transparent text-stone-400 hover:text-stone-600'}`}
+                                    onClick={() => navigateSubTab(tab.id)}
+                                    style={{ fontFamily: 'Noto Serif TC, serif' }}
+                                >
+                                    <span className="text-xl">{tab.icon}</span>
+                                    {tab.name}
+                                </button>
+                            ))}
+                        </div>
+
+                        <div className="animate-fade-in max-w-5xl mx-auto">
+                            {activeSubTab === 'promised-land' && <PromisedLandSection onNavigateToLocation={onNavigateToLocation} />}
+                            {activeSubTab === 'messiah' && <MessiahSection />}
+                            {activeSubTab === 'son-of-man' && <SonOfManSection />}
                         </div>
                     </div>
                 </div>
@@ -3481,6 +3872,7 @@
                 if (hash === 'atlas') return 'atlas';
                 if (hash === 'timeline') return 'timeline';
                 if (hash === 'structure') return 'structure';
+                if (hash.startsWith('analysis')) return 'analysis';
                 if (hash === 'privacy') return 'privacy';
                 return 'home';
             });
@@ -3502,6 +3894,7 @@
                     if (hash === 'atlas') setCurrentPage('atlas');
                     else if (hash === 'timeline') setCurrentPage('timeline');
                     else if (hash === 'structure') setCurrentPage('structure');
+                    else if (hash.startsWith('analysis')) setCurrentPage('analysis');
                     else if (hash === 'privacy') setCurrentPage('privacy');
                     else setCurrentPage('home');
                 };
@@ -3519,6 +3912,7 @@
                         'atlas': '聖經地理',
                         'timeline': '舊約年代表',
                         'structure': '聖經總覽',
+                        'analysis': '聖經解析',
                         'privacy': '隱私權政策'
                     };
                     
@@ -3577,6 +3971,10 @@
                                         navigate('atlas');
                                     }}>
                                     🗺️ 聖經地理
+                                </button>
+                                <button className={`px-2.5 md:px-4 py-1.5 rounded-lg font-bold text-xs md:text-sm transition-all whitespace-nowrap ${currentPage === 'analysis' ? 'bg-white text-stone-900 shadow cursor-default' : 'text-stone-500 hover:text-stone-800 cursor-pointer'}`}
+                                    onClick={() => navigate('analysis/promised-land')}>
+                                    💡 聖經解析
                                 </button>
                             </div>
                         </div>
@@ -3656,11 +4054,31 @@
                                 }}
                             />
                         )}
+                        {currentPage === 'analysis' && <div className="px-4"><AnalysisPage onNavigateToLocation={handleNavigateToLocation} /></div>}
                         {currentPage === 'privacy' && <PrivacyPage />}
                     </main>
 
                      
-                    <footer className="text-center py-8" style={{ fontFamily: 'Inter, sans-serif' }}>
+                    <footer className="text-center py-12" style={{ fontFamily: 'Inter, sans-serif' }}>
+                        <div className="flex items-center justify-center gap-6 mb-6">
+                            <a href="https://www.threads.com/@visiodivina2026" target="_blank" rel="noopener noreferrer" className="text-stone-400 hover:text-stone-800 transition-all hover:scale-110" title="Threads">
+                                <svg width="20" height="20" viewBox="0 0 192 192" fill="currentColor">
+                                    <path d="M141.537 88.9883C140.71 88.5919 139.87 88.2104 139.019 87.8451C137.537 60.5382 122.616 44.905 97.5619 44.745C97.4484 44.7443 97.3355 44.7443 97.222 44.7443C82.2364 44.7443 69.7731 51.1409 62.102 62.7807L75.881 72.2328C81.6116 63.5383 90.6052 61.6848 97.2286 61.6848C97.3051 61.6848 97.3819 61.6848 97.4576 61.6855C105.707 61.7381 111.932 64.1366 115.961 68.814C118.893 72.2193 120.854 76.925 121.825 82.8638C114.511 81.6207 106.601 81.2385 98.145 81.7233C74.3247 83.0954 59.0111 96.9879 60.0396 116.292C60.5615 126.084 65.4397 134.508 73.775 140.011C80.8224 144.663 89.899 146.938 99.3323 146.423C111.79 145.74 121.563 140.987 128.381 132.296C133.559 125.696 136.834 117.143 138.28 106.366C144.217 109.949 148.617 114.664 151.047 120.332C155.179 129.967 155.42 145.8 142.501 158.708C131.182 170.016 117.576 174.908 97.0135 175.059C74.2042 174.89 56.9538 167.575 45.7381 153.317C35.2355 139.966 29.8077 120.682 29.6052 96C29.8077 71.3178 35.2355 52.0336 45.7381 38.6827C56.9538 24.4249 74.2039 17.11 97.0132 16.9405C119.988 17.1113 137.539 24.4614 149.184 38.788C154.894 45.8136 159.199 54.6488 162.037 64.9503L178.184 60.6422C174.744 47.9622 169.331 37.0357 161.965 27.974C147.036 9.60668 125.202 0.195148 97.0695 0H96.9569C68.8816 0.19447 47.2921 9.6418 32.7883 28.0793C19.8819 44.4864 13.2244 67.3157 13.0007 95.9325L13 96L13.0007 96.0675C13.2244 124.684 19.8819 147.514 32.7883 163.921C47.2921 182.358 68.8816 191.806 96.9569 192H97.0695C122.03 191.827 139.624 185.292 154.118 170.811C173.081 151.866 172.51 128.119 166.26 113.541C161.776 103.087 153.227 94.5962 141.537 88.9883ZM98.4405 129.507C88.0005 130.095 77.1544 125.409 76.6196 115.372C76.2232 107.93 81.9158 99.626 99.0812 98.6368C101.047 98.5234 102.976 98.468 104.871 98.468C111.106 98.468 116.939 99.0737 122.242 100.233C120.264 124.935 108.662 128.946 98.4405 129.507Z"/>
+                                </svg>
+                            </a>
+                            <a href="https://www.instagram.com/visiodivina2026" target="_blank" rel="noopener noreferrer" className="text-stone-400 hover:text-stone-800 transition-all hover:scale-110" title="Instagram">
+                                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                                    <rect width="20" height="20" x="2" y="2" rx="5" ry="5"/>
+                                    <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/>
+                                    <line x1="17.5" x2="17.51" y1="6.5" y2="6.5"/>
+                                </svg>
+                            </a>
+                            <a href="https://www.facebook.com/visiodivina2026" target="_blank" rel="noopener noreferrer" className="text-stone-400 hover:text-stone-800 transition-all hover:scale-110" title="Facebook">
+                                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                                    <path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"/>
+                                </svg>
+                            </a>
+                        </div>
                         <p className="text-stone-400 text-xs font-bold">
                             © 2026 Visio Divina · 看見聖經
                         </p>
