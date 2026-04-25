@@ -3425,7 +3425,7 @@
                     </div>
 
                      
-                    <div className="relative z-10 grid grid-cols-1 md:grid-cols-3 gap-6 md:gap-8 w-full max-w-5xl landing-fadeup landing-fadeup-delay3">
+                    <div className="relative z-10 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 md:gap-8 w-full max-w-6xl landing-fadeup landing-fadeup-delay3">
                          
                         <div className="feature-card bg-gradient-to-br from-indigo-50 to-violet-50"
                             onClick={() => onNavigate('structure')}>
@@ -3473,6 +3473,21 @@
                                 <span>→</span>
                             </div>
                         </div>
+
+                        <div className="feature-card bg-gradient-to-br from-rose-50 to-pink-50"
+                            onClick={() => onNavigate('analysis/promised-land')}>
+                            <div className="text-5xl mb-4 landing-float" style={{ animationDelay: '1.2s' }}>💡</div>
+                            <h2 className="text-2xl font-black text-stone-800 mb-2" style={{ fontFamily: 'Noto Serif TC, serif' }}>
+                                聖經解析
+                            </h2>
+                            <p className="text-stone-500 text-sm leading-relaxed mb-4">
+                                深入探討應許之地、彌賽亞與人子等核心主題，從文字中看見救贖計畫的軌跡。
+                            </p>
+                            <div className="flex items-center gap-2 text-rose-700 font-bold text-sm" style={{ fontFamily: 'Inter, sans-serif' }}>
+                                <span>開始探索</span>
+                                <span>→</span>
+                            </div>
+                        </div>
                     </div>
 
                      
@@ -3492,7 +3507,7 @@
             );
         };
 
-        const PromisedLandSection = () => {
+        const PromisedLandSection = ({ onNavigateToLocation }) => {
             return (
                 <div className="space-y-12">
                     <section>
@@ -3561,6 +3576,25 @@
                             <p className="text-stone-700 leading-relaxed text-sm md:text-base">
                                 「地業」「產業」「安息」把土地提升為約中產業。《希伯來書》保留這些語言，但將焦點提升到「安息」與更終極的屬天基業，指向更完全的安息與末後承受。
                             </p>
+                        </div>
+                    </section>
+
+                    <section className="bg-teal-900 text-white p-8 md:p-12 rounded-[3rem] shadow-xl relative overflow-hidden group">
+                        <div className="absolute top-0 right-0 p-8 opacity-10 text-9xl pointer-events-none group-hover:scale-110 transition-transform duration-500">🗺️</div>
+                        <div className="relative z-10">
+                            <h4 className="text-2xl font-black mb-4 flex items-center gap-3">
+                                <span>📍</span> 實地探索地圖邊界
+                            </h4>
+                            <p className="text-teal-100 mb-8 max-w-2xl leading-relaxed text-sm md:text-base">
+                                在「聖經地理」模組中，我們視覺化了民數記 34 章與以西結書 47 章的兩版邊界對照，您可以親自觀察預言中疆界的擴張與地理標誌。
+                            </p>
+                            <button 
+                                onClick={() => onNavigateToLocation && onNavigateToLocation('PROMISED_LAND', 'Ezekiel')}
+                                className="bg-white text-teal-900 px-8 py-4 rounded-2xl font-black flex items-center gap-2 hover:bg-teal-50 transition-all active:scale-95 shadow-lg"
+                            >
+                                🗺️ 前往聖經地理：應許之地
+                                <span>→</span>
+                            </button>
                         </div>
                     </section>
                 </div>
@@ -3724,7 +3758,7 @@
             );
         };
 
-        const AnalysisPage = () => {
+        const AnalysisPage = ({ onNavigateToLocation }) => {
             const [activeSubTab, setActiveSubTab] = useState(() => {
                 const hash = window.location.hash;
                 if (hash.includes('analysis/promised-land')) return 'promised-land';
@@ -3779,7 +3813,7 @@
                         </div>
 
                         <div className="animate-fade-in max-w-5xl mx-auto">
-                            {activeSubTab === 'promised-land' && <PromisedLandSection />}
+                            {activeSubTab === 'promised-land' && <PromisedLandSection onNavigateToLocation={onNavigateToLocation} />}
                             {activeSubTab === 'messiah' && <MessiahSection />}
                             {activeSubTab === 'son-of-man' && <SonOfManSection />}
                         </div>
@@ -3980,7 +4014,7 @@
                                 }}
                             />
                         )}
-                        {currentPage === 'analysis' && <div className="px-4"><AnalysisPage /></div>}
+                        {currentPage === 'analysis' && <div className="px-4"><AnalysisPage onNavigateToLocation={handleNavigateToLocation} /></div>}
                         {currentPage === 'privacy' && <PrivacyPage />}
                     </main>
 
