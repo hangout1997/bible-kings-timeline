@@ -3906,98 +3906,192 @@
         };
 
         const AngelsSection = () => {
-            const angelTypes = [
-                { category: '一般天使', role: '傳訊、保護、執行審判', icon: '🕊️', ref: '創 19, 太 1-2' },
-                { category: '加百列', role: '解釋異象、宣告救恩信息', icon: '📢', ref: '但 8:16, 路 1:26' },
-                { category: '米迦勒', role: '天使長、護衛神子民', icon: '⚔️', ref: '但 10:13, 啟 12:7' },
-                { category: '基路伯', role: '守護神聖、彰顯榮耀', icon: '🏛️', ref: '創 3:24, 結 10' },
-                { category: '撒拉弗', role: '寶座前敬拜、潔淨先知', icon: '🔥', ref: '賽 6:1-7' },
-                { category: '墮落使者', role: '敵對、迷惑、最終受審', icon: '🌑', ref: '啟 12:7, 猶 1:6' }
+            const angelOverview = [
+                { type: '一般天使', identity: '神所差遣的屬靈使者', feature: '傳訊、保護、引導、審判', ref: '創 19, 路 2', deed: '報信、拯救、施行審判' },
+                { type: '耶和華的使者', identity: '特殊的神聖使者顯現', feature: '代表神說話，高度神同在', ref: '創 16, 出 3, 士 6', deed: '與神自我啟示緊密重疊' },
+                { type: '加百列', identity: '具名天使 (使者)', feature: '解釋異象、宣告救恩信息', ref: '但 8, 路 1', deed: '向但以理解夢，向馬利亞報信' },
+                { type: '米迦勒', identity: '天使長、爭戰者', feature: '屬靈爭戰、護衛神子民', ref: '但 10, 猶 1, 啟 12', deed: '帶領天使與龍作戰' },
+                { type: '基路伯', identity: '守護神榮耀的屬靈活物', feature: '守護、承載神榮耀', ref: '創 3:24, 結 1, 10', deed: '守生命樹、與寶座相連' },
+                { type: '撒拉弗', identity: '與神聖潔相關的活物', feature: '六翼、頌讚聖哉、潔淨', ref: '賽 6:1-7', deed: '敬拜神、潔淨先知之口' }
             ];
 
             return (
                 <div className="space-y-16">
-                    {/* 1. 概覽 */}
-                    <section>
-                        <div className="flex items-center gap-4 mb-6">
-                            <div className="w-12 h-12 bg-blue-100 rounded-2xl flex items-center justify-center text-2xl shadow-inner">👼</div>
-                            <h3 className="text-2xl font-black text-stone-800" style={{ fontFamily: 'Noto Serif TC, serif' }}>概覽</h3>
-                        </div>
-                        <div className="space-y-4">
-                            <p className="text-lg text-stone-700 leading-relaxed border-l-4 border-blue-500 pl-6 bg-blue-50/30 py-2">
-                                聖經中的「天使」本義為「使者」；希伯來文 <em>malʾakh</em> 與希臘文 <em>angelos</em> 都可指奉差遣傳遞信息、執行命令的服役者。
-                            </p>
-                            <p className="text-stone-600 leading-relaxed">
-                                聖經呈現了多樣的屬靈活物，其核心功能並非成為敬拜中心，而是指向神的旨意與救恩歷史。最穩妥的認識方式是按照聖經直接出現的類型與事蹟來整理。
-                            </p>
+                    {/* Header Section */}
+                    <section className="text-center max-w-3xl mx-auto space-y-6">
+                        <div className="inline-block px-4 py-1.5 bg-blue-50 text-blue-600 rounded-full text-sm font-bold tracking-widest uppercase mb-2">Celestial Messengers</div>
+                        <h3 className="text-4xl font-black text-stone-800" style={{ fontFamily: 'Noto Serif TC, serif' }}>聖經中的屬靈使者</h3>
+                        <p className="text-lg text-stone-600 leading-relaxed">
+                            聖經中的「天使」本義為「使者」。他們不僅是信息的傳遞者，更是神國權能的執行者。從守護生命樹的基路伯到宣告救恩的加百列，這群服役的靈共同構成了神治下的屬靈秩序。
+                        </p>
+                        <div className="flex justify-center gap-4 text-xs font-bold text-stone-400 italic">
+                            <span>* 本報告僅整理聖經正典中明確出現之屬靈使者</span>
                         </div>
                     </section>
 
-                    {/* 2. 總覽網格 */}
-                    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                        {angelTypes.map((type, i) => (
-                            <div key={i} className="bg-white p-6 rounded-[2rem] border border-stone-200 shadow-sm hover:shadow-md transition-all group">
-                                <div className="text-3xl mb-4 transform group-hover:scale-110 transition-transform">{type.icon}</div>
-                                <h4 className="text-lg font-black text-stone-800 mb-2">{type.category}</h4>
-                                <p className="text-stone-600 text-sm mb-4 leading-relaxed h-10">{type.role}</p>
-                                <div className="text-[10px] font-bold text-blue-600 bg-blue-50 px-2 py-1 rounded-md w-fit">典據：{type.ref}</div>
+                    {/* Summary Table */}
+                    <section className="overflow-x-auto rounded-[2rem] border border-stone-200 shadow-xl bg-white">
+                        <table className="w-full text-left border-collapse">
+                            <thead>
+                                <tr className="bg-stone-50 border-b border-stone-200">
+                                    <th className="p-5 text-sm font-black text-stone-800">類別 / 名稱</th>
+                                    <th className="p-5 text-sm font-black text-stone-800">聖經身分</th>
+                                    <th className="p-5 text-sm font-black text-stone-800">主要特徵</th>
+                                    <th className="p-5 text-sm font-black text-stone-800">主要事蹟</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {angelOverview.map((item, i) => (
+                                    <tr key={i} className="border-b border-stone-100 hover:bg-stone-50/50 transition-colors">
+                                        <td className="p-5 font-bold text-stone-900">{item.type}</td>
+                                        <td className="p-5 text-stone-600 text-sm">{item.identity}</td>
+                                        <td className="p-5 text-stone-500 text-sm leading-relaxed">{item.feature} <br/><span className="text-[10px] text-blue-500 font-bold">典據：{item.ref}</span></td>
+                                        <td className="p-5 text-stone-600 text-sm">{item.deed}</td>
+                                    </tr>
+                                ))}
+                            </tbody>
+                        </table>
+                    </section>
+
+                    {/* Deep Dive Cards */}
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+                        {/* 1. 一般天使 & 耶和華的使者 */}
+                        <div className="space-y-8">
+                            <div className="p-8 bg-white rounded-[3rem] border border-stone-200 shadow-sm space-y-4">
+                                <div className="flex items-center gap-3 mb-2">
+                                    <span className="text-2xl">🕊️</span>
+                                    <h4 className="text-xl font-black text-stone-800">一般天使（未具名）</h4>
+                                </div>
+                                <p className="text-stone-600 text-sm leading-relaxed">
+                                    聖經中最常見的使者，常以人的形貌出現。他們進入所多瑪拯救羅得、在曠野引導百姓、向牧羊人報喜訊。他們是「服役的靈」，旨在指向神的旨意，而非受人敬拜。
+                                </p>
                             </div>
-                        ))}
+
+                            <div className="p-8 bg-gradient-to-br from-amber-50 to-orange-50 rounded-[3rem] border border-amber-200 shadow-lg relative overflow-hidden group">
+                                <div className="absolute -right-4 -top-4 text-8xl opacity-10 group-hover:rotate-12 transition-transform">✨</div>
+                                <div className="flex items-center gap-3 mb-4">
+                                    <span className="text-2xl">🔥</span>
+                                    <h4 className="text-xl font-black text-stone-800">耶和華的使者</h4>
+                                </div>
+                                <p className="text-stone-700 text-sm leading-relaxed mb-4">
+                                    這是聖經中極特殊的表述。這位使者常以神自己的權威說話（第一人稱），甚至被視為神同在的直接展現。
+                                </p>
+                                <div className="bg-white/60 p-4 rounded-2xl text-xs text-stone-500 italic">
+                                    「基督教傳統常將其理解為道成肉身之前的基督顯現（Christophany）。」
+                                </div>
+                            </div>
+                        </div>
+
+                        {/* 2. 基路伯 & 撒拉弗 (聖所活物) */}
+                        <div className="space-y-8">
+                            <div className="p-8 bg-stone-900 text-stone-100 rounded-[3rem] shadow-2xl relative overflow-hidden group">
+                                <div className="absolute -left-4 -bottom-4 text-8xl opacity-10 group-hover:-rotate-12 transition-transform">🛡️</div>
+                                <div className="flex items-center gap-3 mb-4">
+                                    <span className="text-2xl">🏛️</span>
+                                    <h4 className="text-xl font-black text-white">基路伯 (Cherubim)</h4>
+                                </div>
+                                <p className="text-stone-400 text-sm leading-relaxed mb-4">
+                                    並非可愛嬰孩，而是神聖守護者。安置在伊甸園東邊守護生命樹之路，形象出現在約櫃施恩座之上。它們象徵神的臨在與公義的守護。
+                                </p>
+                                <div className="flex gap-2">
+                                    <span className="px-2 py-1 bg-stone-800 rounded text-[10px] font-bold">守護聖所</span>
+                                    <span className="px-2 py-1 bg-stone-800 rounded text-[10px] font-bold">承載寶座</span>
+                                </div>
+                            </div>
+
+                            <div className="p-8 bg-rose-900 text-rose-50 rounded-[3rem] shadow-2xl relative overflow-hidden group">
+                                <div className="absolute -right-4 -bottom-4 text-8xl opacity-10 group-hover:scale-110 transition-transform">🔥</div>
+                                <div className="flex items-center gap-3 mb-4">
+                                    <span className="text-2xl">✨</span>
+                                    <h4 className="text-xl font-black text-white">撒拉弗 (Seraphim)</h4>
+                                </div>
+                                <p className="text-rose-200 text-sm leading-relaxed mb-4">
+                                    「火熱者」之意。出現在以賽亞的異象中，有六個翅膀，在神面前呼喊「聖哉！聖哉！聖哉！」。主要功能是敬拜、彰顯神的聖潔並潔淨事奉者。
+                                </p>
+                                <div className="flex gap-2 text-rose-300 font-bold text-xs italic">
+                                    「聖哉、聖哉、聖哉，萬軍之耶和華！」
+                                </div>
+                            </div>
+                        </div>
                     </div>
 
-                    {/* 3. 功能分類 */}
-                    <section className="bg-stone-50 rounded-[2.5rem] p-8 border border-stone-200">
-                        <h4 className="text-xl font-black text-stone-800 mb-6 flex items-center gap-2">
-                            <span className="text-blue-500 text-2xl">⚡</span> 主要功能分類
-                        </h4>
-                        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    {/* 3. 名稱專論: Gabriel & Michael */}
+                    <section className="bg-stone-50 rounded-[3rem] p-8 md:p-12 border border-stone-200 grid grid-cols-1 md:grid-cols-2 gap-12">
+                        <div>
+                            <div className="flex items-center gap-4 mb-6">
+                                <div className="w-12 h-12 bg-white rounded-2xl flex items-center justify-center text-2xl shadow-sm">📢</div>
+                                <h4 className="text-2xl font-black text-stone-800">加百列 Gabriel</h4>
+                            </div>
+                            <div className="space-y-4">
+                                <p className="text-stone-600 leading-relaxed">
+                                    具名天使，主要職分是「啟示與傳訊」。在舊約為但以理講解異象（但8, 9），在新約向撒迦利亞宣告施洗約翰的出生，並向馬利亞宣告耶穌的受孕。他是神宏大救恩計畫的宣告者。
+                                </p>
+                                <ul className="text-sm text-stone-500 space-y-2">
+                                    <li className="flex gap-2"><span>●</span> 向但以理說明「七十個七」預言</li>
+                                    <li className="flex gap-2"><span>●</span> 宣告彌賽亞的降生</li>
+                                </ul>
+                            </div>
+                        </div>
+                        <div>
+                            <div className="flex items-center gap-4 mb-6">
+                                <div className="w-12 h-12 bg-white rounded-2xl flex items-center justify-center text-2xl shadow-sm">⚔️</div>
+                                <h4 className="text-2xl font-black text-stone-800">米迦勒 Michael</h4>
+                            </div>
+                            <div className="space-y-4">
+                                <p className="text-stone-600 leading-relaxed">
+                                    被稱為「天使長」，是護衛神百姓的戰士。在但以理書中與黑暗權勢（波斯魔君）爭戰，在猶大書中為摩西屍首爭辯，在啟示錄中則率領天軍將古龍摔在地上。
+                                </p>
+                                <ul className="text-sm text-stone-500 space-y-2">
+                                    <li className="flex gap-2"><span>●</span> 以色列人的守護大君</li>
+                                    <li className="flex gap-2"><span>●</span> 末世爭戰的統帥</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </section>
+
+                    {/* 4. 墮落天使與結語 */}
+                    <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+                         <div className="md:col-span-2 p-8 bg-stone-100 rounded-[3rem] border border-stone-200">
+                             <h5 className="font-black text-stone-800 mb-4 text-lg">墮落天使與敵對勢力</h5>
+                             <p className="text-stone-600 text-sm leading-relaxed mb-4">
+                                 聖經也提到背叛神的屬靈存在（撒但及其使者）。他們曾擁有高位卻因墮落而受審，如今在世上迷惑與控告，但最終將在末日審判中被投入永火。
+                             </p>
+                             <div className="grid grid-cols-2 gap-4 text-[10px] font-bold text-stone-400">
+                                 <span>太 25:41 / 啟 12:7-9</span>
+                                 <span>彼後 2:4 / 猶 1:6</span>
+                             </div>
+                         </div>
+                         <div className="p-8 bg-blue-600 text-white rounded-[3rem] flex flex-col justify-center text-center shadow-xl">
+                             <div className="text-3xl mb-4">💡</div>
+                             <h5 className="font-black mb-2">綜合結論</h5>
+                             <p className="text-xs text-blue-100 leading-relaxed italic">
+                                 天使雖然職分不同，但共同功能並非取代神，而是傳達神旨意、執行命令、護衛子民，最終將所有注意力引向寶座上的神。
+                             </p>
+                         </div>
+                    </div>
+
+                    {/* Scripture Index */}
+                    <section className="pt-12 border-t border-stone-200">
+                        <h4 className="text-xl font-black text-stone-800 mb-8 text-center">相關經文索引</h4>
+                        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-x-12 gap-y-4">
                             {[
-                                { label: '傳訊與宣告', desc: '向先知、牧羊人等宣告神的關鍵計畫。' },
-                                { label: '保護與拯救', desc: '在危難中引導或救出神的百姓（如彼得、羅得）。' },
-                                { label: '敬拜與頌讚', desc: '圍繞寶座彰顯神的聖潔（撒拉弗、活物）。' },
-                                { label: '執行與爭戰', desc: '執行審判或在靈界與黑暗勢力交戰。' }
-                            ].map((func, i) => (
-                                <div key={i} className="flex gap-4 items-start p-4 bg-white rounded-2xl shadow-sm">
-                                    <div className="w-2 h-2 bg-blue-400 rounded-full mt-2 shrink-0"></div>
-                                    <div>
-                                        <span className="font-bold text-stone-800 block mb-1 text-sm">{func.label}</span>
-                                        <span className="text-xs text-stone-500 leading-relaxed">{func.desc}</span>
-                                    </div>
+                                { ref: '創 3:24', desc: '基路伯守伊甸園生命樹之路' },
+                                { ref: '創 16, 22', desc: '耶和華的使者向夏甲、亞伯拉罕顯現' },
+                                { ref: '出 25:18', desc: '約櫃上的金基路伯' },
+                                { ref: '賽 6:1-7', desc: '撒拉弗敬拜與潔淨以賽亞' },
+                                { ref: '但 8, 9', desc: '加百列講解異象' },
+                                { ref: '但 10, 12', desc: '米迦勒作為護衛與爭戰者' },
+                                { ref: '路 1, 2', desc: '天使報信：救主降生' },
+                                { ref: '啟 4, 5', desc: '寶座前活物的永恆敬拜' },
+                                { ref: '啟 12:7', desc: '米迦勒與龍交戰' }
+                            ].map((item, i) => (
+                                <div key={i} className="flex gap-4 items-start p-2 hover:bg-stone-50 rounded-xl transition-colors group">
+                                    <span className="text-blue-500 font-black text-sm whitespace-nowrap min-w-[70px] group-hover:translate-x-1 transition-transform">{item.ref}</span>
+                                    <span className="text-stone-400 text-xs leading-relaxed">{item.desc}</span>
                                 </div>
                             ))}
                         </div>
                     </section>
-
-                    {/* 4. 特殊存在 */}
-                    <section>
-                        <h4 className="text-xl font-black text-stone-800 mb-8 text-center">聖經中特殊的屬靈存在</h4>
-                        <div className="space-y-6">
-                            <div className="p-6 bg-white rounded-[2rem] border border-stone-200 shadow-sm relative overflow-hidden group">
-                                <div className="absolute -right-4 -top-4 text-6xl opacity-5 group-hover:opacity-10 transition-opacity">✨</div>
-                                <h5 className="font-black text-stone-800 mb-2 flex items-center gap-2">
-                                    耶和華的使者 (The Angel of the LORD)
-                                </h5>
-                                <p className="text-stone-600 text-sm leading-relaxed">
-                                    常以第一人稱代神說話，帶有高度神同在色彩。部分傳統理解為道成肉身之前的基督顯現，承載神的臨在與啟示。
-                                </p>
-                            </div>
-                            <div className="p-6 bg-white rounded-[2rem] border border-stone-200 shadow-sm relative overflow-hidden group">
-                                <div className="absolute -right-4 -top-4 text-6xl opacity-5 group-hover:opacity-10 transition-opacity">👁️</div>
-                                <h5 className="font-black text-stone-800 mb-2 flex items-center gap-2">
-                                    寶座前的活物 (Living Creatures)
-                                </h5>
-                                <p className="text-stone-600 text-sm leading-relaxed">
-                                    出現在以西結與啟示錄的異象中。多面、多翼、充滿眼睛，突出神的全知、威榮與對全地的掌權。
-                                </p>
-                            </div>
-                        </div>
-                    </section>
-
-                    <div className="text-center pt-8 border-t border-stone-200">
-                        <p className="text-stone-400 italic text-sm">
-                            「天使的主要功能不是為了滿足好奇，而是把人的注意力引回到寶座上的神。」
-                        </p>
-                    </div>
                 </div>
             );
         };
