@@ -203,18 +203,20 @@
             top: -22px;
             left: 50%;
             transform: translateX(-50%);
-            background: rgba(255, 255, 255, 0.95);
-            color: #000;
-            padding: 1px 5px;
-            border-radius: 4px;
-            font-size: 11px;
+            color: #1c1917;
+            font-size: 13px;
             font-weight: 900;
+            font-family: 'Noto Serif TC', serif;
             white-space: nowrap;
             pointer-events: none;
-            box-shadow: 0 1px 3px rgba(0,0,0,0.2);
-            border: 1px solid rgba(0,0,0,0.15);
             z-index: 1000;
-            font-family: 'Noto Serif TC', serif;
+            text-shadow:
+                -1.5px -1.5px 0 #fff,
+                1.5px -1.5px 0 #fff,
+                -1.5px 1.5px 0 #fff,
+                1.5px 1.5px 0 #fff,
+                0 2px 4px rgba(0, 0, 0, 0.2);
+            letter-spacing: 0.03em;
         }
 
         .focus-mode-active .atlas-marker-label {
@@ -979,6 +981,18 @@
                     books: ['Esther', 'Nehemiah', 'Daniel'],
                     desc: '波斯帝國冬宮所在地。以斯帖在此成為王后拯救猶大人。尼希米在此擔任王的酒政。但以理在此見到公綿羊與公山羊的異象。', ref: '斯1:2, 尼1:1, 但8:2', icon: '🏛️',
                     rcuvText: '亞哈隨魯王在書珊城的宮登基…設擺筵席。（斯1:2-3）'
+                },
+                {
+                    name: '烏萊河', nameEn: 'River Ulai', lat: 32.18, lng: 48.27, era: 'empire',
+                    books: ['Daniel'],
+                    desc: '位於書珊城旁的河道或運河。但以理在此見到公綿羊與公山羊的異象，並聽見烏萊河兩岸間有人的聲音。', ref: '單8:2, 16', icon: '🌊',
+                    rcuvText: '我見了異象，我人在書珊城的宮中，這省在以攔；我見了異象，我人在烏萊河邊。（但8:2）'
+                },
+                {
+                    name: '底格里斯河', nameEn: 'Tigris River', lat: 32.8, lng: 45.2, era: 'empire',
+                    books: ['Daniel'],
+                    desc: '美索不達米亞兩大河流之一（希伯來稱「底格里斯」）。但以理在此見到那身穿細麻衣者的異象。', ref: '但10:4', icon: '🌊',
+                    rcuvText: '正月二十四日，我在底格里斯大河邊，我舉目觀看，見有一人身穿細麻衣…（但10:4-5）'
                 },
                 {
                     name: '以東', nameEn: 'Edom', lat: 30.73, lng: 35.40, era: 'empire',
@@ -1949,6 +1963,25 @@
                                 { name: '尼布甲尼撒', nameEn: 'Nebuchadnezzar', role: '巴比倫王', desc: '曾因驕傲如獸，後稱頌至高神。', isBlood: false },
                                 { name: '伯沙撒', nameEn: 'Belshazzar', role: '巴比倫末代王', desc: '見牆上現指，國亡之夜被殺。', isBlood: false },
                                 { name: '大利烏', nameEn: 'Darius', role: '波斯/瑪代王', desc: '因愛護但以理，不得不下令將其投入獅子坑。', isBlood: false }
+                            ]
+                        },
+                        {
+                            name: '天使與啟示', role: '屬靈使者',
+                            desc: '向但以理傳遞神國的奧秘與時間。',
+                            isBlood: false,
+                            children: [
+                                { 
+                                    name: '加百列', nameEn: 'Gabriel', 
+                                    role: '大天使', 
+                                    desc: '受命向但以理講解烏萊河邊的異象，並傳達「七十個七」的預言。', 
+                                    isBlood: false 
+                                },
+                                { 
+                                    name: '米迦勒', nameEn: 'Michael', 
+                                    role: '大君/天使長', 
+                                    desc: '以色列人的守護大君，曾助加百列對抗波斯魔君，並在末時護衛神子民。', 
+                                    isBlood: false 
+                                }
                             ]
                         }
                     ]
@@ -3648,67 +3681,136 @@
 
         const MessiahSection = () => {
             return (
-                <div className="space-y-12">
+                <div className="space-y-16">
+                    {/* 1. 概覽 */}
                     <section>
                         <div className="flex items-center gap-4 mb-6">
                             <div className="w-12 h-12 bg-amber-100 rounded-2xl flex items-center justify-center text-2xl shadow-inner">👑</div>
                             <h3 className="text-2xl font-black text-stone-800" style={{ fontFamily: 'Noto Serif TC, serif' }}>概覽</h3>
                         </div>
-                        <p className="text-lg text-stone-700 leading-relaxed border-l-4 border-amber-500 pl-6">
-                            「彌賽亞」（Mashiach）本義為「受膏者」，希臘文即「基督」。在希伯來聖經中，這個詞最初指君王、祭司等執行神授使命的人。到新約時代，基督教確信耶穌就是上帝所應許的基督。
+                        <div className="space-y-4">
+                            <p className="text-lg text-stone-700 leading-relaxed border-l-4 border-amber-500 pl-6 bg-amber-50/30 py-2">
+                                「彌賽亞」一詞來自希伯來文 <em>mashiach</em>，本義是「受膏者」；其希臘文對應詞是 <em>christos</em>，中文通常譯為「基督」。
+                            </p>
+                            <p className="text-stone-600 leading-relaxed">
+                                在希伯來聖經中，這個詞最初不專指末世性的單一人物，而可用於君王、祭司。到第二聖殿時期，猶太社群對「那位將要來的彌賽亞」的期待逐漸聚焦為一位末後的拯救者，但各群體對其身分與工作內容並不完全一致。
+                            </p>
+                        </div>
+                    </section>
+
+                    {/* 2. 詞義與基本背景 */}
+                    <section className="bg-white rounded-[2.5rem] p-8 border border-stone-200 shadow-sm">
+                        <h4 className="text-xl font-black text-stone-800 mb-4 flex items-center gap-2">
+                            <span className="text-amber-500 text-2xl">📜</span> 詞義與基本背景
+                        </h4>
+                        <p className="text-stone-600 leading-relaxed mb-6">
+                            「彌賽亞」在原始語義上並非直接等同於「救主」，而是<strong>「被膏立、被分別出來執行神授使命的人」</strong>。在舊約文本中，掃羅、大衛等君王，以及大祭司都被稱為受膏者。隨著大衛之約、先知預言與亡國經驗的累積，這個詞逐漸承載起對未來大衛後裔王者、復興以色列者與和平秩序建立者的盼望。
                         </p>
-                    </section>
-
-                    <section className="grid grid-cols-1 md:grid-cols-3 gap-6">
-                        {[
-                            { title: '君王型', icon: '🏰', desc: '出自大衛家、恢復公義與國度秩序，是猶太教中最核心的期待。' },
-                            { title: '受苦型', icon: '✝️', desc: '基督教強調耶穌以受難、贖罪與復活整合了受苦僕人的圖像。' },
-                            { title: '末世型', icon: '☁️', desc: '駕雲而來、領受永遠國度的榮耀王者，呼應但以理書的異象。' }
-                        ].map((item, i) => (
-                            <div key={i} className="bg-white p-6 rounded-[2rem] border border-stone-200 shadow-sm hover:shadow-md transition-shadow">
-                                <span className="text-3xl mb-4 block">{item.icon}</span>
-                                <h4 className="text-lg font-black text-stone-800 mb-2">{item.title}彌賽亞</h4>
-                                <p className="text-stone-600 text-sm leading-relaxed">{item.desc}</p>
+                        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                            <div className="p-5 bg-stone-50 rounded-2xl border border-stone-100">
+                                <h5 className="font-bold text-stone-800 mb-2">舊約中的「受膏者」</h5>
+                                <p className="text-sm text-stone-500">常指當下已被膏立的王或祭司，是在其歷史語境中談論王權與祭司制度。</p>
                             </div>
-                        ))}
+                            <div className="p-5 bg-amber-50 rounded-2xl border border-amber-100">
+                                <h5 className="font-bold text-amber-900 mb-2">彌賽亞性經文</h5>
+                                <p className="text-sm text-amber-700">許多經文雖未直接使用「受膏者」一詞，但因描寫和平君王、受苦僕人而被視為高度「彌賽亞性」。</p>
+                            </div>
+                        </div>
                     </section>
 
+                    {/* 3. 主要類型差異 */}
                     <section>
-                        <h4 className="text-xl font-bold text-stone-800 mb-6">猶太教與基督教對彌賽亞的比較</h4>
-                        <div className="overflow-x-auto rounded-3xl border border-stone-200 bg-white">
+                        <h4 className="text-xl font-black text-stone-800 mb-8 text-center">彌賽亞期待的主要類型</h4>
+                        <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+                            {[
+                                { 
+                                    title: '君王型', icon: '🏰', 
+                                    desc: '最核心且普遍的期待。一位出自大衛家、恢復公義與國度秩序的人間君王。',
+                                    ref: '結 34, 賽 11'
+                                },
+                                { 
+                                    title: '受苦型', icon: '✝️', 
+                                    desc: '基督教核心觀點。認為彌賽亞必須先以受苦僕人的身分代贖罪孽。',
+                                    ref: '賽 53, 詩 22'
+                                },
+                                { 
+                                    title: '榮耀型', icon: '☁️', 
+                                    desc: '末世性的審判者與王者。駕雲而來，領受永遠的國度與權柄。',
+                                    ref: '但 7, 啟 19'
+                                }
+                            ].map((item, i) => (
+                                <div key={i} className="group bg-white p-8 rounded-[2.5rem] border border-stone-200 shadow-sm hover:shadow-xl hover:-translate-y-2 transition-all duration-300">
+                                    <div className="text-4xl mb-6 transform group-hover:scale-110 transition-transform">{item.icon}</div>
+                                    <h5 className="text-xl font-black text-stone-800 mb-3">{item.title}彌賽亞</h5>
+                                    <p className="text-stone-500 text-sm leading-relaxed mb-4">{item.desc}</p>
+                                    <div className="text-[10px] font-bold text-amber-600 bg-amber-50 px-2 py-1 rounded-full w-fit">典據：{item.ref}</div>
+                                </div>
+                            ))}
+                        </div>
+                    </section>
+
+                    {/* 4. 觀點對照表 */}
+                    <section>
+                        <div className="flex flex-col items-center mb-10">
+                            <h4 className="text-2xl font-black text-stone-800 mb-2">猶太教與基督教觀點對照</h4>
+                            <div className="w-16 h-1 bg-amber-500 rounded-full"></div>
+                        </div>
+                        <div className="overflow-x-auto rounded-[2rem] border border-stone-200 bg-white shadow-lg">
                             <table className="w-full text-left border-collapse">
                                 <thead className="bg-stone-50 border-b border-stone-200">
                                     <tr>
-                                        <th className="p-4 font-black text-stone-600 text-sm">面向</th>
-                                        <th className="p-4 font-black text-stone-600 text-sm">猶太教主流理解</th>
-                                        <th className="p-4 font-black text-stone-600 text-sm">基督教主流理解</th>
+                                        <th className="p-6 font-black text-stone-600 text-sm uppercase tracking-wider">核心面向</th>
+                                        <th className="p-6 font-black text-amber-700 text-sm">猶太教主流理解</th>
+                                        <th className="p-6 font-black text-blue-700 text-sm">基督教主流理解</th>
                                     </tr>
                                 </thead>
-                                <tbody className="divide-y divide-stone-100 text-sm">
-                                    <tr>
-                                        <td className="p-4 font-bold">主要身分</td>
-                                        <td className="p-4">大衛後裔的人間君王</td>
-                                        <td className="p-4">大衛後裔、基督、神子、救主</td>
-                                    </tr>
-                                    <tr>
-                                        <td className="p-4 font-bold">主要任務</td>
-                                        <td className="p-4">聚集分散者、復興以色列、建立公義秩序</td>
-                                        <td className="p-4">受死與復活完成救贖，再來完成普世和平</td>
-                                    </tr>
-                                    <tr>
-                                        <td className="p-4 font-bold">受苦僕人</td>
-                                        <td className="p-4">通常視為以色列群體或義人群體</td>
-                                        <td className="p-4">視為耶穌受苦、代贖與復活的關鍵預表</td>
-                                    </tr>
-                                    <tr>
-                                        <td className="p-4 font-bold">未實現預言</td>
-                                        <td className="p-4">若任務未達成，表示彌賽亞尚未來到</td>
-                                        <td className="p-4">以「兩次降臨」解釋已然與未然的張力</td>
-                                    </tr>
+                                <tbody className="divide-y divide-stone-100">
+                                    {[
+                                        { label: '基本身分', jew: '大衛後裔的人間君王', chr: '大衛後裔、基督、神子、救主' },
+                                        { label: '核心任務', jew: '復興以色列、帶來普世和平、重建聖殿', chr: '第一次以降臨成就贖罪，第二次以再來完成國度' },
+                                        { label: '受苦僕人', jew: '通常指以色列集體或義人群體', chr: '預表耶穌的受難與代贖' },
+                                        { label: '失敗判定', jew: '若世界和平未實現，則表示彌賽亞尚未來到', chr: '以「已然未然」框架解釋預言的逐步實現' },
+                                        { label: '權威來源', jew: '希伯來聖經與猶太詮釋傳統', chr: '舊約＋新約，並在基督裡重新詮釋舊約' }
+                                    ].map((row, i) => (
+                                        <tr key={i} className="hover:bg-stone-50 transition-colors">
+                                            <td className="p-6 text-sm font-black text-stone-800 bg-stone-50/30">{row.label}</td>
+                                            <td className="p-6 text-sm text-stone-600 leading-relaxed">{row.jew}</td>
+                                            <td className="p-6 text-sm text-stone-600 leading-relaxed">{row.chr}</td>
+                                        </tr>
+                                    ))}
                                 </tbody>
                             </table>
                         </div>
                     </section>
+
+                    {/* 5. 重要經文索引 */}
+                    <section className="bg-stone-900 rounded-[3rem] p-10 text-stone-100 shadow-2xl relative overflow-hidden">
+                        <div className="absolute top-0 right-0 p-8 opacity-10 text-8xl">📖</div>
+                        <h4 className="text-2xl font-black mb-8 border-b border-white/10 pb-4">重要經文索引</h4>
+                        <div className="grid grid-cols-1 md:grid-cols-2 gap-x-12 gap-y-6">
+                            {[
+                                { ref: '創世記 49:10', desc: '王權與猶大支派的線索。' },
+                                { ref: '撒下 7:12-16', desc: '大衛之約與永固的王位。' },
+                                { ref: '詩篇 2, 110', desc: '受膏君王與主權王者的圖像。' },
+                                { ref: '賽 7:14, 9:6-7', desc: '必有童女懷孕生子，大衛位上的和平君王。' },
+                                { ref: '賽 52:13-53:12', desc: '受苦僕人：代罪受難的關鍵文本。' },
+                                { ref: '但以理書 7:13-14', desc: '人子：駕雲而來領受永遠權柄者。' },
+                                { ref: '約翰福音 4:25', desc: '新約明言：「彌賽亞翻出來就是基督」。' }
+                            ].map((item, i) => (
+                                <div key={i} className="flex gap-4 items-start">
+                                    <div className="text-amber-400 font-black whitespace-nowrap text-sm mt-1">{item.ref}</div>
+                                    <div className="text-stone-400 text-sm leading-relaxed">{item.desc}</div>
+                                </div>
+                            ))}
+                        </div>
+                    </section>
+
+                    {/* 綜合結論 */}
+                    <div className="text-center max-w-2xl mx-auto pt-8">
+                        <p className="text-stone-400 italic text-sm">
+                            「彌賽亞並非單一平面的概念，而是從職分逐步發展為對末後拯救者的期待。基督教以復活信仰為中心整合了這些圖像，而猶太教則仍在等待歷史性任務的完成。」
+                        </p>
+                    </div>
                 </div>
             );
         };
@@ -3803,12 +3905,110 @@
             );
         };
 
+        const AngelsSection = () => {
+            const angelTypes = [
+                { category: '一般天使', role: '傳訊、保護、執行審判', icon: '🕊️', ref: '創 19, 太 1-2' },
+                { category: '加百列', role: '解釋異象、宣告救恩信息', icon: '📢', ref: '但 8:16, 路 1:26' },
+                { category: '米迦勒', role: '天使長、護衛神子民', icon: '⚔️', ref: '但 10:13, 啟 12:7' },
+                { category: '基路伯', role: '守護神聖、彰顯榮耀', icon: '🏛️', ref: '創 3:24, 結 10' },
+                { category: '撒拉弗', role: '寶座前敬拜、潔淨先知', icon: '🔥', ref: '賽 6:1-7' },
+                { category: '墮落使者', role: '敵對、迷惑、最終受審', icon: '🌑', ref: '啟 12:7, 猶 1:6' }
+            ];
+
+            return (
+                <div className="space-y-16">
+                    {/* 1. 概覽 */}
+                    <section>
+                        <div className="flex items-center gap-4 mb-6">
+                            <div className="w-12 h-12 bg-blue-100 rounded-2xl flex items-center justify-center text-2xl shadow-inner">👼</div>
+                            <h3 className="text-2xl font-black text-stone-800" style={{ fontFamily: 'Noto Serif TC, serif' }}>概覽</h3>
+                        </div>
+                        <div className="space-y-4">
+                            <p className="text-lg text-stone-700 leading-relaxed border-l-4 border-blue-500 pl-6 bg-blue-50/30 py-2">
+                                聖經中的「天使」本義為「使者」；希伯來文 <em>malʾakh</em> 與希臘文 <em>angelos</em> 都可指奉差遣傳遞信息、執行命令的服役者。
+                            </p>
+                            <p className="text-stone-600 leading-relaxed">
+                                聖經呈現了多樣的屬靈活物，其核心功能並非成為敬拜中心，而是指向神的旨意與救恩歷史。最穩妥的認識方式是按照聖經直接出現的類型與事蹟來整理。
+                            </p>
+                        </div>
+                    </section>
+
+                    {/* 2. 總覽網格 */}
+                    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                        {angelTypes.map((type, i) => (
+                            <div key={i} className="bg-white p-6 rounded-[2rem] border border-stone-200 shadow-sm hover:shadow-md transition-all group">
+                                <div className="text-3xl mb-4 transform group-hover:scale-110 transition-transform">{type.icon}</div>
+                                <h4 className="text-lg font-black text-stone-800 mb-2">{type.category}</h4>
+                                <p className="text-stone-600 text-sm mb-4 leading-relaxed h-10">{type.role}</p>
+                                <div className="text-[10px] font-bold text-blue-600 bg-blue-50 px-2 py-1 rounded-md w-fit">典據：{type.ref}</div>
+                            </div>
+                        ))}
+                    </div>
+
+                    {/* 3. 功能分類 */}
+                    <section className="bg-stone-50 rounded-[2.5rem] p-8 border border-stone-200">
+                        <h4 className="text-xl font-black text-stone-800 mb-6 flex items-center gap-2">
+                            <span className="text-blue-500 text-2xl">⚡</span> 主要功能分類
+                        </h4>
+                        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                            {[
+                                { label: '傳訊與宣告', desc: '向先知、牧羊人等宣告神的關鍵計畫。' },
+                                { label: '保護與拯救', desc: '在危難中引導或救出神的百姓（如彼得、羅得）。' },
+                                { label: '敬拜與頌讚', desc: '圍繞寶座彰顯神的聖潔（撒拉弗、活物）。' },
+                                { label: '執行與爭戰', desc: '執行審判或在靈界與黑暗勢力交戰。' }
+                            ].map((func, i) => (
+                                <div key={i} className="flex gap-4 items-start p-4 bg-white rounded-2xl shadow-sm">
+                                    <div className="w-2 h-2 bg-blue-400 rounded-full mt-2 shrink-0"></div>
+                                    <div>
+                                        <span className="font-bold text-stone-800 block mb-1 text-sm">{func.label}</span>
+                                        <span className="text-xs text-stone-500 leading-relaxed">{func.desc}</span>
+                                    </div>
+                                </div>
+                            ))}
+                        </div>
+                    </section>
+
+                    {/* 4. 特殊存在 */}
+                    <section>
+                        <h4 className="text-xl font-black text-stone-800 mb-8 text-center">聖經中特殊的屬靈存在</h4>
+                        <div className="space-y-6">
+                            <div className="p-6 bg-white rounded-[2rem] border border-stone-200 shadow-sm relative overflow-hidden group">
+                                <div className="absolute -right-4 -top-4 text-6xl opacity-5 group-hover:opacity-10 transition-opacity">✨</div>
+                                <h5 className="font-black text-stone-800 mb-2 flex items-center gap-2">
+                                    耶和華的使者 (The Angel of the LORD)
+                                </h5>
+                                <p className="text-stone-600 text-sm leading-relaxed">
+                                    常以第一人稱代神說話，帶有高度神同在色彩。部分傳統理解為道成肉身之前的基督顯現，承載神的臨在與啟示。
+                                </p>
+                            </div>
+                            <div className="p-6 bg-white rounded-[2rem] border border-stone-200 shadow-sm relative overflow-hidden group">
+                                <div className="absolute -right-4 -top-4 text-6xl opacity-5 group-hover:opacity-10 transition-opacity">👁️</div>
+                                <h5 className="font-black text-stone-800 mb-2 flex items-center gap-2">
+                                    寶座前的活物 (Living Creatures)
+                                </h5>
+                                <p className="text-stone-600 text-sm leading-relaxed">
+                                    出現在以西結與啟示錄的異象中。多面、多翼、充滿眼睛，突出神的全知、威榮與對全地的掌權。
+                                </p>
+                            </div>
+                        </div>
+                    </section>
+
+                    <div className="text-center pt-8 border-t border-stone-200">
+                        <p className="text-stone-400 italic text-sm">
+                            「天使的主要功能不是為了滿足好奇，而是把人的注意力引回到寶座上的神。」
+                        </p>
+                    </div>
+                </div>
+            );
+        };
+
         const AnalysisPage = ({ onNavigateToLocation }) => {
             const [activeSubTab, setActiveSubTab] = useState(() => {
                 const hash = window.location.hash;
                 if (hash.includes('analysis/promised-land')) return 'promised-land';
                 if (hash.includes('analysis/messiah')) return 'messiah';
                 if (hash.includes('analysis/son-of-man')) return 'son-of-man';
+                if (hash.includes('analysis/angels')) return 'angels';
                 return 'promised-land';
             });
 
@@ -3816,6 +4016,7 @@
                 { id: 'promised-land', name: '應許之地', icon: '🏞️' },
                 { id: 'messiah', name: '彌賽亞', icon: '👑' },
                 { id: 'son-of-man', name: '人子', icon: '👤' },
+                { id: 'angels', name: '屬靈使者', icon: '👼' },
             ];
 
             useEffect(() => {
@@ -3824,6 +4025,7 @@
                     if (hash.includes('analysis/promised-land')) setActiveSubTab('promised-land');
                     else if (hash.includes('analysis/messiah')) setActiveSubTab('messiah');
                     else if (hash.includes('analysis/son-of-man')) setActiveSubTab('son-of-man');
+                    else if (hash.includes('analysis/angels')) setActiveSubTab('angels');
                 };
                 window.addEventListener('hashchange', handleHash);
                 return () => window.removeEventListener('hashchange', handleHash);
@@ -3861,6 +4063,7 @@
                             {activeSubTab === 'promised-land' && <PromisedLandSection onNavigateToLocation={onNavigateToLocation} />}
                             {activeSubTab === 'messiah' && <MessiahSection />}
                             {activeSubTab === 'son-of-man' && <SonOfManSection />}
+                            {activeSubTab === 'angels' && <AngelsSection />}
                         </div>
                     </div>
                 </div>
